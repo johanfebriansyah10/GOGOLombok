@@ -1,0 +1,40 @@
+[2026-02-24 01:52:59] local.DEBUG: [vite] server connection lost. Polling for restart... {"url":"http://127.0.0.1:8000/register","user_agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36","timestamp":"2026-02-24T01:52:57.910Z"} 
+[2026-02-24 02:52:42] local.DEBUG: [vite] server connection lost. Polling for restart... {"url":"http://127.0.0.1:8000/dashboard","user_agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36","timestamp":"2026-02-24T02:52:39.757Z"} 
+[2026-02-24 03:04:12] local.DEBUG: [vite] server connection lost. Polling for restart... {"url":"http://127.0.0.1:8000/dashboard","user_agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36","timestamp":"2026-02-24T03:03:37.639Z"} 
+[2026-02-24 03:13:25] local.DEBUG: [vite] server connection lost. Polling for restart... {"url":"http://127.0.0.1:8000/dashboard","user_agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36","timestamp":"2026-02-24T03:09:24.312Z"} 
+[2026-03-01 06:17:55] local.DEBUG: [vite] server connection lost. Polling for restart... {"url":"http://localhost:8000/","user_agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36","timestamp":"2026-03-01T06:17:54.436Z"} 
+[2026-03-01 06:46:22] local.DEBUG: [vite] server connection lost. Polling for restart... {"url":"http://localhost:8000/login","user_agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36","timestamp":"2026-03-01T06:46:20.699Z"} 
+[2026-03-01 06:46:22] local.DEBUG: [vite] server connection lost. Polling for restart... {"url":"http://localhost:8000/login","user_agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36","timestamp":"2026-03-01T06:46:20.699Z"} 
+[2026-03-01 06:46:36] local.DEBUG: [vite] server connection lost. Polling for restart... {"url":"http://localhost:8000/login","user_agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36","timestamp":"2026-03-01T06:46:35.031Z"} 
+[2026-03-01 06:49:25] local.DEBUG: [vite] server connection lost. Polling for restart... {"url":"http://localhost:8000/login","user_agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36","timestamp":"2026-03-01T06:49:24.192Z"} 
+[2026-03-16 05:17:56] local.WARNING: Alpine Expression Error: Unexpected token '>'
+
+Expression: ">
+    <div class=" null 1 null null {"url":"http://127.0.0.1:8000/admin/dashboard","user_agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36","timestamp":"2026-03-16T05:17:55.379Z"} 
+[2026-03-16 05:17:56] local.ERROR: Uncaught SyntaxError: Unexpected token '>' http://[::1]:5173/node_modules/.vite/deps/alpinejs.js?v=37925f5b 456 5 SyntaxError Unexpected token '>' SyntaxError: Unexpected token '>'
+    at new AsyncFunction (<anonymous>)
+    at safeAsyncFunction (http://[::1]:5173/node_modules/.vite/deps/alpinejs.js?v=37925f5b:511:19)
+    at generateFunctionFromString (http://[::1]:5173/node_modules/.vite/deps/alpinejs.js?v=37925f5b:524:14)
+    at generateEvaluatorFromString (http://[::1]:5173/node_modules/.vite/deps/alpinejs.js?v=37925f5b:529:14)
+    at normalEvaluator (http://[::1]:5173/node_modules/.vite/deps/alpinejs.js?v=37925f5b:487:109)
+    at evaluateLater (http://[::1]:5173/node_modules/.vite/deps/alpinejs.js?v=37925f5b:473:10)
+    at evaluate (http://[::1]:5173/node_modules/.vite/deps/alpinejs.js?v=37925f5b:469:3)
+    at Function.<anonymous> (http://[::1]:5173/node_modules/.vite/deps/alpinejs.js?v=37925f5b:3062:15)
+    at flushHandlers (http://[::1]:5173/node_modules/.vite/deps/alpinejs.js?v=37925f5b:653:46)
+    at stopDeferring (http://[::1]:5173/node_modules/.vite/deps/alpinejs.js?v=37925f5b:658:5) {"url":"http://127.0.0.1:8000/admin/dashboard","user_agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36","timestamp":"2026-03-16T05:17:55.381Z"} 
+[2026-03-16 05:17:56] local.ERROR: Uncaught SyntaxError: Unexpected token '>' http://[::1]:5173/node_modules/.vite/deps/alpinejs.js?v=37925f5b 456 5 SyntaxError Unexpected token '>' SyntaxError: Unexpected token '>'
+    at new AsyncFunction (<anonymous>)
+    at safeAsyncFunction (http://[::1]:5173/node_modules/.vite/deps/alpinejs.js?v=37925f5b:511:19)
+    at generateFunctionFromString (http://[::1]:5173/node_modules/.vite/deps/alpinejs.js?v=37925f5b:524:14)
+    at generateEvaluatorFromString (http://[::1]:5173/node_modules/.vite/deps/alpinejs.js?v=37925f5b:529:14)
+    at normalEvaluator (http://[::1]:5173/node_modules/.vite/deps/alpinejs.js?v=37925f5b:487:109)
+    at evaluateLater (http://[::1]:5173/node_modules/.vite/deps/alpinejs.js?v=37925f5b:473:10)
+    at evaluate (http://[::1]:5173/node_modules/.vite/deps/alpinejs.js?v=37925f5b:469:3)
+    at Function.<anonymous> (http://[::1]:5173/node_modules/.vite/deps/alpinejs.js?v=37925f5b:3062:15)
+    at flushHandlers (http://[::1]:5173/node_modules/.vite/deps/alpinejs.js?v=37925f5b:653:46)
+    at stopDeferring (http://[::1]:5173/node_modules/.vite/deps/alpinejs.js?v=37925f5b:658:5) {"url":"http://127.0.0.1:8000/admin/dashboard","user_agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36","timestamp":"2026-03-16T05:17:55.381Z"} 
+[2026-03-29 07:37:02] local.ERROR: [vite] failed to connect to websocket.
+your current setup:
+  (browser) [::1]:5173/ <--[HTTP]--> localhost:5173/ (server)
+  (browser) [::1]:5173/ <--[WebSocket (failing)]--> localhost:5173/ (server)
+Check out your Vite / network configuration and https://vite.dev/config/server-options.html#server-hmr . {"url":"http://127.0.0.1:8000/register","user_agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36","timestamp":"2026-03-29T07:37:01.900Z"} 
