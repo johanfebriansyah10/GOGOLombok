@@ -47,7 +47,7 @@
                             @enderror
                         </div>
 
-                        <div class="mb-6">
+                        {{-- <div class="mb-6">
                             <label for="description" class="block text-sm font-medium mb-2">Deskripsi</label>
                             <textarea
                                 id="description"
@@ -58,11 +58,11 @@
                             @error('description')
                                 <span class="text-red-600 text-sm mt-1 block">{{ $message }}</span>
                             @enderror
-                        </div>
+                        </div> --}}
 
-                        <div class="grid grid-cols-2 gap-6 mb-6">
+                        <div class="grid gap-6 mb-6">
                             <div>
-                                <label for="location" class="block text-sm font-medium mb-2">Lokasi (Nama)</label>
+                                <label for="location" class="block text-sm font-medium mb-2">Lokasi</label>
                                 <input
                                     type="text"
                                     id="location"
@@ -76,7 +76,7 @@
                                 @enderror
                             </div>
 
-                            <div>
+                            {{-- <div>
                                 <label for="rating" class="block text-sm font-medium mb-2">Rating (1-5)</label>
                                 <select
                                     id="rating"
@@ -94,7 +94,7 @@
                                 @error('rating')
                                     <span class="text-red-600 text-sm mt-1 block">{{ $message }}</span>
                                 @enderror
-                            </div>
+                            </div> --}}
                         </div>
 
                         <div class="mb-6">
@@ -144,7 +144,7 @@
 
                         <!-- Filter Related Fields -->
                         <div class="mb-6 p-4 bg-blue-50 dark:bg-blue-900 border border-blue-200 dark:border-blue-700 rounded-lg">
-                            <h3 class="text-sm font-semibold text-blue-900 dark:text-blue-100 mb-4">📊 Data untuk Filter & SAW</h3>
+                            <h3 class="text-sm font-semibold text-blue-900 dark:text-blue-100 mb-4">Data untuk Filter & SAW</h3>
 
                             <div class="grid grid-cols-2 gap-6">
                                 <div>

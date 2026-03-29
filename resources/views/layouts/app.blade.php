@@ -31,6 +31,15 @@
             <main>
                 {{ $slot }}
             </main>
+
+            <div>
+                <!-- Footer -->
+                @if(Auth::check() && Auth::user()->role === 'admin')
+                    @include('components.footer-admin')
+                @else
+                    @include('components.footer-user')
+                @endif
+            </div>
         </div>
     </body>
 </html>

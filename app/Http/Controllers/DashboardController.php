@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Wisata;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -11,6 +12,7 @@ class DashboardController extends Controller
      */
     public function show(Request $request)
     {
-        return view('user/dashboard');
+        $wisatas = Wisata::orderBy('rating', 'desc')->limit(3)->get();
+        return view('user/dashboard', ['wisatas' => $wisatas]);
     }
 }

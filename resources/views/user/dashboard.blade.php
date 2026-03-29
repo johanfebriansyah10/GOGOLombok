@@ -5,18 +5,89 @@
         </h2>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    <h3 class="text-lg font-semibold mb-4">Welcome to User Dashboard</h3>
-                    <p class="mb-2">You are logged in as: <strong>{{ Auth::user()->name }}</strong></p>
-                    <p class="mb-4">Role: <span class="bg-green-100 text-green-800 px-2 py-1 rounded">{{ Auth::user()->role }}</span></p>
-                    <p class="text-gray-600 dark:text-gray-400">
-                        This is your personal user dashboard.
-                    </p>
+    <div class="py-12 px-4">
+        <div class="max-w-7xl mx-auto">
+            <!-- Welcome Section - Enhanced -->
+            <section class="overflow-hidden shadow-xl sm:rounded-2xl mb-12 border-2 border-gray-200">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 p-8 lg:p-12">
+                    <!-- Left: Text -->
+                    <div class="flex flex-col justify-center">
+                        <h1 class="text-2xl lg:text-5xl font-black mb-4 leading-tight">
+                            Selamat Datang, {{ Auth::user()->name }}
+                        </h1>
+                        <p class="text-lg mb-6 leading-relaxed">
+                            Jelajahi keindahan Lombok melalui Website Kami.
+                        </p>
+                        <div class="flex flex-wrap gap-3">
+                            <span class="inline-flex items-center px-4 py-2 rounded-full bg-green-500/20 backdrop-blur text-sm font-semibold border border-white/30">
+                                Rekomendasi sesuai Kebutuhan
+                            </span>
+                            <span class="inline-flex items-center px-4 py-2 rounded-full bg-green-500/20 backdrop-blur text-sm font-semibold border border-white/30">
+                                Jelajahi Wisata Terbaik di Lombok
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Right: Logo with Animation -->
+                    <div class="flex items-center justify-end">
+                        <div class="relative">
+                            <div class="absolute inset-0 rounded-2xl blur-2xl"></div>
+                            <div class="relative rounded-full flex items-center justify-center shadow-2xl transform hover:scale-105 transition-transform duration-300 h-auto w-auto">
+                                <img src="{{ asset('images/GOLombok.svg') }}" alt="GO Lombok" class="w-52 h-52" />
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </section>
+
+            <!-- Recommended Wisata Carousel -->
+            @if($wisatas->count() > 0)
+            <section class="mb-12">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-3xl font-bold text-gray-900 dark:text-gray-100">Rekomendasi Pilihan</h2>
+                    <a href="{{ route('wisata.catalog') }}" class="text-emerald-600 hover:text-emerald-700 font-semibold text-sm">Lihat Semua →</a>
+                </div>
+                <div class="relative">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        @foreach($wisatas as $wisata)
+                        <div class="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 h-80">
+                            <!-- Background Image -->
+                            <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/80">
+                                @if($wisata->image)
+                                    <img src="{{ asset('storage/' . $wisata->image) }}" alt="{{ $wisata->name }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"/>
+                                @else
+                                    <div class="w-full h-full bg-gradient-to-br from-emerald-400 to-teal-600"></div>
+                                @endif
+                            </div>
+
+                            <!-- Content Overlay -->
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent flex flex-col justify-end p-6">
+                                <div>
+                                    <div class="flex items-start justify-between mb-3">
+                                        <div>
+                                            <h3 class="text-2xl font-bold text-white">{{ $wisata->name }}</h3>
+                                            <p class="text-emerald-200 text-sm flex items-center mt-1">
+                                                {{ $wisata->location ?? 'Lombok' }}
+                                            </p>
+                                        </div>
+                                        <span class="bg-yellow-400 text-gray-900 px-3 py-1 rounded-full font-bold text-sm">⭐ {{ number_format($wisata->rating, 1) }}</span>
+                                    </div>
+                                    <p class="text-gray-200 text-sm line-clamp-2 mb-4">{{ $wisata->description }}</p>
+                                    <div class="flex items-center justify-between pt-3 border-t border-white/20">
+                                        <span class="text-white font-semibold">💰 Rp{{ number_format($wisata->ticket_price, 0, ',', '.') }}</span>
+                                        <a href="{{ route('wisata.show', $wisata->id) }}" class="bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-lg font-semibold text-sm transition-colors">
+                                            Detail
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+            </section>
+            @endif
+
         </div>
     </div>
 </x-app-layout>

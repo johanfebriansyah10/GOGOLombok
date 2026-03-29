@@ -16,12 +16,10 @@ class Wisata extends Model
     protected $fillable = [
         'category_id',
         'name',
-        'description',
         'location',
         'address',
         'latitude',
         'longitude',
-        'rating',
         'image',
         'ticket_price',
         'distance',
