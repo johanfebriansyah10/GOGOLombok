@@ -23,6 +23,9 @@
                     <a href="{{ route('admin.criterias.index') }}" class="px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('admin.criterias.*') ? 'text-gray-100 border-b-2 border-gray-100 hover:border-blue-300': 'text-gray-100 hover:border-blue-300 hover:border-b-2 border-b-2 border-transparent' }} transition">
                         Kriteria
                     </a>
+                    <a href="{{ route('admin.weights.index') }}" class="px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('admin.weights.*') ? 'text-gray-100 border-b-2 border-gray-100 hover:border-blue-300': 'text-gray-100 hover:border-blue-300 hover:border-b-2 border-b-2 border-transparent' }} transition">
+                        Bobot
+                    </a>
                     <a href="{{ route('admin.users.index') }}" class="px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('admin.users.*') ? 'text-gray-100 border-b-2 border-gray-100 hover:border-blue-300': 'text-gray-100 hover:border-blue-300 hover:border-b-2 border-b-2 border-transparent' }} transition">
                         Users
                     </a>
@@ -110,6 +113,9 @@
                     </a>
                     <a href="{{ route('admin.criterias.index') }}" class="block px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('admin.criterias.*') ? 'text-gray-500 border-b-2 border-blue-300': 'text-gray-700 hover:text-blue-600 hover:bg-gray-50' }} transition">
                         Kriteria
+                    </a>
+                    <a href="{{ route('admin.weights.index') }}" class="block px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('admin.weights.*') ? 'text-gray-500 border-b-2 border-blue-300': 'text-gray-700 hover:text-blue-600 hover:bg-gray-50' }} transition">
+                        Bobot
                     </a>
                     <a href="{{ route('admin.users.index') }}" class="block px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('admin.users.*') ? 'text-gray-500 border-b-2 border-blue-300': 'text-gray-700 hover:text-blue-600 hover:bg-gray-50' }} transition">
                         Users

@@ -12,10 +12,14 @@ class WisataSeeder extends Seeder
      */
     public function run(): void
     {
-        $category = \App\Models\Category::updateOrCreate(
-            ['name' => 'Alam'],
-            ['description' => 'Wisata alam dan outdoor']
-        );
+        $category = \App\Models\Category::where('name', 'Alam')->first();
+
+        if (!$category) {
+            $category = \App\Models\Category::create([
+                'name' => 'Alam',
+                'description' => 'Wisata alam dan outdoor',
+            ]);
+        }
 
         $wisatas = [
             [
@@ -161,10 +165,7 @@ class WisataSeeder extends Seeder
         ];
 
         foreach ($wisatas as $wisata) {
-            Wisata::updateOrCreate(
-                ['name' => $wisata['name']],
-                $wisata
-            );
+            Wisata::create($wisata);
         }
     }
 }

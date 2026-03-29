@@ -30,15 +30,8 @@ Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->name('ad
     Route::get('/dashboard', [AdminDashboardController::class, 'show'])->name('dashboard');
     Route::resource('categories', \App\Http\Controllers\Admin\CategoryController::class);
     Route::resource('wisatas', \App\Http\Controllers\Admin\WisataController::class);
-
-    // Criteria & Weight (Combined)
     Route::resource('criterias', \App\Http\Controllers\Admin\CriteriaController::class);
-    Route::get('/criterias-weight/create-weight', [\App\Http\Controllers\Admin\CriteriaController::class, 'createWeight'])->name('criterias.create-weight');
-    Route::post('/criterias-weight/store-weight', [\App\Http\Controllers\Admin\CriteriaController::class, 'storeWeight'])->name('criterias.store-weight');
-    Route::get('/criterias-weight/{weight}/edit-weight', [\App\Http\Controllers\Admin\CriteriaController::class, 'editWeight'])->name('criterias.edit-weight');
-    Route::patch('/criterias-weight/{weight}/update-weight', [\App\Http\Controllers\Admin\CriteriaController::class, 'updateWeight'])->name('criterias.update-weight');
-    Route::delete('/criterias-weight/{weight}/destroy-weight', [\App\Http\Controllers\Admin\CriteriaController::class, 'destroyWeight'])->name('criterias.destroy-weight');
-
+    Route::resource('weights', \App\Http\Controllers\Admin\WeightController::class);
     Route::resource('users', \App\Http\Controllers\Admin\UserController::class);
     Route::get('/evaluations', [\App\Http\Controllers\Admin\EvaluationController::class, 'index'])->name('evaluations.index');
     Route::post('/evaluations', [\App\Http\Controllers\Admin\EvaluationController::class, 'store'])->name('evaluations.store');

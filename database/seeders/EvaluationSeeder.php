@@ -2,9 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Criteria;
 use App\Models\Evaluation;
-use App\Models\Wisata;
 use Illuminate\Database\Seeder;
 
 class EvaluationSeeder extends Seeder
@@ -14,43 +12,44 @@ class EvaluationSeeder extends Seeder
      */
     public function run(): void
     {
-        $requiredCriteriaCodes = ['C1', 'C2', 'C3', 'C4'];
-        $criteriaIds = Criteria::whereIn('code', $requiredCriteriaCodes)
-            ->pluck('id', 'code');
+        // Sample evaluation data
+        // Wisata IDs: 1-5
+        // Criteria IDs: 7-10 (C1: Harga Tiket, C2: Jarak, C3: Fasilitas, C4: Rating)
 
-        $missingCriteriaCodes = array_diff($requiredCriteriaCodes, $criteriaIds->keys()->all());
+        $evaluations = [
+            // Wisata 1 (Taman Nasional)
+            ['wisata_id' => 1, 'criteria_id' => 7, 'value' => 50000],   // Harga Tiket (cost - lower is better)
+            ['wisata_id' => 1, 'criteria_id' => 8, 'value' => 25],       // Jarak km (cost - lower is better)
+            ['wisata_id' => 1, 'criteria_id' => 9, 'value' => 85],       // Fasilitas (benefit - higher is better)
+            ['wisata_id' => 1, 'criteria_id' => 10, 'value' => 4.5],     // Rating (benefit)
 
-        if ($missingCriteriaCodes !== []) {
-            throw new \RuntimeException(
-                'Criteria berikut belum tersedia: ' . implode(', ', $missingCriteriaCodes)
-            );
-        }
+            // Wisata 2 (Pantai)
+            ['wisata_id' => 2, 'criteria_id' => 7, 'value' => 30000],
+            ['wisata_id' => 2, 'criteria_id' => 8, 'value' => 15],
+            ['wisata_id' => 2, 'criteria_id' => 9, 'value' => 80],
+            ['wisata_id' => 2, 'criteria_id' => 10, 'value' => 4.2],
 
-        $wisatas = Wisata::all([
-            'id',
-            'ticket_price',
-            'distance',
-            'facilities_count',
-            'actual_rating',
-        ]);
+            // Wisata 3 (Candi)
+            ['wisata_id' => 3, 'criteria_id' => 7, 'value' => 25000],
+            ['wisata_id' => 3, 'criteria_id' => 8, 'value' => 10],
+            ['wisata_id' => 3, 'criteria_id' => 9, 'value' => 75],
+            ['wisata_id' => 3, 'criteria_id' => 10, 'value' => 4.7],
 
-        foreach ($wisatas as $wisata) {
-            $evaluations = [
-                ['criteria_id' => $criteriaIds['C1'], 'value' => $wisata->ticket_price],
-                ['criteria_id' => $criteriaIds['C2'], 'value' => $wisata->distance],
-                ['criteria_id' => $criteriaIds['C3'], 'value' => $wisata->facilities_count],
-                ['criteria_id' => $criteriaIds['C4'], 'value' => $wisata->actual_rating],
-            ];
+            // Wisata 4 (Gunung)
+            ['wisata_id' => 4, 'criteria_id' => 7, 'value' => 40000],
+            ['wisata_id' => 4, 'criteria_id' => 8, 'value' => 35],
+            ['wisata_id' => 4, 'criteria_id' => 9, 'value' => 70],
+            ['wisata_id' => 4, 'criteria_id' => 10, 'value' => 4.0],
 
-            foreach ($evaluations as $evaluation) {
-                Evaluation::updateOrCreate(
-                    [
-                        'wisata_id' => $wisata->id,
-                        'criteria_id' => $evaluation['criteria_id'],
-                    ],
-                    ['value' => $evaluation['value']]
-                );
-            }
+            // Wisata 5 (Air Terjun)
+            ['wisata_id' => 5, 'criteria_id' => 7, 'value' => 35000],
+            ['wisata_id' => 5, 'criteria_id' => 8, 'value' => 20],
+            ['wisata_id' => 5, 'criteria_id' => 9, 'value' => 90],
+            ['wisata_id' => 5, 'criteria_id' => 10, 'value' => 4.8],
+        ];
+
+        foreach ($evaluations as $evaluation) {
+            Evaluation::create($evaluation);
         }
     }
 }

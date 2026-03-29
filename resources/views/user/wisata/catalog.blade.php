@@ -11,7 +11,7 @@
                     placeholder="Cari wisata..."
                     class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
                 />
-                <select id="categoryFilter" class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <select id="categoryFilter" class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
                     <option value="">Semua Kategori</option>
                     @foreach ($categories as $category)
                         <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -28,7 +28,7 @@
                 ['label' => 'Wisata', 'url' => null]
             ]" />
 
-            {{-- <!-- Info Box -->
+            <!-- Info Box -->
             <div class="mb-8 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900 dark:to-indigo-900 border-l-4 border-blue-500 p-6 rounded-lg">
                 <div class="flex items-start gap-4">
                     <div class="pt-1">
@@ -37,7 +37,7 @@
                         <p class="text-xs text-gray-600 dark:text-gray-400">Klik salah satu wisata untuk melihat detail lengkap dan analisis SAW</p>
                     </div>
                 </div>
-            </div> --}}
+            </div>
 
             <!-- Stats Cards -->
             {{-- <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">

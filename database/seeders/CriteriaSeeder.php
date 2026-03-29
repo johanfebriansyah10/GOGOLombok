@@ -40,10 +40,7 @@ class CriteriaSeeder extends Seeder
         ];
 
         foreach ($criterias as $criteria) {
-            Criteria::updateOrCreate(
-                ['code' => $criteria['code']],
-                $criteria
-            );
+            Criteria::create($criteria);
         }
     }
 }
