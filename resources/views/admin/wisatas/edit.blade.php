@@ -235,10 +235,10 @@
                                 type="file"
                                 id="image"
                                 name="image"
-                                accept="image/*"
+                                accept=".jpg,.jpeg,.png,.gif,.bmp,.webp,.avif,image/*"
                                 class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                             >
-                            <p class="text-gray-500 text-xs mt-2">Max 2MB. Format: JPG, PNG, GIF (Biarkan kosong jika tidak ingin mengubah foto)</p>
+                            <p class="text-gray-500 text-xs mt-2">Maksimal ukuran gambar 2MB. Format yang didukung: JPG, JPEG, PNG, GIF, BMP, WebP, AVIF. Biarkan kosong jika tidak ingin mengubah foto.</p>
                             @error('image')
                                 <span class="text-red-600 text-sm mt-1 block">{{ $message }}</span>
                             @enderror

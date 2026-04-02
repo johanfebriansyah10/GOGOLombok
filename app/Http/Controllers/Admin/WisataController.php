@@ -33,21 +33,10 @@ class WisataController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'category_id' => 'required|exists:categories,id',
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'location' => 'required|string|max:255',
-            'address' => 'nullable|string',
-            'latitude' => 'nullable|numeric|between:-90,90',
-            'longitude' => 'nullable|numeric|between:-180,180',
-            'rating' => 'required|integer|between:1,5',
-            'ticket_price' => 'required|numeric|min:0',
-            'distance' => 'required|numeric|min:0',
-            'facilities_count' => 'required|integer|min:0',
-            'actual_rating' => 'required|numeric|between:0,5',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
+        $validated = $request->validate(
+            $this->wisataValidationRules(),
+            $this->wisataValidationMessages(),
+        );
 
         // Handle image upload
         if ($request->hasFile('image')) {
@@ -74,21 +63,10 @@ class WisataController extends Controller
      */
     public function update(Request $request, Wisata $wisata)
     {
-        $validated = $request->validate([
-            'category_id' => 'required|exists:categories,id',
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'location' => 'required|string|max:255',
-            'address' => 'nullable|string',
-            'latitude' => 'nullable|numeric|between:-90,90',
-            'longitude' => 'nullable|numeric|between:-180,180',
-            'rating' => 'required|integer|between:1,5',
-            'ticket_price' => 'required|numeric|min:0',
-            'distance' => 'required|numeric|min:0',
-            'facilities_count' => 'required|integer|min:0',
-            'actual_rating' => 'required|numeric|between:0,5',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
+        $validated = $request->validate(
+            $this->wisataValidationRules(),
+            $this->wisataValidationMessages(),
+        );
 
         // Handle image upload
         if ($request->hasFile('image')) {
@@ -118,5 +96,32 @@ class WisataController extends Controller
         $wisata->delete();
 
         return redirect()->route('admin.wisatas.index')->with('success', 'Wisata berhasil dihapus');
+    }
+
+    private function wisataValidationRules(): array
+    {
+        return [
+            'category_id' => 'required|exists:categories,id',
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'location' => 'required|string|max:255',
+            'address' => 'nullable|string',
+            'latitude' => 'nullable|numeric|between:-90,90',
+            'longitude' => 'nullable|numeric|between:-180,180',
+            'rating' => 'required|integer|between:1,5',
+            'ticket_price' => 'required|numeric|min:0',
+            'distance' => 'required|numeric|min:0',
+            'facilities_count' => 'required|integer|min:0',
+            'actual_rating' => 'required|numeric|between:0,5',
+            'image' => 'nullable|file|mimes:jpg,jpeg,png,gif,bmp,webp,avif|max:2048',
+        ];
+    }
+
+    private function wisataValidationMessages(): array
+    {
+        return [
+            'image.mimes' => 'Format gambar harus JPG, JPEG, PNG, GIF, BMP, WebP, atau AVIF.',
+            'image.max' => 'Maksimal ukuran gambar 2MB.',
+        ];
     }
 }

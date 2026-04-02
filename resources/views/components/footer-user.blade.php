@@ -26,8 +26,8 @@
             <div>
                 <h4 class="text-lg font-semibold mb-4">Kontak</h4>
                 <p class="text-gray-300 text-sm">
-                    Email: info@golombok.com<br>
-                    Telepon: +62 123 456 789
+                    Email: johanfebriansyah2022@gmail.com<br>
+                    Telepon: +62 8597 4190 621
                 </p>
             </div>
         </div>

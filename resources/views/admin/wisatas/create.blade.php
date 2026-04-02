@@ -47,7 +47,7 @@
                             @enderror
                         </div>
 
-                        {{-- <div class="mb-6">
+                        <div class="mb-6">
                             <label for="description" class="block text-sm font-medium mb-2">Deskripsi</label>
                             <textarea
                                 id="description"
@@ -58,7 +58,7 @@
                             @error('description')
                                 <span class="text-red-600 text-sm mt-1 block">{{ $message }}</span>
                             @enderror
-                        </div> --}}
+                        </div>
 
                         <div class="grid gap-6 mb-6">
                             <div>
@@ -68,7 +68,7 @@
                                     id="location"
                                     name="location"
                                     value="{{ old('location') }}"
-                                    class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     required
                                 >
                                 @error('location')
@@ -76,7 +76,7 @@
                                 @enderror
                             </div>
 
-                            {{-- <div>
+                            <div>
                                 <label for="rating" class="block text-sm font-medium mb-2">Rating (1-5)</label>
                                 <select
                                     id="rating"
@@ -94,7 +94,7 @@
                                 @error('rating')
                                     <span class="text-red-600 text-sm mt-1 block">{{ $message }}</span>
                                 @enderror
-                            </div> --}}
+                            </div>
                         </div>
 
                         <div class="mb-6">
@@ -192,7 +192,7 @@
                                         step="1"
                                         min="0"
                                         value="{{ old('facilities_count') }}"
-                                        placeholder="Contoh: 12 (restoran, toilet, parkir, dll)"
+                                        placeholder="Contoh: 3"
                                         class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                                         required
                                     >
@@ -228,10 +228,10 @@
                                 type="file"
                                 id="image"
                                 name="image"
-                                accept="image/*"
+                                accept=".jpg,.jpeg,.png,.gif,.bmp,.webp,.avif,image/*"
                                 class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                             >
-                            <p class="text-gray-500 text-xs mt-2">Max 2MB. Format: JPG, PNG, GIF</p>
+                            <p class="text-gray-500 text-xs mt-2">Maksimal ukuran gambar 2MB. Format yang didukung: JPG, JPEG, PNG, GIF, BMP, WebP, AVIF.</p>
                             @error('image')
                                 <span class="text-red-600 text-sm mt-1 block">{{ $message }}</span>
                             @enderror

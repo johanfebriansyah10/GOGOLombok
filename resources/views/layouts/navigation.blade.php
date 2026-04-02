@@ -24,7 +24,7 @@
                         Kriteria
                     </a>
                     <a href="{{ route('admin.users.index') }}" class="px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('admin.users.*') ? 'text-gray-100 border-b-2 border-gray-100 hover:border-blue-300': 'text-gray-100 hover:border-blue-300 hover:border-b-2 border-b-2 border-transparent' }} transition">
-                        Users
+                        Pengguna
                     </a>
                     {{-- <a href="{{ route('admin.evaluations.index') }}" class="px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('admin.evaluations.*') ? 'text-gray-100 border-b-2 border-gray-100 hover:border-blue-300': 'text-gray-100 hover:border-blue-300 hover:border-b-2 border-b-2 border-transparent' }} transition">
                         Evaluasi
@@ -67,10 +67,7 @@
 
                         <x-slot name="content">
                             <x-dropdown-link :href="route('profile.edit')">
-                                {{ __('Profile Settings') }}
-                            </x-dropdown-link>
-                            <x-dropdown-link :href="route('dashboard')">
-                                {{ __('Dashboard') }}
+                                {{ __('Profile') }}
                             </x-dropdown-link>
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
@@ -130,9 +127,9 @@
                     <a href="{{ route('saw.results.index') }}" class="block px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('saw.results.*') ? 'text-gray-500 border-b-2 border-blue-300': 'text-gray-700 hover:text-blue-600 hover:bg-gray-50' }} transition">
                         Ranking
                     </a>
-                    <a href="{{ route('saw.results.analysis') }}" class="block px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('saw.results.analysis') ? 'text-gray-500 border-b-2 border-blue-300': 'text-gray-700 hover:text-blue-600 hover:bg-gray-50' }} transition">
+                    {{-- <a href="{{ route('saw.results.analysis') }}" class="block px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('saw.results.analysis') ? 'text-gray-500 border-b-2 border-blue-300': 'text-gray-700 hover:text-blue-600 hover:bg-gray-50' }} transition">
                         Analisis
-                    </a>
+                    </a> --}}
                 @endif
             </div>
 
@@ -144,7 +141,7 @@
                 </div>
                 <div class="px-2 space-y-1">
                     <a href="{{ route('profile.edit') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100 transition">
-                        {{ __('Profile Settings') }}
+                        {{ __('Profile') }}
                     </a>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf

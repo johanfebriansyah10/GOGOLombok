@@ -2,9 +2,9 @@
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                {{ __('Katalog Wisata') }}
+                {{ __('Daftar Wisata') }}
             </h2>
-            <div class="flex gap-2">
+            {{-- <div class="flex gap-2">
                 <input
                     type="text"
                     id="searchInput"
@@ -17,7 +17,7 @@
                         <option value="{{ $category->id }}">{{ $category->name }}</option>
                     @endforeach
                 </select>
-            </div>
+            </div> --}}
         </div>
     </x-slot>
 
@@ -25,7 +25,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <!-- Breadcrumbs -->
             <x-breadcrumbs :breadcrumbs="[
-                ['label' => 'Wisata', 'url' => null]
+                ['label' => 'Daftar Wisata', 'url' => null]
             ]" />
 
             {{-- <!-- Info Box -->
