@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Wisata;
 use App\Models\Criteria;
-use App\Models\Evaluation;
 use App\Services\SAWCalculator;
-use Illuminate\Http\Request;
 
 class SAWResultController extends Controller
 {
@@ -21,6 +19,16 @@ class SAWResultController extends Controller
             if (isset($result['error'])) {
                 return view('saw.results.index', [
                     'error' => $result['error'],
+                    'message' => null,
+                    'ranking' => collect(),
+                    'criterias' => Criteria::with('weight')->get(),
+                ]);
+            }
+
+            if (isset($result['message'])) {
+                return view('saw.results.index', [
+                    'message' => $result['message'],
+                    'error' => null,
                     'ranking' => collect(),
                     'criterias' => Criteria::with('weight')->get(),
                 ]);
@@ -31,10 +39,13 @@ class SAWResultController extends Controller
                 'scores' => $result['scores'],
                 'criterias' => Criteria::with('weight')->get(),
                 'normalizedMatrix' => $result['normalized_matrix'],
+                'error' => null,
+                'message' => null,
             ]);
         } catch (\Exception $e) {
             return view('saw.results.index', [
                 'error' => $e->getMessage(),
+                'message' => null,
                 'ranking' => collect(),
                 'criterias' => Criteria::with('weight')->get(),
             ]);
@@ -51,6 +62,10 @@ class SAWResultController extends Controller
 
             if (isset($result['error'])) {
                 return redirect()->route('saw.results.index')->with('error', $result['error']);
+            }
+
+            if (isset($result['message'])) {
+                return redirect()->route('saw.results.index')->with('message', $result['message']);
             }
 
             $wisata = Wisata::find($wisataId);
@@ -87,6 +102,19 @@ class SAWResultController extends Controller
             if (isset($result['error'])) {
                 return view('saw.results.analysis', [
                     'error' => $result['error'],
+                    'message' => null,
+                    'decisionMatrix' => collect(),
+                    'normalizedMatrix' => collect(),
+                    'scores' => collect(),
+                    'ranking' => collect(),
+                    'criterias' => Criteria::with('weight')->get(),
+                ]);
+            }
+
+            if (isset($result['message'])) {
+                return view('saw.results.analysis', [
+                    'error' => null,
+                    'message' => $result['message'],
                     'decisionMatrix' => collect(),
                     'normalizedMatrix' => collect(),
                     'scores' => collect(),
@@ -96,6 +124,8 @@ class SAWResultController extends Controller
             }
 
             return view('saw.results.analysis', [
+                'error' => null,
+                'message' => null,
                 'decisionMatrix' => $result['decision_matrix'],
                 'normalizedMatrix' => $result['normalized_matrix'],
                 'scores' => collect($result['scores'])->keyBy('wisata_id'),
@@ -105,6 +135,7 @@ class SAWResultController extends Controller
         } catch (\Exception $e) {
             return view('saw.results.analysis', [
                 'error' => $e->getMessage(),
+                'message' => null,
                 'decisionMatrix' => collect(),
                 'normalizedMatrix' => collect(),
                 'scores' => collect(),

@@ -6,7 +6,6 @@ use App\Models\Wisata;
 use App\Models\Criteria;
 use App\Models\Evaluation;
 use App\Models\Weight;
-use Illuminate\Support\Collection;
 
 class SAWCalculator
 {
@@ -41,7 +40,13 @@ class SAWCalculator
         // 4. Ambil semua evaluasi
         $evaluations = Evaluation::all();
         if ($evaluations->isEmpty()) {
-            throw new \Exception('Belum ada evaluasi untuk wisata');
+            return [
+                'decision_matrix' => [],
+                'normalized_matrix' => [],
+                'scores' => collect(),
+                'ranking' => collect(),
+                'message' => 'Belum ada evaluasi untuk wisata',
+            ];
         }
 
         // 5. Buat decision matrix (wisata × kriteria)

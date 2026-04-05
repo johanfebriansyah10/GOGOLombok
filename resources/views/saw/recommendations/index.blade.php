@@ -158,7 +158,7 @@
             </div> --}}
 
             <!-- Results Section -->
-            @if ($hasFilters || (isset($result) && isset($result['error'])))
+            @if ($hasFilters || (isset($result) && (isset($result['error']) || isset($result['message']))))
                 @if (isset($result['error']))
                     <!-- Error Message -->
                     <div class="mb-4 bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded-lg flex items-start gap-3">
@@ -167,6 +167,14 @@
                             <p class="font-semibold">Tidak ada hasil yang sesuai</p>
                             <p class="text-sm">{{ $result['error'] }}</p>
                             <p class="text-xs mt-2 text-yellow-600">Silakan coba ubah preferensi filter Anda</p>
+                        </div>
+                    </div>
+                @elseif (isset($result['message']))
+                    <div class="mb-4 bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded-lg flex items-start gap-3">
+                        <span class="text-xl">⚠️</span>
+                        <div>
+                            <p class="font-semibold">Informasi</p>
+                            <p class="text-sm">{{ $result['message'] }}</p>
                         </div>
                     </div>
                 @else

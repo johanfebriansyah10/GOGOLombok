@@ -17,11 +17,21 @@
                 ['label' => '📈 Hasil Rekomendasi', 'url' => null]
             ]" />
 
+            @if (session('message'))
+                <div class="mb-4 bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded">
+                    <strong>Info:</strong> {{ session('message') }}
+                </div>
+            @elseif (isset($message))
+                <div class="mb-4 bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded">
+                    <strong>Info:</strong> {{ $message }}
+                </div>
+            @endif
+
             @if (isset($error))
                 <div class="mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
                     <strong>Error:</strong> {{ $error }}
                 </div>
-            @else
+            @elseif (!isset($message))
                 <!-- Kriteria & Bobot Summary -->
                 <div class="mb-6 bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6">

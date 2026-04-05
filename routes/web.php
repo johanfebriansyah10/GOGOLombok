@@ -1,8 +1,16 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\CriteriaController;
+use App\Http\Controllers\Admin\EvaluationController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\WisataController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RecommendationController;
+use App\Http\Controllers\SAWResultController;
+use App\Http\Controllers\WisataController as UserWisataController;
 use Illuminate\Support\Facades\Route;
 
 // User Dashboard - only for users
@@ -12,38 +20,38 @@ Route::middleware(['auth', 'verified', 'role:user'])->group(function () {
 
 // Wisata Catalog & Details - accessible to all authenticated users
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/wisata', [\App\Http\Controllers\WisataController::class, 'catalog'])->name('wisata.catalog');
-    Route::get('/wisata/{id}', [\App\Http\Controllers\WisataController::class, 'show'])->name('wisata.show');
+    Route::get('/wisata', [UserWisataController::class, 'catalog'])->name('wisata.catalog');
+    Route::get('/wisata/{id}', [UserWisataController::class, 'show'])->name('wisata.show');
 });
 
 // SAW Results - accessible to all authenticated users
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/saw/recommendations', [\App\Http\Controllers\RecommendationController::class, 'index'])->name('saw.recommendations.index');
-    Route::get('/saw/recommendations/reset', [\App\Http\Controllers\RecommendationController::class, 'reset'])->name('saw.recommendations.reset');
-    Route::get('/saw/results', [\App\Http\Controllers\SAWResultController::class, 'index'])->name('saw.results.index');
-    Route::get('/saw/results/analysis/transparent', [\App\Http\Controllers\SAWResultController::class, 'analysis'])->name('saw.results.analysis');
-    Route::get('/saw/results/{wisataId}', [\App\Http\Controllers\SAWResultController::class, 'detail'])->name('saw.results.detail');
+    Route::get('/saw/recommendations', [RecommendationController::class, 'index'])->name('saw.recommendations.index');
+    Route::get('/saw/recommendations/reset', [RecommendationController::class, 'reset'])->name('saw.recommendations.reset');
+    Route::get('/saw/results', [SAWResultController::class, 'index'])->name('saw.results.index');
+    Route::get('/saw/results/analysis/transparent', [SAWResultController::class, 'analysis'])->name('saw.results.analysis');
+    Route::get('/saw/results/{wisataId}', [SAWResultController::class, 'detail'])->name('saw.results.detail');
 });
 
 // Admin Dashboard - only for admins
 Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'show'])->name('dashboard');
-    Route::resource('categories', \App\Http\Controllers\Admin\CategoryController::class);
-    Route::resource('wisatas', \App\Http\Controllers\Admin\WisataController::class);
+    Route::resource('categories', CategoryController::class);
+    Route::resource('wisatas', WisataController::class);
 
     // Criteria & Weight (Combined)
-    Route::resource('criterias', \App\Http\Controllers\Admin\CriteriaController::class);
-    Route::get('/criterias-weight/create-weight', [\App\Http\Controllers\Admin\CriteriaController::class, 'createWeight'])->name('criterias.create-weight');
-    Route::post('/criterias-weight/store-weight', [\App\Http\Controllers\Admin\CriteriaController::class, 'storeWeight'])->name('criterias.store-weight');
-    Route::get('/criterias-weight/{weight}/edit-weight', [\App\Http\Controllers\Admin\CriteriaController::class, 'editWeight'])->name('criterias.edit-weight');
-    Route::patch('/criterias-weight/{weight}/update-weight', [\App\Http\Controllers\Admin\CriteriaController::class, 'updateWeight'])->name('criterias.update-weight');
-    Route::delete('/criterias-weight/{weight}/destroy-weight', [\App\Http\Controllers\Admin\CriteriaController::class, 'destroyWeight'])->name('criterias.destroy-weight');
+    Route::resource('criterias', CriteriaController::class);
+    Route::get('/criterias-weight/create-weight', [CriteriaController::class, 'createWeight'])->name('criterias.create-weight');
+    Route::post('/criterias-weight/store-weight', [CriteriaController::class, 'storeWeight'])->name('criterias.store-weight');
+    Route::get('/criterias-weight/{weight}/edit-weight', [CriteriaController::class, 'editWeight'])->name('criterias.edit-weight');
+    Route::patch('/criterias-weight/{weight}/update-weight', [CriteriaController::class, 'updateWeight'])->name('criterias.update-weight');
+    Route::delete('/criterias-weight/{weight}/destroy-weight', [CriteriaController::class, 'destroyWeight'])->name('criterias.destroy-weight');
 
-    Route::resource('users', \App\Http\Controllers\Admin\UserController::class);
-    Route::get('/evaluations', [\App\Http\Controllers\Admin\EvaluationController::class, 'index'])->name('evaluations.index');
-    Route::post('/evaluations', [\App\Http\Controllers\Admin\EvaluationController::class, 'store'])->name('evaluations.store');
-    Route::delete('/evaluations/{evaluation}', [\App\Http\Controllers\Admin\EvaluationController::class, 'destroy'])->name('evaluations.destroy');
-    Route::post('/evaluations/import', [\App\Http\Controllers\Admin\EvaluationController::class, 'import'])->name('evaluations.import');
+    Route::resource('users', UserController::class);
+    Route::get('/evaluations', [EvaluationController::class, 'index'])->name('evaluations.index');
+    Route::post('/evaluations', [EvaluationController::class, 'store'])->name('evaluations.store');
+    Route::delete('/evaluations/{evaluation}', [EvaluationController::class, 'destroy'])->name('evaluations.destroy');
+    Route::post('/evaluations/import', [EvaluationController::class, 'import'])->name('evaluations.import');
 });
 
 // Profile routes - for all authenticated users

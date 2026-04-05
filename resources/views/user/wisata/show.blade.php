@@ -71,9 +71,11 @@
                             <p class="text-gray-700 dark:text-gray-300 text-lg mb-2"><strong>{{ $wisata->location }}</strong></p>
                             <p class="text-gray-600 dark:text-gray-400 text-sm">{{ $wisata->address }}</p>
                             @if ($wisata->latitude && $wisata->longitude)
-                                <p class="text-xs text-gray-500 dark:text-gray-500 mt-2">
-                                    📌 Koordinat: {{ $wisata->latitude }}, {{ $wisata->longitude }}
-                                </p>
+                                <!-- Map Section -->
+                                <div class="mt-4">
+                                    <h4 class="font-semibold text-gray-900 dark:text-gray-100 mb-2">Peta Lokasi</h4>
+                                    <div id="map" style="height: 300px; width: 100%;" class="rounded-lg border border-gray-300 dark:border-gray-600"></div>
+                                </div>
                             @endif
                         </div>
 
@@ -165,5 +167,28 @@
                 alert('Link disalin ke clipboard!');
             });
         }
+    </script>
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <script>
+        @if($wisata->latitude && $wisata->longitude)
+            // Initialize map
+            var map = L.map('map').setView([{{ $wisata->latitude }}, {{ $wisata->longitude }}], 15);
+
+            // Add OpenStreetMap tiles
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+
+            // Add marker
+            L.marker([{{ $wisata->latitude }}, {{ $wisata->longitude }}]).addTo(map)
+                .bindPopup('<b>{{ addslashes($wisata->name) }}</b><br>{{ addslashes($wisata->location) }}')
+                .openPopup();
+        @endif
     </script>
 </x-app-layout>
