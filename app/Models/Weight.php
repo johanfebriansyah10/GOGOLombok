@@ -17,29 +17,17 @@ class Weight extends Model
     protected $casts = [
         'weight' => 'decimal:4',
     ];
-
-    /**
-     * Get the criteria this weight belongs to
-     */
     public function criteria()
     {
         return $this->belongsTo(Criteria::class);
     }
-
-    /**
-     * Get total weight of all weights
-     */
     public static function totalWeight()
     {
         return self::sum('weight');
     }
-
-    /**
-     * Check if total weight equals 1
-     */
     public static function isWeightValid()
     {
         $total = self::totalWeight();
-        return $total >= 0.99 && $total <= 1.01; // Allow small floating point differences
+        return $total >= 0.99 && $total <= 1.01;
     }
 }

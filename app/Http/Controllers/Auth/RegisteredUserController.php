@@ -43,8 +43,8 @@ class RegisteredUserController extends Controller
 
         event(new Registered($user));
 
-        Auth::logout();
+        Auth::login($user);
 
-        return redirect()->route('verification.notice')->with('success', 'Pendaftaran berhasil! Silakan cek email untuk verifikasi sebelum login.');
+        return redirect()->route('dashboard')->with('success', 'Pendaftaran berhasil! Silakan login.');
     }
 }

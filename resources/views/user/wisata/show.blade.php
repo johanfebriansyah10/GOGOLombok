@@ -23,7 +23,7 @@
                 <!-- Left Side: Image & Info -->
                 <div class="lg:col-span-2">
                     <!-- Image Gallery -->
-                    <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-lg rounded-lg mb-6">
+                    <div class="bg-white overflow-hidden shadow-lg rounded-lg mb-6">
                         <div class="relative bg-gray-200 dark:bg-gray-700 overflow-hidden" style="aspect-ratio: 16/9;">
                             @if ($wisata->image_url)
                                 <img
@@ -135,7 +135,7 @@
                                             <img
                                                 src="{{ $item->image_url }}"
                                                 alt="{{ $item->name }}"
-                                                class="w-full h-full object-cover group-hover:scale-110 transition-transform"
+                                                class="w-full h-full object-cover transition-transform"
                                             />
                                         @else
                                             <div class="w-full h-full flex items-center justify-center text-gray-400">
@@ -146,7 +146,7 @@
 
                                     <!-- Info -->
                                     <div class="p-4">
-                                        <h3 class="font-bold text-sm text-gray-900 dark:text-gray-100 line-clamp-2 group-hover:text-blue-600 dark:group-hover:text-blue-400">
+                                        <h3 class="font-bold text-sm text-gray-900 dark:text-gray-100 line-clamp-2">
                                             {{ $item->name }}
                                         </h3>
                                         <p class="text-xs text-gray-600 dark:text-gray-400 mt-1">⭐ {{ number_format($item->actual_rating ?? 0, 1) }}/5</p>

@@ -27,7 +27,7 @@
                                 type="number"
                                 id="weight"
                                 name="weight"
-                                value="{{ old('weight', $weight->weight) }}"
+                                value="{{ old('weight', (float)$weight->weight + 0) }}"
                                 step="0.0001"
                                 min="0"
                                 max="1"

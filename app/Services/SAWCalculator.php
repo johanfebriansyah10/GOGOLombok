@@ -9,9 +9,6 @@ use App\Models\Weight;
 
 class SAWCalculator
 {
-    /**
-     * Calculate SAW (Simple Additive Weighting) score with optional filters
-     */
     public static function calculate($filters = null)
     {
         // 1. Validasi: Total bobot harus = 1
@@ -58,8 +55,11 @@ class SAWCalculator
         // 7. Hitung weighted score (Vi)
         $scores = self::calculateScores($normalizedMatrix, $criterias, $wisatas);
 
-        // 8. Sort by score (descending)
-        $ranking = $scores->sortByDesc('score')->values();
+        // 8. Sort by score (descending) and set rank values
+        $ranking = $scores->sortByDesc('score')->values()->map(function ($item, $index) {
+            $item['rank'] = $index + 1;
+            return $item;
+        });
 
         return [
             'decision_matrix' => $decisionMatrix,
@@ -242,9 +242,11 @@ class SAWCalculator
         try {
             $result = self::calculate($filters);
 
-            // Add ranking numbers
-            foreach ($result['ranking'] as $index => $item) {
-                $item['rank'] = $index + 1;
+            if (isset($result['ranking'])) {
+                $result['ranking'] = $result['ranking']->map(function ($item, $index) {
+                    $item['rank'] = $index + 1;
+                    return $item;
+                });
             }
 
             return $result;

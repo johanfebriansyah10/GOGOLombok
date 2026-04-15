@@ -64,7 +64,7 @@
                                                     <input
                                                         type="number"
                                                         step="0.01"
-                                                        value="{{ $row[$criteria->id] ?? '' }}"
+                                                        value="{{ ((float)($row[$criteria->id] ?? 0) + 0) === 0 ? '' : ((float)($row[$criteria->id] ?? 0) + 0) }}"
                                                         class="w-full px-2 py-1 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 rounded text-center focus:outline-none focus:ring-2 focus:ring-blue-500"
                                                         data-wisata-id="{{ $row['wisata_id'] }}"
                                                         data-criteria-id="{{ $criteria->id }}"

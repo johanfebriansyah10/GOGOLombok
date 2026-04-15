@@ -58,9 +58,6 @@ class WisataController extends Controller
         return view('admin.wisatas.edit', compact('wisata', 'categories'));
     }
 
-    /**
-     * Update the specified wisata in storage.
-     */
     public function update(Request $request, Wisata $wisata)
     {
         $validated = $request->validate(
@@ -68,9 +65,7 @@ class WisataController extends Controller
             $this->wisataValidationMessages(),
         );
 
-        // Handle image upload
         if ($request->hasFile('image')) {
-            // Delete old image if exists
             if ($wisata->image && Storage::disk('public')->exists($wisata->image)) {
                 Storage::disk('public')->delete($wisata->image);
             }

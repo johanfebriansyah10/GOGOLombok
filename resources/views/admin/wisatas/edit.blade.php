@@ -156,7 +156,7 @@
                                         name="ticket_price"
                                         step="1000"
                                         min="0"
-                                        value="{{ old('ticket_price', $wisata->ticket_price) }}"
+                                        value="{{ old('ticket_price', intval($wisata->ticket_price)) }}"
                                         placeholder="Contoh: 150000"
                                         class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                                         required
@@ -174,7 +174,7 @@
                                         name="distance"
                                         step="0.1"
                                         min="0"
-                                        value="{{ old('distance', $wisata->distance) }}"
+                                        value="{{ old('distance', (float)$wisata->distance + 0) }}"
                                         placeholder="Contoh: 25.5"
                                         class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                                         required
@@ -192,7 +192,7 @@
                                         name="facilities_count"
                                         step="1"
                                         min="0"
-                                        value="{{ old('facilities_count', $wisata->facilities_count) }}"
+                                        value="{{ old('facilities_count', intval($wisata->facilities_count)) }}"
                                         placeholder="Contoh: 12 (restoran, toilet, parkir, dll)"
                                         class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                                         required

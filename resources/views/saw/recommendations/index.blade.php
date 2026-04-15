@@ -4,14 +4,6 @@
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                 {{ __('Rekomendasi Wisata SAW') }}
             </h2>
-            <div class="flex gap-2">
-                <a href="{{ route('saw.results.analysis') }}" class="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-4 rounded flex items-center gap-2 text-sm">
-                    📊 Analisis Transparan
-                </a>
-                <a href="{{ route('saw.results.index') }}" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded flex items-center gap-2 text-sm">
-                    📈 Ranking SAW
-                </a>
-            </div>
         </div>
     </x-slot>
 
@@ -56,7 +48,7 @@
                                         min="0"
                                     />
                                 </div>
-                                <p class="text-xs text-gray-600 dark:text-gray-400 mt-1">Cari wisata dengan harga tiket ≤ nilai ini</p>
+                                <p class="text-xs text-gray-600 dark:text-gray-400 mt-1">Cari wisata dengan harga tiket lebih murah dari nilai di atas</p>
                             </div>
 
                             <!-- Jarak Maksimal -->
@@ -77,7 +69,7 @@
                                     />
                                     <span class="absolute right-3 top-3 text-gray-600 dark:text-gray-400">km</span>
                                 </div>
-                                <p class="text-xs text-gray-600 dark:text-gray-400 mt-1">Cari wisata dalam jarak ≤ nilai ini dari pusat kota</p>
+                                <p class="text-xs text-gray-600 dark:text-gray-400 mt-1">Cari wisata dalam jarak kurang dari nilai di #1atas dari pusat kota</p>
                             </div>
 
                             <!-- Fasilitas Minimal -->
@@ -97,7 +89,7 @@
                                         min="0"
                                     />
                                 </div>
-                                <p class="text-xs text-gray-600 dark:text-gray-400 mt-1">Minimal restoran, toilet, parkir, dll</p>
+                                <p class="text-xs text-gray-600 dark:text-gray-400 mt-1">Minimal ada toilet, parkir, dll</p>
                             </div>
 
                             <!-- Rating Minimal -->
@@ -136,26 +128,6 @@
                 </div>
             </div>
 
-            <!-- Kriteria & Bobot Summary -->
-            {{-- <div class="mb-6 bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6">
-                    <h3 class="text-lg font-semibold mb-4 text-gray-900 dark:text-gray-100">📊 Kriteria & Bobot Perhitungan</h3>
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        @foreach ($criterias as $criteria)
-                            <div class="bg-gradient-to-br {{ $criteria->type === 'benefit' ? 'from-green-50 to-green-100' : 'from-red-50 to-red-100' }} dark:from-gray-700 dark:to-gray-600 p-4 rounded-lg border {{ $criteria->type === 'benefit' ? 'border-green-300' : 'border-red-300' }}">
-                                <p class="text-xs text-gray-600 dark:text-gray-300 font-semibold uppercase">{{ $criteria->code }}</p>
-                                <p class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">{{ $criteria->weight->weight ?? 'N/A' }}</p>
-                                <p class="text-sm text-gray-700 dark:text-gray-300 font-medium mb-2">{{ $criteria->name }}</p>
-                                <div class="flex gap-1">
-                                    <span class="inline-block text-xs px-2 py-1 rounded font-semibold {{ $criteria->type === 'benefit' ? 'bg-green-200 text-green-800' : 'bg-red-200 text-red-800' }}">
-                                        {{ $criteria->type === 'benefit' ? '✓ Benefit' : '↓ Cost' }}
-                                    </span>
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-            </div> --}}
 
             <!-- Results Section -->
             @if ($hasFilters || (isset($result) && (isset($result['error']) || isset($result['message']))))
@@ -188,11 +160,6 @@
                                         {{ $result['ranking']->count() }} wisata
                                     </span>
                                 </h3>
-                                @if ($hasFilters)
-                                    <p class="text-sm text-gray-600 dark:text-gray-400 mt-2">
-                                        Sistem telah memfilter wisata berdasarkan preferensi Anda, kemudian menghitung skor SAW untuk rangkuman hasil
-                                    </p>
-                                @endif
                             </div>
 
                             @if ($result['ranking']->isEmpty())
@@ -213,8 +180,6 @@
                                                 <th class="px-4 py-3 font-semibold text-gray-900 dark:text-gray-100">Jarak</th>
                                                 <th class="px-4 py-3 font-semibold text-gray-900 dark:text-gray-100">Fasilitas</th>
                                                 <th class="px-4 py-3 font-semibold text-gray-900 dark:text-gray-100">Rating</th>
-                                                <th class="px-4 py-3 font-semibold text-gray-900 dark:text-gray-100">Skor SAW</th>
-                                                <th class="px-4 py-3 font-semibold text-gray-900 dark:text-gray-100 text-center">Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
@@ -251,20 +216,20 @@
                                                         </span>
                                                     </td>
                                                     <td class="px-4 py-3">
-                                                        <span class="text-gray-900 dark:text-gray-100">{{ $wisata->distance ?? 0 }} km</span>
+                                                        <span class="text-gray-900 dark:text-gray-100">{{ number_format($wisata->distance ?? 0, 1) }} km</span>
                                                     </td>
                                                     <td class="px-4 py-3">
                                                         <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium {{ $wisata->facilities_count >= 10 ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' : ($wisata->facilities_count >= 5 ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200' : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200') }}">
-                                                            🏢 {{ $wisata->facilities_count }}
+                                                            🏢 {{ intval($wisata->facilities_count ?? 0) }}
                                                         </span>
                                                     </td>
                                                     <td class="px-4 py-3">
                                                         <div class="flex items-center gap-1">
                                                             <span class="text-yellow-400">⭐</span>
-                                                            <span class="text-gray-900 dark:text-gray-100 font-medium">{{ $wisata->actual_rating ?? 0 }}/5</span>
+                                                            <span class="text-gray-900 dark:text-gray-100 font-medium">{{ number_format($wisata->actual_rating ?? 0, 1) }}/5</span>
                                                         </div>
                                                     </td>
-                                                    <td class="px-4 py-3">
+                                                    {{-- <td class="px-4 py-3">
                                                         <div class="flex flex-col">
                                                             <span class="text-lg font-bold text-blue-600 dark:text-blue-400">
                                                                 {{ number_format($item['score'], 4) }}
@@ -281,7 +246,7 @@
                                                         <a href="{{ route('saw.results.detail', $item['wisata_id']) }}" class="inline-block px-3 py-2 bg-blue-500 text-white text-xs rounded-lg hover:bg-blue-600 transition">
                                                             Detail
                                                         </a>
-                                                    </td>
+                                                    </td> --}}
                                                 </tr>
                                             @endforeach
                                         </tbody>
@@ -320,19 +285,19 @@
                 @endif
             @else
                 <!-- Initial State - No Filter Applied -->
-                {{-- <div class="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-gray-800 dark:to-gray-700 border-2 border-dashed border-blue-300 dark:border-gray-600 rounded-lg p-12 text-center">
+                <div class="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-gray-800 dark:to-gray-700 border-2 border-dashed border-blue-300 dark:border-gray-600 rounded-lg p-12 text-center">
                     <div class="text-5xl mb-4">🎯</div>
-                    <h3 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">Mulai Cari Wisata Impian Anda</h3>
+                    <h3 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">Mulai Cari Wisata Tujuan Anda</h3>
                     <p class="text-gray-600 dark:text-gray-400 mb-4">
-                        Isi preferensi di atas dan klik "Cari Wisata" untuk mendapatkan rekomendasi yang dipersonalisasi
+                        Isi preferensi di atas dan klik "Cari Wisata" untuk mendapatkan rekomendasi sesuai kebutuhan anda
                     </p>
                     <div class="flex justify-center gap-4 text-sm text-gray-600 dark:text-gray-400">
                         <div>✅ Filter berdasarkan budget</div>
                         <div>📍 Sesuaikan jarak</div>
-                        <div>🏢 Tentukan fasilitas</div>
+                        <div>🏢 Tentukan berapa banyak fasilitas tersedia</div>
                         <div>⭐ Pilih rating minimal</div>
                     </div>
-                </div> --}}
+                </div>
             @endif
         </div>
     </div>

@@ -29,17 +29,17 @@
                     @else
                         <div class="overflow-x-auto">
                             <table class="w-full text-sm">
-                                <thead class="bg-gray-100 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-600">
+                                <thead class="bg-gray-100 border-b border-gray-200">
                                     <tr>
                                         <th class="px-4 py-34 font-semibold text-[16px] text-center">No</th>
                                         <th class="px-4 py-4 font-semibold text-[16px] text-center">Foto</th>
-                                        <th class="px-4 py-4 font-semibold text-[16px] text-center">Nama</th>
+                                        <th class="px-4 py-4 font-semibold text-[16px]">Nama</th>
                                         <th class="px-4 py-4 font-semibold text-[16px] text-center">Kategori</th>
                                         <th class="px-4 py-4 font-semibold text-[16px] text-center">Lokasi</th>
-                                        <th class="px-4 py-4 font-semibold text-[16px] text-center">💰 Harga</th>
-                                        <th class="px-4 py-4 font-semibold text-[16px] text-center">📍 Jarak (km)</th>
-                                        <th class="px-4 py-4 font-semibold text-[16px] text-center">🏢 Fasilitas</th>
-                                        <th class="px-4 py-4 font-semibold text-[16px] text-center">⭐ Rating</th>
+                                        <th class="px-4 py-4 font-semibold text-[16px] text-center">Harga</th>
+                                        <th class="px-4 py-4 font-semibold text-[16px] text-center">Jarak (km)</th>
+                                        <th class="px-4 py-4 font-semibold text-[16px] text-center">Fasilitas</th>
+                                        <th class="px-4 py-4 font-semibold text-[16px] text-center">Rating</th>
                                         <th class="px-4 py-4 font-semibold text-[16px] text-center">Aksi</th>
                                     </tr>
                                 </thead>
