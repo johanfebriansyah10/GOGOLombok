@@ -17,13 +17,13 @@ class RecommendationController extends Controller
         $filters = [
             'max_budget' => $request->input('max_budget'),
             'max_distance' => $request->input('max_distance'),
-            'min_facilities' => $request->input('min_facilities'),
+            'facilities' => $request->input('facilities', []),
             'min_rating' => $request->input('min_rating'),
         ];
 
         // Remove null/empty values
         $filters = array_filter($filters, function ($value) {
-            return !is_null($value) && $value !== '';
+            return !is_null($value) && (!is_array($value) || !empty($value));
         });
 
         $criterias = Criteria::with('weight')->get();

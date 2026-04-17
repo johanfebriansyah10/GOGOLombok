@@ -220,6 +220,39 @@
                                     @enderror
                                 </div>
                             </div>
+
+                            <div class="col-span-2">
+                                <label class="block text-sm font-medium mb-2">🏢 Fasilitas Tersedia</label>
+                                <div class="grid grid-cols-2 gap-2">
+                                    @php
+                                        $facilityOptions = ['toilet', 'musholla', 'parkir', 'spot_foto', 'restoran', 'wifi', 'guide'];
+                                        $facilityLabels = [
+                                            'toilet' => 'Toilet',
+                                            'musholla' => 'Musholla',
+                                            'parkir' => 'Parkir',
+                                            'spot_foto' => 'Spot Foto',
+                                            'restoran' => 'Restoran',
+                                            'wifi' => 'WiFi',
+                                            'guide' => 'Pemandu Wisata'
+                                        ];
+                                    @endphp
+                                    @foreach($facilityOptions as $facility)
+                                    <label class="flex items-center">
+                                        <input
+                                            type="checkbox"
+                                            name="facilities[]"
+                                            value="{{ $facility }}"
+                                            {{ in_array($facility, old('facilities', [])) ? 'checked' : '' }}
+                                            class="rounded border-gray-300 dark:border-gray-600 text-blue-600 focus:ring-blue-500 dark:bg-gray-700"
+                                        >
+                                        <span class="ml-2 text-sm">{{ $facilityLabels[$facility] }}</span>
+                                    </label>
+                                    @endforeach
+                                </div>
+                                @error('facilities')
+                                    <span class="text-red-600 text-sm mt-1 block">{{ $message }}</span>
+                                @enderror
+                            </div>
                         </div>
 
                         <div class="mb-6">

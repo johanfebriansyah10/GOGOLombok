@@ -13,25 +13,31 @@ use App\Http\Controllers\SAWResultController;
 use App\Http\Controllers\WisataController as UserWisataController;
 use Illuminate\Support\Facades\Route;
 
+// Public routes
+Route::get('/landing', fn() => view('landing'))->name('landing');
+Route::get('/', [DashboardController::class, 'show'])->name('dashboard');
+Route::get('/saw/recommendations', [RecommendationController::class, 'index'])->name('saw.recommendations.index');
+Route::get('/saw/recommendations/reset', [RecommendationController::class, 'reset'])->name('saw.recommendations.reset');
+Route::get('/saw/results', [SAWResultController::class, 'index'])->name('saw.results.index');
+Route::get('/saw/results/analysis/transparent', [SAWResultController::class, 'analysis'])->name('saw.results.analysis');
+Route::get('/saw/results/{wisataId}', [SAWResultController::class, 'detail'])->name('saw.results.detail');
+Route::get('/wisata', [UserWisataController::class, 'catalog'])->name('wisata.catalog');
+Route::get('/wisata/{id}', [UserWisataController::class, 'show'])->name('wisata.show');
+
 // User Dashboard - only for users
 Route::middleware(['auth', 'verified', 'role:user'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'show'])->name('dashboard');
 });
 
-// Wisata Catalog & Details - accessible to all authenticated users
-Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/wisata', [UserWisataController::class, 'catalog'])->name('wisata.catalog');
-    Route::get('/wisata/{id}', [UserWisataController::class, 'show'])->name('wisata.show');
-});
 
-// SAW Results - accessible to all authenticated users
-Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/saw/recommendations', [RecommendationController::class, 'index'])->name('saw.recommendations.index');
-    Route::get('/saw/recommendations/reset', [RecommendationController::class, 'reset'])->name('saw.recommendations.reset');
-    Route::get('/saw/results', [SAWResultController::class, 'index'])->name('saw.results.index');
-    Route::get('/saw/results/analysis/transparent', [SAWResultController::class, 'analysis'])->name('saw.results.analysis');
-    Route::get('/saw/results/{wisataId}', [SAWResultController::class, 'detail'])->name('saw.results.detail');
-});
+// SAW Results - duplicate, remove from auth group since now public
+// Route::middleware(['auth', 'verified'])->group(function () {
+//     Route::get('/saw/recommendations', [RecommendationController::class, 'index'])->name('saw.recommendations.index');
+//     Route::get('/saw/recommendations/reset', [RecommendationController::class, 'reset'])->name('saw.recommendations.reset');
+//     Route::get('/saw/results', [SAWResultController::class, 'index'])->name('saw.results.index');
+//     Route::get('/saw/results/analysis/transparent', [SAWResultController::class, 'analysis'])->name('saw.results.analysis');
+//     Route::get('/saw/results/{wisataId}', [SAWResultController::class, 'detail'])->name('saw.results.detail');
+// });
 
 // Admin Dashboard - only for admins
 Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {

@@ -16,6 +16,21 @@ export default {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
+            animation: {
+                fadeInUp: 'fadeInUp 0.8s ease forwards',
+            },
+            keyframes: {
+                fadeInUp: {
+                    from: {
+                        opacity: '0',
+                        transform: 'translateY(30px)',
+                    },
+                    to: {
+                        opacity: '1',
+                        transform: 'translateY(0)',
+                    },
+                },
+            },
         },
     },
 

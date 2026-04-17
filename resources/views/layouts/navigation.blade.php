@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="shadow-md border-b bg-gradient-to-br from-[#34C759] to-[#00C8B3] sticky top-0 z-50 sm:py-2">
+<nav x-data="{ open: false }" class="shadow-md border-b bg-gradient-to-br from-[#34C759] to-[#00C8B3] sticky top-0 z-50 sm:py-2 border-none">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-16">
             <!-- Logo -->
@@ -10,7 +10,7 @@
 
             <!-- Desktop Navigation (Centered) -->
             <div class="hidden md:flex items-center gap-4">
-                @if (Auth::user()->role === 'admin')
+                @if (Auth::check() && Auth::user()->role === 'admin')
                     <a href="{{ route('admin.dashboard') }}" class="px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('admin.dashboard') ? 'text-gray-100 border-b-2 border-gray-100 hover:border-blue-300': 'text-gray-100 hover:border-blue-300 hover:border-b-2 border-b-2 border-transparent' }} transition">
                         Dashboard
                     </a>
@@ -23,15 +23,16 @@
                     <a href="{{ route('admin.criterias.index') }}" class="px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('admin.criterias.*') ? 'text-gray-100 border-b-2 border-gray-100 hover:border-blue-300': 'text-gray-100 hover:border-blue-300 hover:border-b-2 border-b-2 border-transparent' }} transition">
                         Kriteria
                     </a>
-                    <a href="{{ route('admin.users.index') }}" class="px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('admin.users.*') ? 'text-gray-100 border-b-2 border-gray-100 hover:border-blue-300': 'text-gray-100 hover:border-blue-300 hover:border-b-2 border-b-2 border-transparent' }} transition">
-                        Pengguna
-                    </a>
                     <a href="{{ route('admin.evaluations.index') }}" class="px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('admin.evaluations.*') ? 'text-gray-100 border-b-2 border-gray-100 hover:border-blue-300': 'text-gray-100 hover:border-blue-300 hover:border-b-2 border-b-2 border-transparent' }} transition">
                         Evaluasi
                     </a>
+                    <a href="{{ route('admin.users.index') }}" class="px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('admin.users.*') ? 'text-gray-100 border-b-2 border-gray-100 hover:border-blue-300': 'text-gray-100 hover:border-blue-300 hover:border-b-2 border-b-2 border-transparent' }} transition">
+                        Admin
+                    </a>
                 @else
+                    <!-- Guest navigation -->
                     <a href="{{ route('dashboard') }}" class="px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('dashboard') ? 'text-gray-100 border-b-2 border-gray-100 hover:border-blue-300': 'text-gray-100 hover:border-blue-300 hover:border-b-2 border-b-2 border-transparent' }} transition">
-                        Home
+                        Beranda
                     </a>
                     <a href="{{ route('wisata.catalog') }}" class="px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('wisata.*') ? 'text-gray-100 border-b-2 border-gray-100 hover:border-blue-300': 'text-gray-100 hover:border-blue-300 hover:border-b-2 border-b-2 border-transparent' }} transition">
                         Wisata
@@ -42,14 +43,17 @@
                     <a href="{{ route('saw.results.index') }}" class="px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('saw.results.*') ? 'text-gray-100 border-b-2 border-gray-100 hover:border-blue-300': 'text-gray-100 hover:border-blue-300 hover:border-b-2 border-b-2 border-transparent' }} transition">
                         Ranking
                     </a>
-                    {{-- <a href="{{ route('saw.results.analysis') }}" class="px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('saw.results.analysis') ? 'text-gray-100 border-b-2 border-gray-100 hover:border-blue-300': 'text-gray-100 hover:border-blue-300 hover:border-b-2 border-b-2 border-transparent' }} transition">
-                        Analisis
-                    </a> --}}
+
+                    {{-- button login  di kanan --}}
+                    <a href="{{ route('login') }}" class="ml-4 px-3 py-2 rounded-md text-md font-medium text-gray-100 hover:text-gray-300 transition">
+                        Login
+                    </a>
                 @endif
             </div>
 
             <!-- Right Side: User Menu & Hamburger -->
             <div class="flex items-center gap-4">
+                @if(Auth::check())
                 <!-- Desktop User Dropdown -->
                 <div class="hidden md:block">
                     <x-dropdown align="right" width="48">
@@ -90,12 +94,13 @@
                     </svg>
                 </button>
             </div>
+            @endif
         </div>
 
         <!-- Mobile Navigation Menu -->
         <div x-show="open" class="md:hidden border-t border-gray-200 bg-white">
             <div class="px-2 pt-2 pb-3 space-y-1">
-                @if (Auth::user()->role === 'admin')
+                @if (Auth::check() && Auth::user()->role === 'admin')
                     <a href="{{ route('admin.dashboard') }}" class="block px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('admin.dashboard') ? 'text-gray-500 border-b-2 border-blue-300': 'text-gray-700 hover:text-blue-600 hover:bg-gray-50' }} transition">
                         Dashboard
                     </a>
@@ -114,7 +119,7 @@
                     <a href="{{ route('admin.evaluations.index') }}" class="block px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('admin.evaluations.*') ? 'text-gray-500 border-b-2 border-blue-300': 'text-gray-700 hover:text-blue-600 hover:bg-gray-50' }} transition">
                         Evaluasi
                     </a>
-                @else
+                @elseif (Auth::check())
                     <a href="{{ route('dashboard') }}" class="block px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('dashboard') ? 'text-gray-500 border-b-2 border-blue-300': 'text-gray-700 hover:text-blue-600 hover:bg-gray-50' }} transition">
                         Home
                     </a>
@@ -127,12 +132,21 @@
                     <a href="{{ route('saw.results.index') }}" class="block px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('saw.results.*') ? 'text-gray-500 border-b-2 border-blue-300': 'text-gray-700 hover:text-blue-600 hover:bg-gray-50' }} transition">
                         Ranking
                     </a>
-                    {{-- <a href="{{ route('saw.results.analysis') }}" class="block px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('saw.results.analysis') ? 'text-gray-500 border-b-2 border-blue-300': 'text-gray-700 hover:text-blue-600 hover:bg-gray-50' }} transition">
-                        Analisis
-                    </a> --}}
+                @else
+                    <!-- Guest mobile navigation -->
+                    <a href="{{ route('dashboard') }}" class="block px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('dashboard') ? 'text-gray-500 border-b-2 border-blue-300': 'text-gray-700 hover:text-blue-600 hover:bg-gray-50' }} transition">
+                        Beranda
+                    </a>
+                    <a href="{{ route('saw.recommendations.index') }}" class="block px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('saw.recommendations.*') ? 'text-gray-500 border-b-2 border-blue-300': 'text-gray-700 hover:text-blue-600 hover:bg-gray-50' }} transition">
+                        Rekomendasi
+                    </a>
+                    <a href="{{ route('saw.results.index') }}" class="block px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('saw.results.*') ? 'text-gray-500 border-b-2 border-blue-300': 'text-gray-700 hover:text-blue-600 hover:bg-gray-50' }} transition">
+                        Ranking
+                    </a>
                 @endif
             </div>
 
+            @if(Auth::check())
             <!-- Mobile User Menu -->
             <div class="border-t border-gray-200 pt-3 pb-3">
                 <div class="px-4 mb-3">
@@ -151,6 +165,16 @@
                     </form>
                 </div>
             </div>
+            @else
+            <!-- Guest login -->
+            <div class="border-t border-gray-200 pt-3 pb-3">
+                <div class="px-2 space-y-1">
+                    <a href="{{ route('login') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100 transition">
+                        Login Admin
+                    </a>
+                </div>
+            </div>
+            @endif
         </div>
     </div>
 </nav>

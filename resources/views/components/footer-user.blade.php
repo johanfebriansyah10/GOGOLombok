@@ -4,11 +4,11 @@
             <!-- Logo dan Deskripsi -->
             <div>
                 <div class="flex items-center mb-4">
-                    <img src="{{ asset('images/GOLombok.png') }}" alt="Logo" class="h-10 w-10 mr-3">
-                    <h3 class="text-lg font-semibold">GO Lombok</h3>
+                    <img src="{{ asset('images/GOLombok.svg') }}" alt="Logo" class="h-10 w-10 mr-3">
+                    <h3 class="text-lg font-semibold">GOLombok</h3>
                 </div>
                 <p class="text-gray-300 text-sm">
-                    Sistem rekomendasi wisata di Lombok menggunakan metode SAW (Simple Additive Weighting).
+                    Sistem rekomendasi wisata di Lombok.
                 </p>
             </div>
 
@@ -19,6 +19,7 @@
                     <li><a href="{{ route('dashboard') }}" class="text-gray-300 hover:text-white transition">Dashboard</a></li>
                     <li><a href="{{ route('wisata.catalog') }}" class="text-gray-300 hover:text-white transition">Wisata</a></li>
                     <li><a href="{{ route('saw.recommendations.index') }}" class="text-gray-300 hover:text-white transition">Rekomendasi</a></li>
+                    <li><a href="{{ route('saw.results.index') }}" class="text-gray-300 hover:text-white transition">Ranking</a></li>
                 </ul>
             </div>
 

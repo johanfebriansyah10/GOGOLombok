@@ -27,6 +27,7 @@ class Wisata extends Model
         'distance',
         'facilities_count',
         'actual_rating',
+        'facilities',
     ];
 
     protected $casts = [
@@ -35,6 +36,7 @@ class Wisata extends Model
         'ticket_price' => 'decimal:2',
         'distance' => 'decimal:2',
         'actual_rating' => 'decimal:2',
+        'facilities' => 'array',
     ];
 
     /**

@@ -108,6 +108,8 @@ class WisataController extends Controller
             'distance' => 'required|numeric|min:0',
             'facilities_count' => 'required|integer|min:0',
             'actual_rating' => 'required|numeric|between:0,5',
+            'facilities' => 'nullable|array',
+            'facilities.*' => 'string',
             'image' => 'nullable|file|mimes:jpg,jpeg,png,gif,bmp,webp,avif|max:2048',
         ];
     }

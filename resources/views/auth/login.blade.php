@@ -67,9 +67,8 @@
             </div>
             <div class="relative flex justify-center text-sm">
             <p class="text-gray-600 bg-white px-4">
-                Belum punya akun?
-                <a href="{{ route('register') }}" class="text-[#34C759] hover:text-[#248b3e] font-semibold transition-colors">
-                    Buat akun baru
+                <a href="{{ route('dashboard') }}" class="text-[#34C759] hover:text-[#248b3e] font-semibold transition-colors">
+                    Balik ke Beranda
                 </a>
             </p>
             </div>

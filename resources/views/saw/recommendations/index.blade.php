@@ -72,24 +72,38 @@
                                 <p class="text-xs text-gray-600 dark:text-gray-400 mt-1">Cari wisata dalam jarak kurang dari nilai di #1atas dari pusat kota</p>
                             </div>
 
-                            <!-- Fasilitas Minimal -->
+                            <!-- Fasilitas -->
                             <div>
-                                <label for="min_facilities" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                                    Jumlah Fasilitas Minimal
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                    Fasilitas Wajib
                                 </label>
-                                <div>
-                                    <input
-                                        type="number"
-                                        id="min_facilities"
-                                        name="min_facilities"
-                                        class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
-                                        placeholder="Contoh: 5"
-                                        value="{{ $filters['min_facilities'] ?? '' }}"
-                                        step="1"
-                                        min="0"
-                                    />
+                                <div class="space-y-2">
+                                    @php
+                                        $facilityOptions = ['toilet', 'musholla', 'parkir', 'spot_foto', 'restoran', 'wifi', 'guide'];
+                                        $facilityLabels = [
+                                            'toilet' => 'Toilet',
+                                            'musholla' => 'Musholla',
+                                            'parkir' => 'Parkir',
+                                            'spot_foto' => 'Spot Foto',
+                                            'restoran' => 'Restoran',
+                                            'wifi' => 'WiFi',
+                                            'guide' => 'Pemandu Wisata'
+                                        ];
+                                    @endphp
+                                    @foreach($facilityOptions as $facility)
+                                    <label class="flex items-center">
+                                        <input
+                                            type="checkbox"
+                                            name="facilities[]"
+                                            value="{{ $facility }}"
+                                            {{ in_array($facility, $filters['facilities'] ?? []) ? 'checked' : '' }}
+                                            class="rounded border-gray-300 dark:border-gray-600 text-blue-600 focus:ring-blue-500 dark:bg-gray-700"
+                                        >
+                                        <span class="ml-2 text-sm text-gray-700 dark:text-gray-300">{{ $facilityLabels[$facility] }}</span>
+                                    </label>
+                                    @endforeach
                                 </div>
-                                <p class="text-xs text-gray-600 dark:text-gray-400 mt-1">Minimal ada toilet, parkir, dll</p>
+                                <p class="text-xs text-gray-600 dark:text-gray-400 mt-1">Pilih fasilitas yang wajib ada</p>
                             </div>
 
                             <!-- Rating Minimal -->

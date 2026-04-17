@@ -76,6 +76,14 @@ class SAWCalculator
     {
         $matrix = [];
 
+        // Hitung global average rating untuk Bayesian adjustment
+        $ratingCriteria = $criterias->firstWhere('code', 'C4');
+        $globalAvgRating = 0;
+        if ($ratingCriteria) {
+            $ratingEvals = $evaluations->where('criteria_id', $ratingCriteria->id);
+            $globalAvgRating = $ratingEvals->avg('value') ?? 0;
+        }
+
         foreach ($wisatas as $wisata) {
             $row = [
                 'wisata_id' => $wisata->id,
@@ -89,11 +97,28 @@ class SAWCalculator
                     return $e->wisata_id == $wisata->id && $e->criteria_id == $criteria->id;
                 });
 
+                $value = $eval ? $eval->value : 0;
+
+                // Jika kriteria rating (C4), gunakan weighted rating
+                if ($criteria->code === 'C4' && $ratingCriteria) {
+                    $wisataRatingEvals = $evaluations->where('wisata_id', $wisata->id)->where('criteria_id', $ratingCriteria->id);
+                    $v = $wisataRatingEvals->count(); // jumlah rating
+                    $R = $wisataRatingEvals->avg('value') ?? 0; // rata-rata rating
+                    $m = 5; // minimum ratings
+                    $C = $globalAvgRating; // global average
+
+                    if ($v > 0) {
+                        $value = ($v / ($v + $m)) * $R + ($m / ($v + $m)) * $C;
+                    } else {
+                        $value = $C; // jika tidak ada rating, gunakan global
+                    }
+                }
+
                 $row['values'][$criteria->id] = [
                     'criteria_code' => $criteria->code,
                     'criteria_name' => $criteria->name,
                     'criteria_type' => $criteria->type,
-                    'value' => $eval ? $eval->value : 0,
+                    'value' => $value,
                 ];
             }
 
@@ -216,10 +241,13 @@ class SAWCalculator
                 }
             }
 
-            // Filter: Fasilitas minimal
-            if (isset($filters['min_facilities']) && $filters['min_facilities'] > 0) {
-                if ($wisata->facilities_count < $filters['min_facilities']) {
-                    return false;
+            // Filter: Fasilitas (harus memiliki semua fasilitas yang dipilih)
+            if (isset($filters['facilities']) && is_array($filters['facilities']) && !empty($filters['facilities'])) {
+                $wisataFacilities = $wisata->facilities ?? [];
+                foreach ($filters['facilities'] as $requiredFacility) {
+                    if (!in_array($requiredFacility, $wisataFacilities)) {
+                        return false;
+                    }
                 }
             }
 
