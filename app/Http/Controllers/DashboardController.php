@@ -8,19 +8,17 @@ use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
-    /**
-     * Show the user dashboard.
-     */
+
     public function show(Request $request)
     {
-        $wisatas = Wisata::orderBy('rating', 'desc')->limit(3)->get();
+        $wisatas = Wisata::orderBy('actual_rating', 'desc')->limit(3)->get();
 
         // Get featured wisata with image for hero background
-        $featuredWisata = Wisata::whereNotNull('image')->orderBy('rating', 'desc')->first();
+        $featuredWisata = Wisata::whereNotNull('image')->orderBy('actual_rating', 'desc')->first();
 
         // Get all categories with their wisata (limited to 3 per category)
         $categories = Category::with(['wisatas' => function ($query) {
-            $query->orderBy('rating', 'desc')->limit(3);
+            $query->orderBy('actual_rating', 'desc')->limit(3);
         }])->get();
 
         return view('user/dashboard', [

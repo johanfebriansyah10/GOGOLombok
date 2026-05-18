@@ -55,8 +55,12 @@ class SAWCalculator
         // 7. Hitung weighted score (Vi)
         $scores = self::calculateScores($normalizedMatrix, $criterias, $wisatas);
 
-        // 8. Sort by score (descending) and set rank values
-        $ranking = $scores->sortByDesc('score')->values()->map(function ($item, $index) {
+        // 8. Sort by score, then prefer higher review credibility when scores tie
+        $ranking = $scores->sort(function ($a, $b) {
+            return [$b['score'], $b['review_count'], $b['actual_rating'], $a['wisata_name']]
+                <=>
+                [$a['score'], $a['review_count'], $a['actual_rating'], $b['wisata_name']];
+        })->values()->map(function ($item, $index) {
             $item['rank'] = $index + 1;
             return $item;
         });
@@ -76,12 +80,11 @@ class SAWCalculator
     {
         $matrix = [];
 
-        // Hitung global average rating untuk Bayesian adjustment
+        // Gunakan prior netral agar review_count tetap punya efek walau rating sama
         $ratingCriteria = $criterias->firstWhere('code', 'C4');
-        $globalAvgRating = 0;
+        $ratingPrior = 2.5;
         if ($ratingCriteria) {
-            $ratingEvals = $evaluations->where('criteria_id', $ratingCriteria->id);
-            $globalAvgRating = $ratingEvals->avg('value') ?? 0;
+            $ratingPrior = self::getRatingPriorValue();
         }
 
         foreach ($wisatas as $wisata) {
@@ -99,18 +102,21 @@ class SAWCalculator
 
                 $value = $eval ? $eval->value : 0;
 
-                // Jika kriteria rating (C4), gunakan weighted rating
+                // Jika kriteria rating (C4), gunakan weighted rating dengan review_count dari database
                 if ($criteria->code === 'C4' && $ratingCriteria) {
-                    $wisataRatingEvals = $evaluations->where('wisata_id', $wisata->id)->where('criteria_id', $ratingCriteria->id);
-                    $v = $wisataRatingEvals->count(); // jumlah rating
-                    $R = $wisataRatingEvals->avg('value') ?? 0; // rata-rata rating
-                    $m = 5; // minimum ratings
-                    $C = $globalAvgRating; // global average
+                    $R = $wisata->actual_rating ?? 0; // actual rating dari wisata
+                    $v = $wisata->review_count ?? 0; // jumlah reviewer dari wisata
+                    $m = 1000; // minimum ratings threshold untuk credibility (disesuaikan dengan data distribution)
+                    $C = $ratingPrior; // prior netral rating pada skala 0-5
 
                     if ($v > 0) {
+                        // Bayesian weighted rating:
+                        // WR = (v/(v+m)) * R + (m/(v+m)) * C
+                        // Dengan prior netral, wisata dengan rating sama tetapi review lebih banyak
+                        // akan lebih cepat mendekati rating aslinya.
                         $value = ($v / ($v + $m)) * $R + ($m / ($v + $m)) * $C;
                     } else {
-                        $value = $C; // jika tidak ada rating, gunakan global
+                        $value = $C; // jika tidak ada review, gunakan prior netral
                     }
                 }
 
@@ -213,6 +219,8 @@ class SAWCalculator
                 'wisata_id' => $row['wisata_id'],
                 'wisata_name' => $row['wisata_name'],
                 'image' => $wisata->image,
+                'actual_rating' => (float) ($wisata->actual_rating ?? 0),
+                'review_count' => (int) ($wisata->review_count ?? 0),
                 'score' => round($totalScore, 4),
                 'score_details' => $scoreDetails,
             ]);
@@ -222,11 +230,26 @@ class SAWCalculator
     }
 
     /**
+     * Neutral prior for 0-5 rating scale.
+     */
+    private static function getRatingPriorValue()
+    {
+        return 2.5;
+    }
+
+    /**
      * Apply user filters to wisata collection
      */
     private static function applyFilters($wisatas, $filters)
     {
         return $wisatas->filter(function ($wisata) use ($filters) {
+            // Filter: Kategori
+            if (isset($filters['category_id']) && $filters['category_id'] > 0) {
+                if ($wisata->category_id != $filters['category_id']) {
+                    return false;
+                }
+            }
+
             // Filter: Budget maksimal
             if (isset($filters['max_budget']) && $filters['max_budget'] > 0) {
                 if ($wisata->ticket_price > $filters['max_budget']) {

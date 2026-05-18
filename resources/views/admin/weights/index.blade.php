@@ -2,7 +2,7 @@
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                {{ __('Manajemen Bobot Kriteria') }}
+                {{ __('Halaman Bobot Kategori Admin') }}
             </h2>
             <a href="{{ route('admin.weights.create') }}" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded">
                 + Tambah Bobot
@@ -20,10 +20,10 @@
                 <div class="alert-error hidden">{{ $message }}</div>
             @endif
 
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
+            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900 dark:text-gray-100">
                     @if ($weights->isEmpty())
-                        <p class="text-gray-500 text-center py-8">
+                        <p class="text-gray-500 dark:text-gray-400 text-center py-8">
                             Belum ada bobot. <a href="{{ route('admin.weights.create') }}" class="text-blue-600 hover:text-blue-800">Tambah bobot baru</a>
                         </p>
                     @else
@@ -36,8 +36,7 @@
                                         <th class="px-4 py-3 font-semibold">Nama Kriteria</th>
                                         <th class="px-4 py-3 font-semibold">Tipe</th>
                                         <th class="px-4 py-3 font-semibold">Bobot</th>
-                                        <th class="px-4 py-3 font-semibold">Persentase</th>
-                                        <th class="px-4 py-3 font-semibold">Aksi</th>
+                                        <th class="px-4 py-3 font-semibold text-center">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -48,18 +47,15 @@
                                             <td class="px-4 py-3 font-semibold">{{ $weight->criteria->name }}</td>
                                             <td class="px-4 py-3">
                                                 @if ($weight->criteria->type === 'benefit')
-                                                    <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-semibold">Benefit</span>
+                                                    <span class="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200 px-2 py-1 rounded text-xs font-semibold">Benefit</span>
                                                 @else
-                                                    <span class="bg-red-100 text-red-800 px-2 py-1 rounded text-xs font-semibold">Cost</span>
+                                                    <span class="bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200 px-2 py-1 rounded text-xs font-semibold">Cost</span>
                                                 @endif
                                             </td>
-                                            <td class="px-4 py-3 font-semibold text-blue-600">
-                                                {{ number_format($weight->weight, 4) }}
+                                            <td class="px-4 py-3 font-semibold text-blue-600 dark:text-blue-400">
+                                                {{ number_format($weight->weight, 2) }}
                                             </td>
-                                            <td class="px-4 py-3">
-                                                {{ number_format($weight->weight * 100, 2) }}%
-                                            </td>
-                                            <td class="px-4 py-3 space-x-2">
+                                            <td class="px-4 py-3 space-x-2 text-center">
                                                 <a href="{{ route('admin.weights.edit', $weight) }}" class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded text-sm">
                                                     Edit
                                                 </a>

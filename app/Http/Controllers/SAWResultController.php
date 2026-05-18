@@ -2,16 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Wisata;
 use App\Models\Criteria;
+use App\Models\Category;
 use App\Services\SAWCalculator;
+use Illuminate\Http\Request;
 
 class SAWResultController extends Controller
 {
-    /**
-     * Show SAW ranking results
-     */
-    public function index()
+    public function index(Request $request)
     {
         try {
             $result = SAWCalculator::getDetails();
@@ -22,6 +20,8 @@ class SAWResultController extends Controller
                     'message' => null,
                     'ranking' => collect(),
                     'criterias' => Criteria::with('weight')->get(),
+                    'categories' => Category::all(),
+                    'selectedCategory' => null,
                 ]);
             }
 
@@ -31,14 +31,29 @@ class SAWResultController extends Controller
                     'error' => null,
                     'ranking' => collect(),
                     'criterias' => Criteria::with('weight')->get(),
+                    'categories' => Category::all(),
+                    'selectedCategory' => null,
                 ]);
             }
 
+            // Ambil ranking hasil SAW
+            $ranking = $result['ranking'];
+            $selectedCategory = $request->get('category');
+
+            // Filter berdasarkan kategori jika ada
+            if ($selectedCategory) {
+                $ranking = collect($ranking)->filter(function ($item) use ($selectedCategory) {
+                    $wisata = \App\Models\Wisata::find($item['wisata_id']);
+                    return $wisata && $wisata->category_id == $selectedCategory;
+                })->values();
+            }
+
             return view('saw.results.index', [
-                'ranking' => $result['ranking'],
+                'ranking' => $ranking,
                 'scores' => $result['scores'],
                 'criterias' => Criteria::with('weight')->get(),
-                'normalizedMatrix' => $result['normalized_matrix'],
+                'categories' => Category::all(),
+                'selectedCategory' => $selectedCategory,
                 'error' => null,
                 'message' => null,
             ]);
@@ -48,99 +63,8 @@ class SAWResultController extends Controller
                 'message' => null,
                 'ranking' => collect(),
                 'criterias' => Criteria::with('weight')->get(),
-            ]);
-        }
-    }
-
-    /**
-     * Show detail of SAW calculation
-     */
-    public function detail($wisataId)
-    {
-        try {
-            $result = SAWCalculator::getDetails();
-
-            if (isset($result['error'])) {
-                return redirect()->route('saw.results.index')->with('error', $result['error']);
-            }
-
-            if (isset($result['message'])) {
-                return redirect()->route('saw.results.index')->with('message', $result['message']);
-            }
-
-            $wisata = Wisata::find($wisataId);
-            if (!$wisata) {
-                return redirect()->route('saw.results.index')->with('error', 'Wisata tidak ditemukan');
-            }
-
-            // Find score detail for this wisata
-            $scoreDetail = $result['ranking']->firstWhere('wisata_id', $wisataId);
-
-            if (!$scoreDetail) {
-                return redirect()->route('saw.results.index')->with('error', 'Data skor tidak ditemukan');
-            }
-
-            return view('saw.results.detail', [
-                'wisata' => $wisata,
-                'scoreDetail' => $scoreDetail,
-                'ranking' => $result['ranking'],
-                'criterias' => Criteria::with('weight')->get(),
-            ]);
-        } catch (\Exception $e) {
-            return redirect()->route('saw.results.index')->with('error', $e->getMessage());
-        }
-    }
-
-    /**
-     * Show comprehensive SAW analysis with all calculation steps
-     */
-    public function analysis()
-    {
-        try {
-            $result = SAWCalculator::getDetails();
-
-            if (isset($result['error'])) {
-                return view('saw.results.analysis', [
-                    'error' => $result['error'],
-                    'message' => null,
-                    'decisionMatrix' => collect(),
-                    'normalizedMatrix' => collect(),
-                    'scores' => collect(),
-                    'ranking' => collect(),
-                    'criterias' => Criteria::with('weight')->get(),
-                ]);
-            }
-
-            if (isset($result['message'])) {
-                return view('saw.results.analysis', [
-                    'error' => null,
-                    'message' => $result['message'],
-                    'decisionMatrix' => collect(),
-                    'normalizedMatrix' => collect(),
-                    'scores' => collect(),
-                    'ranking' => collect(),
-                    'criterias' => Criteria::with('weight')->get(),
-                ]);
-            }
-
-            return view('saw.results.analysis', [
-                'error' => null,
-                'message' => null,
-                'decisionMatrix' => $result['decision_matrix'],
-                'normalizedMatrix' => $result['normalized_matrix'],
-                'scores' => collect($result['scores'])->keyBy('wisata_id'),
-                'ranking' => $result['ranking'],
-                'criterias' => Criteria::with('weight')->get(),
-            ]);
-        } catch (\Exception $e) {
-            return view('saw.results.analysis', [
-                'error' => $e->getMessage(),
-                'message' => null,
-                'decisionMatrix' => collect(),
-                'normalizedMatrix' => collect(),
-                'scores' => collect(),
-                'ranking' => collect(),
-                'criterias' => Criteria::with('weight')->get(),
+                'categories' => Category::all(),
+                'selectedCategory' => null,
             ]);
         }
     }

@@ -27,11 +27,12 @@ class WisataSeeder extends Seeder
                 'address' => 'Jl. Raya Timur No. 123, Jakarta',
                 'latitude' => -6.1751,
                 'longitude' => 106.8650,
-                'rating' => 4,
                 'ticket_price' => 150000,      // 150rb
                 'distance' => 15.5,            // 15.5 km
                 'facilities_count' => 12,      // 12 fasilitas
                 'actual_rating' => 4.5,        // 4.5 dari 5
+                'review_count' => 850,         // 850 reviewer
+                'facilities' => ['toilet', 'musholla', 'parkir', 'spot_foto', 'restoran', 'wifi', 'guide'],
             ],
             [
                 'category_id' => $category->id,
@@ -41,11 +42,12 @@ class WisataSeeder extends Seeder
                 'address' => 'Jl. Pantai Raya No. 45, Tangerang',
                 'latitude' => -6.3000,
                 'longitude' => 106.5800,
-                'rating' => 4,
                 'ticket_price' => 50000,       // 50rb
                 'distance' => 45.2,            // 45.2 km
                 'facilities_count' => 8,       // 8 fasilitas
                 'actual_rating' => 4.7,        // 4.7 dari 5
+                'review_count' => 1200,        // 1200 reviewer (tinggi)
+                'facilities' => ['toilet', 'musholla', 'parkir', 'spot_foto', 'restoran'],
             ],
             [
                 'category_id' => $category->id,
@@ -55,11 +57,12 @@ class WisataSeeder extends Seeder
                 'address' => 'Desa Cemoro Lawang, Probolinggo',
                 'latitude' => -7.9424,
                 'longitude' => 112.9511,
-                'rating' => 5,
                 'ticket_price' => 200000,      // 200rb
                 'distance' => 250.0,           // 250 km
                 'facilities_count' => 6,       // 6 fasilitas
                 'actual_rating' => 4.8,        // 4.8 dari 5
+                'review_count' => 450,         // 450 reviewer
+                'facilities' => ['toilet', 'parkir', 'restoran', 'guide'],
             ],
             [
                 'category_id' => $category->id,
@@ -69,11 +72,12 @@ class WisataSeeder extends Seeder
                 'address' => 'Jl. Cikini Raya No. 73, Jakarta',
                 'latitude' => -6.2086,
                 'longitude' => 106.8000,
-                'rating' => 4,
                 'ticket_price' => 175000,      // 175rb
                 'distance' => 8.3,             // 8.3 km
                 'facilities_count' => 15,      // 15 fasilitas
                 'actual_rating' => 4.6,        // 4.6 dari 5
+                'review_count' => 1500,        // 1500 reviewer (sangat banyak)
+                'facilities' => ['toilet', 'musholla', 'parkir', 'spot_foto', 'restoran', 'wifi', 'guide'],
             ],
             [
                 'category_id' => $category->id,
@@ -83,11 +87,12 @@ class WisataSeeder extends Seeder
                 'address' => 'Jl. Danau Toba No. 1, Parapat',
                 'latitude' => 2.6900,
                 'longitude' => 98.8800,
-                'rating' => 5,
                 'ticket_price' => 300000,      // 300rb
                 'distance' => 350.0,           // 350 km
                 'facilities_count' => 18,      // 18 fasilitas
                 'actual_rating' => 4.9,        // 4.9 dari 5
+                'review_count' => 600,         // 600 reviewer
+                'facilities' => ['toilet', 'musholla', 'parkir', 'spot_foto', 'restoran', 'wifi', 'guide'],
             ],
             [
                 'category_id' => $category->id,
@@ -97,11 +102,12 @@ class WisataSeeder extends Seeder
                 'address' => 'Pelabuhanratu, Banten',
                 'latitude' => -6.7833,
                 'longitude' => 105.3167,
-                'rating' => 4,
                 'ticket_price' => 225000,      // 225rb
                 'distance' => 180.0,           // 180 km
                 'facilities_count' => 9,       // 9 fasilitas
                 'actual_rating' => 4.4,        // 4.4 dari 5
+                'review_count' => 320,         // 320 reviewer
+                'facilities' => ['toilet', 'parkir', 'restoran', 'guide'],
             ],
             [
                 'category_id' => $category->id,
@@ -111,11 +117,12 @@ class WisataSeeder extends Seeder
                 'address' => 'Jl. Ir. Sutami No. 188, Bogor',
                 'latitude' => -6.5971,
                 'longitude' => 106.8060,
-                'rating' => 4,
                 'ticket_price' => 25000,       // 25rb (murah!)
                 'distance' => 60.0,            // 60 km
                 'facilities_count' => 7,       // 7 fasilitas
                 'actual_rating' => 4.3,        // 4.3 dari 5
+                'review_count' => 2000,        // 2000 reviewer (paling banyak!)
+                'facilities' => ['toilet', 'parkir', 'spot_foto', 'restoran', 'wifi'],
             ],
             [
                 'category_id' => $category->id,
@@ -125,11 +132,12 @@ class WisataSeeder extends Seeder
                 'address' => 'Marina Ancol, Jakarta',
                 'latitude' => -6.1200,
                 'longitude' => 106.8350,
-                'rating' => 5,
                 'ticket_price' => 500000,      // 500rb (mahal)
                 'distance' => 25.0,            // 25 km
                 'facilities_count' => 14,      // 14 fasilitas
                 'actual_rating' => 4.8,        // 4.8 dari 5
+                'review_count' => 200,         // 200 reviewer (sedikit, karena mahal)
+                'facilities' => ['toilet', 'musholla', 'parkir', 'spot_foto', 'restoran', 'wifi', 'guide'],
             ],
             [
                 'category_id' => $category->id,
@@ -139,11 +147,12 @@ class WisataSeeder extends Seeder
                 'address' => 'Gang Pokrol No. 34, Jakarta',
                 'latitude' => -6.1349,
                 'longitude' => 106.8091,
-                'rating' => 4,
                 'ticket_price' => 100000,      // 100rb
                 'distance' => 12.0,            // 12 km
                 'facilities_count' => 5,       // 5 fasilitas (minim)
                 'actual_rating' => 4.2,        // 4.2 dari 5
+                'review_count' => 280,         // 280 reviewer
+                'facilities' => ['toilet', 'parkir', 'wifi'],
             ],
             [
                 'category_id' => $category->id,
@@ -153,11 +162,12 @@ class WisataSeeder extends Seeder
                 'address' => 'Desa Paltuding, Banyuwangi',
                 'latitude' => -8.0506,
                 'longitude' => 114.2400,
-                'rating' => 4,
                 'ticket_price' => 150000,      // 150rb
                 'distance' => 230.0,           // 230 km
                 'facilities_count' => 7,       // 7 fasilitas
                 'actual_rating' => 4.7,        // 4.7 dari 5
+                'review_count' => 380,         // 380 reviewer
+                'facilities' => ['toilet', 'parkir', 'restoran', 'guide'],
             ],
         ];
 

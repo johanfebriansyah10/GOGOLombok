@@ -21,12 +21,12 @@ class Wisata extends Model
         'address',
         'latitude',
         'longitude',
-        'rating',
         'image',
         'ticket_price',
         'distance',
         'facilities_count',
         'actual_rating',
+        'review_count',
         'facilities',
     ];
 
@@ -36,6 +36,7 @@ class Wisata extends Model
         'ticket_price' => 'decimal:2',
         'distance' => 'decimal:2',
         'actual_rating' => 'decimal:2',
+        'review_count' => 'integer',
         'facilities' => 'array',
     ];
 

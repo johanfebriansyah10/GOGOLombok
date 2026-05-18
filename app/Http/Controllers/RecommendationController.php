@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Criteria;
+use App\Models\Category;
 use App\Services\SAWCalculator;
 use Illuminate\Http\Request;
 
@@ -19,6 +20,7 @@ class RecommendationController extends Controller
             'max_distance' => $request->input('max_distance'),
             'facilities' => $request->input('facilities', []),
             'min_rating' => $request->input('min_rating'),
+            'category_id' => $request->input('category_id'),
         ];
 
         // Remove null/empty values
@@ -27,6 +29,7 @@ class RecommendationController extends Controller
         });
 
         $criterias = Criteria::with('weight')->get();
+        $categories = Category::all();
         $hasFilters = !empty($filters);
         $result = null;
 
@@ -37,6 +40,7 @@ class RecommendationController extends Controller
 
         return view('saw.recommendations.index', compact(
             'criterias',
+            'categories',
             'filters',
             'hasFilters',
             'result'

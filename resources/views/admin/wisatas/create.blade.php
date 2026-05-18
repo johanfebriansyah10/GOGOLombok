@@ -7,11 +7,10 @@
 
     <div class="py-12">
         <div class="max-w-2xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900">
                     <form action="{{ route('admin.wisatas.store') }}" method="POST" enctype="multipart/form-data" data-loading="Membuat wisata...">
                         @csrf
-
                         <div class="mb-6">
                             <label for="category_id" class="block text-sm font-medium mb-2">Kategori</label>
                             <select
@@ -60,7 +59,7 @@
                             @enderror
                         </div>
 
-                        <div class="grid gap-6 mb-6">
+                        <div class="mb-6">
                             <div>
                                 <label for="location" class="block text-sm font-medium mb-2">Lokasi</label>
                                 <input
@@ -72,26 +71,6 @@
                                     required
                                 >
                                 @error('location')
-                                    <span class="text-red-600 text-sm mt-1 block">{{ $message }}</span>
-                                @enderror
-                            </div>
-
-                            <div>
-                                <label for="rating" class="block text-sm font-medium mb-2">Rating (1-5)</label>
-                                <select
-                                    id="rating"
-                                    name="rating"
-                                    class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    required
-                                >
-                                    <option value="">-- Pilih Rating --</option>
-                                    <option value="1" {{ old('rating') == 1 ? 'selected' : '' }}>1 - Buruk</option>
-                                    <option value="2" {{ old('rating') == 2 ? 'selected' : '' }}>2 - Cukup</option>
-                                    <option value="3" {{ old('rating') == 3 ? 'selected' : '' }}>3 - Baik</option>
-                                    <option value="4" {{ old('rating') == 4 ? 'selected' : '' }}>4 - Sangat Baik</option>
-                                    <option value="5" {{ old('rating') == 5 ? 'selected' : '' }}>5 - Luar Biasa</option>
-                                </select>
-                                @error('rating')
                                     <span class="text-red-600 text-sm mt-1 block">{{ $message }}</span>
                                 @enderror
                             </div>
@@ -219,21 +198,52 @@
                                         <span class="text-red-600 text-sm mt-1 block">{{ $message }}</span>
                                     @enderror
                                 </div>
+
+                                <div>
+                                    <label for="review_count" class="block text-sm font-medium mb-2">👥 Jumlah Reviewer</label>
+                                    <input
+                                        type="number"
+                                        id="review_count"
+                                        name="review_count"
+                                        step="1"
+                                        min="0"
+                                        value="{{ old('review_count', 0) }}"
+                                        placeholder="Contoh: 1000"
+                                        class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        required
+                                    >
+                                    @error('review_count')
+                                        <span class="text-red-600 text-sm mt-1 block">{{ $message }}</span>
+                                    @enderror
+                                </div>
                             </div>
 
                             <div class="col-span-2">
                                 <label class="block text-sm font-medium mb-2">🏢 Fasilitas Tersedia</label>
                                 <div class="grid grid-cols-2 gap-2">
                                     @php
-                                        $facilityOptions = ['toilet', 'musholla', 'parkir', 'spot_foto', 'restoran', 'wifi', 'guide'];
+                                        $facilityOptions = ['Toilet', 'Musholla / Masjid', 'Parkir', 'Spot Foto', 'Kuliner', 'WiFi', 'Pemandu Wisata', 'Tempat Sampah', 'Bangku Tempat Duduk', 'Gazebo', 'Cafe', 'Kios Suvenir', 'ATM', 'Tempat Bermain Anak', 'Penginapan', 'Pusat Informasi Wisata', 'Outbound', 'Klinik', 'Penyewaan Alat Snorkeling', 'Area Camping'];
                                         $facilityLabels = [
-                                            'toilet' => 'Toilet',
-                                            'musholla' => 'Musholla',
-                                            'parkir' => 'Parkir',
-                                            'spot_foto' => 'Spot Foto',
-                                            'restoran' => 'Restoran',
-                                            'wifi' => 'WiFi',
-                                            'guide' => 'Pemandu Wisata'
+                                            'Toilet' => 'Toilet',
+                                            'Musholla / Masjid' => 'Musholla / Masjid',
+                                            'Parkir' => 'Parkir',
+                                            'Spot Foto' => 'Spot Foto',
+                                            'Kuliner' => 'Kuliner',
+                                            'WiFi' => 'WiFi',
+                                            'Pemandu Wisata' => 'Pemandu Wisata',
+                                            'Tempat Sampah' => 'Tempat Sampah',
+                                            'Bangku Tempat Duduk' => 'Bangku Tempat Duduk',
+                                            'Gazebo' => 'Gazebo',
+                                            'Cafe' => 'Cafe',
+                                            'Kios Suvenir' => 'Kios Suvenir',
+                                            'ATM' => 'ATM',
+                                            'Tempat Bermain Anak' => 'Tempat Bermain Anak',
+                                            'Penginapan' => 'Penginapan',
+                                            'Pusat Informasi Wisata' => 'Pusat Informasi Wisata',
+                                            'Outbound' => 'Outbound',
+                                            'Klinik' => 'Klinik',
+                                            'Penyewaan Alat Snorkeling' => 'Penyewaan Alat Snorkeling',
+                                            'Area Camping' => 'Area Camping',
                                         ];
                                     @endphp
                                     @foreach($facilityOptions as $facility)

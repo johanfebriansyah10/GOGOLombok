@@ -2,7 +2,7 @@
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                {{ __('Rekomendasi Wisata SAW') }}
+                {{ __('Rekomendasi Wisata') }}
             </h2>
         </div>
     </x-slot>
@@ -11,7 +11,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <!-- Breadcrumbs -->
             <x-breadcrumbs :breadcrumbs="[
-                ['label' => 'Rekomendasi SAW', 'url' => null]
+                ['label' => 'Rekomendasi', 'url' => null]
             ]" />
 
             <!-- Filter Form Section -->
@@ -30,6 +30,26 @@
 
                     <form method="GET" action="{{ route('saw.recommendations.index') }}" class="space-y-6">
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                            <!-- Kategori Wisata -->
+                            <div>
+                                <label for="category_id" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                    Kategori Wisata
+                                </label>
+                                <select
+                                    id="category_id"
+                                    name="category_id"
+                                    class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                                >
+                                    <option value="">-- Semua Kategori --</option>
+                                    @foreach($categories as $category)
+                                        <option value="{{ $category->id }}" {{ ($filters['category_id'] ?? '') == $category->id ? 'selected' : '' }}>
+                                            {{ $category->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                <p class="text-xs text-gray-600 dark:text-gray-400 mt-1">Pilih kategori wisata yang ingin dicari</p>
+                            </div>
+
                             <!-- Budget Maksimal -->
                             <div>
                                 <label for="max_budget" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
@@ -72,39 +92,6 @@
                                 <p class="text-xs text-gray-600 dark:text-gray-400 mt-1">Cari wisata dalam jarak kurang dari nilai di #1atas dari pusat kota</p>
                             </div>
 
-                            <!-- Fasilitas -->
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                                    Fasilitas Wajib
-                                </label>
-                                <div class="space-y-2">
-                                    @php
-                                        $facilityOptions = ['toilet', 'musholla', 'parkir', 'spot_foto', 'restoran', 'wifi', 'guide'];
-                                        $facilityLabels = [
-                                            'toilet' => 'Toilet',
-                                            'musholla' => 'Musholla',
-                                            'parkir' => 'Parkir',
-                                            'spot_foto' => 'Spot Foto',
-                                            'restoran' => 'Restoran',
-                                            'wifi' => 'WiFi',
-                                            'guide' => 'Pemandu Wisata'
-                                        ];
-                                    @endphp
-                                    @foreach($facilityOptions as $facility)
-                                    <label class="flex items-center">
-                                        <input
-                                            type="checkbox"
-                                            name="facilities[]"
-                                            value="{{ $facility }}"
-                                            {{ in_array($facility, $filters['facilities'] ?? []) ? 'checked' : '' }}
-                                            class="rounded border-gray-300 dark:border-gray-600 text-blue-600 focus:ring-blue-500 dark:bg-gray-700"
-                                        >
-                                        <span class="ml-2 text-sm text-gray-700 dark:text-gray-300">{{ $facilityLabels[$facility] }}</span>
-                                    </label>
-                                    @endforeach
-                                </div>
-                                <p class="text-xs text-gray-600 dark:text-gray-400 mt-1">Pilih fasilitas yang wajib ada</p>
-                            </div>
 
                             <!-- Rating Minimal -->
                             <div>
@@ -128,6 +115,51 @@
                                 <p class="text-xs text-gray-600 dark:text-gray-400 mt-1">Minimum rating dari pengunjung</p>
                             </div>
                         </div>
+                            <!-- Fasilitas -->
+                            <div>
+                                <label class="text-sm font-medium text-gray-700">
+                                    Fasilitas Wajib
+                                </label>
+                                <div class="flex flex-wrap gap-5 mt-3">
+                                    @php
+                                        $facilityOptions = ['Toilet', 'Musholla / Masjid', 'Parkir', 'Spot Foto', 'Kuliner', 'WiFi', 'Guide', 'Tempat Sampah', 'Bangku Tempat Duduk', 'Gazebo', 'Cafe', 'Kios Suvenir', 'ATM', 'Tempat Bermain Anak', 'Penginapan', 'Pusat Informasi Wisata', 'Outbound', 'Klinik', 'Penyewaan Alat Snorkeling', 'Area Camping'];
+                                        $facilityLabels = [
+                                            'Toilet' => 'Toilet',
+                                            'Musholla / Masjid' => 'Musholla / Masjid',
+                                            'Parkir' => 'Parkir',
+                                            'Spot Foto' => 'Spot Foto',
+                                            'Kuliner' => 'Kuliner',
+                                            'WiFi' => 'WiFi',
+                                            'Guide' => 'Pemandu Wisata',
+                                            'Tempat Sampah' => 'Tempat Sampah',
+                                            'Bangku Tempat Duduk' => 'Bangku Tempat Duduk',
+                                            'Gazebo' => 'Gazebo',
+                                            'Cafe' => 'Cafe',
+                                            'Kios Suvenir' => 'Kios Suvenir',
+                                            'ATM' => 'ATM',
+                                            'Tempat Bermain Anak' => 'Tempat Bermain Anak',
+                                            'Penginapan' => 'Penginapan',
+                                            'Pusat Informasi Wisata' => 'Pusat Informasi Wisata',
+                                            'Outbound' => 'Outbound',
+                                            'Klinik' => 'Klinik',
+                                            'Penyewaan Alat Snorkeling' => 'Penyewaan Alat Snorkeling',
+                                            'Area Camping' => 'Area Camping',
+                                        ];
+                                    @endphp
+                                    @foreach($facilityOptions as $facility)
+                                    <label class="flex items-center">
+                                        <input
+                                            type="checkbox"
+                                            name="facilities[]"
+                                            value="{{ $facility }}"
+                                            {{ in_array($facility, $filters['facilities'] ?? []) ? 'checked' : '' }}
+                                            class="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                                        >
+                                        <span class="ml-2 text-md text-gray-700">{{ $facilityLabels[$facility] }}</span>
+                                    </label>
+                                    @endforeach
+                                </div>
+                            </div>
 
                         <!-- Submit Button -->
                         <div class="flex gap-3 justify-end pt-4">
@@ -194,6 +226,8 @@
                                                 <th class="px-4 py-3 font-semibold text-gray-900 dark:text-gray-100">Jarak</th>
                                                 <th class="px-4 py-3 font-semibold text-gray-900 dark:text-gray-100">Fasilitas</th>
                                                 <th class="px-4 py-3 font-semibold text-gray-900 dark:text-gray-100">Rating</th>
+                                                <th class="px-4 py-3 font-semibold text-gray-900 dark:text-gray-100">Reviews</th>
+                                                <th class="px-4 py-3 font-semibold text-gray-900 dark:text-gray-100">Detail</th>
                                             </tr>
                                         </thead>
                                         <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
@@ -243,55 +277,21 @@
                                                             <span class="text-gray-900 dark:text-gray-100 font-medium">{{ number_format($wisata->actual_rating ?? 0, 1) }}/5</span>
                                                         </div>
                                                     </td>
-                                                    {{-- <td class="px-4 py-3">
-                                                        <div class="flex flex-col">
-                                                            <span class="text-lg font-bold text-blue-600 dark:text-blue-400">
-                                                                {{ number_format($item['score'], 4) }}
-                                                            </span>
-                                                            <span class="text-xs text-gray-600 dark:text-gray-400">
-                                                                @php
-                                                                    $percentage = $item['score'] * 100;
-                                                                @endphp
-                                                                {{ number_format($percentage, 1) }}%
-                                                            </span>
+                                                    <td class="px-4 py-3">
+                                                        <div class="flex items-center gap-1">
+                                                            <span class="text-blue-600 dark:text-blue-400">👥</span>
+                                                            <span class="text-gray-900 dark:text-gray-100 font-medium">{{ intval($wisata->review_count ?? 0) }}</span>
                                                         </div>
                                                     </td>
-                                                    <td class="px-4 py-3 text-center">
-                                                        <a href="{{ route('saw.results.detail', $item['wisata_id']) }}" class="inline-block px-3 py-2 bg-blue-500 text-white text-xs rounded-lg hover:bg-blue-600 transition">
+                                                    <td class="px-4 py-3">
+                                                        <a href="{{ route('wisata.show', $wisata->id) }}" class="inline-block px-3 py-2 bg-blue-500 text-white text-xs rounded-lg hover:bg-blue-600 transition">
                                                             Detail
                                                         </a>
-                                                    </td> --}}
+                                                    </td>
                                                 </tr>
                                             @endforeach
                                         </tbody>
                                     </table>
-                                </div>
-
-                                <!-- Statistics Summary -->
-                                <div class="mt-6 grid grid-cols-2 md:grid-cols-5 gap-4">
-                                    <div class="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-gray-700 dark:to-gray-600 p-4 rounded-lg">
-                                        <p class="text-xs text-gray-600 dark:text-gray-400 font-semibold">Total Wisata</p>
-                                        <p class="text-2xl font-bold text-gray-900 dark:text-gray-100">{{ $result['ranking']->count() }}</p>
-                                    </div>
-                                    <div class="bg-gradient-to-br from-green-50 to-green-100 dark:from-gray-700 dark:to-gray-600 p-4 rounded-lg">
-                                        <p class="text-xs text-gray-600 dark:text-gray-400 font-semibold">Skor Tertinggi</p>
-                                        <p class="text-2xl font-bold text-gray-900 dark:text-gray-100">{{ number_format($result['ranking']->first()['score'] ?? 0, 4) }}</p>
-                                    </div>
-                                    <div class="bg-gradient-to-br from-yellow-50 to-yellow-100 dark:from-gray-700 dark:to-gray-600 p-4 rounded-lg">
-                                        <p class="text-xs text-gray-600 dark:text-gray-400 font-semibold">Skor Terendah</p>
-                                        <p class="text-2xl font-bold text-gray-900 dark:text-gray-100">{{ number_format($result['ranking']->last()['score'] ?? 0, 4) }}</p>
-                                    </div>
-                                    <div class="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-gray-700 dark:to-gray-600 p-4 rounded-lg">
-                                        <p class="text-xs text-gray-600 dark:text-gray-400 font-semibold">Rata-rata Skor</p>
-                                        @php
-                                            $avgScore = $result['ranking']->avg('score');
-                                        @endphp
-                                        <p class="text-2xl font-bold text-gray-900 dark:text-gray-100">{{ number_format($avgScore, 4) }}</p>
-                                    </div>
-                                    <div class="bg-gradient-to-br from-pink-50 to-pink-100 dark:from-gray-700 dark:to-gray-600 p-4 rounded-lg">
-                                        <p class="text-xs text-gray-600 dark:text-gray-400 font-semibold">Rekomendasi Top</p>
-                                        <p class="text-lg font-bold text-gray-900 dark:text-gray-100">🏆 #1</p>
-                                    </div>
                                 </div>
                             @endif
                         </div>
@@ -308,7 +308,7 @@
                     <div class="flex justify-center gap-4 text-sm text-gray-600 dark:text-gray-400">
                         <div>✅ Filter berdasarkan budget</div>
                         <div>📍 Sesuaikan jarak</div>
-                        <div>🏢 Tentukan berapa banyak fasilitas tersedia</div>
+                        <div>🏢 Pilih fasilitas</div>
                         <div>⭐ Pilih rating minimal</div>
                     </div>
                 </div>

@@ -1,7 +1,7 @@
 <x-app-layout>
     <!-- HERO SECTION -->
     <section class="relative min-h-[92vh] flex flex-col justify-center items-center text-white overflow-hidden" style="background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('images/pantai1.avif') center/cover no-repeat;">
-        <div class="max-w-[700px] animate-fadeInUp opacity-0 text-center" style="animation-delay: 0.2s">
+        <div class="max-w-[700px] animate-fadeInUp opacity-0 text-center mt-28" style="animation-delay: 0.2s">
             {{-- badge --}}
             <div class="absolute -top-20 left-32 z-10">
                 <span class="inline-block px-3 py-4 bg-[#34C759]/70 text-5xl font-semibold uppercase rounded-lg">Selamat Datang</span>
@@ -22,7 +22,7 @@
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <!-- Left Side - Image -->
             <div class="relative">
-                <img src="{{ 'images/alam.avif' }}" alt="Sejarah Lombok" class="w-full rounded-2xl shadow-2xl object-cover h-[500px]">
+                <img src="{{ 'images/rinjani.avif' }}" alt="Sejarah Lombok" class="w-full rounded-2xl shadow-2xl object-cover h-[500px]">
                 <div class="absolute -bottom-6 -right-6 w-40 h-40 bg-[#34C759]/20 rounded-full blur-3xl"></div>
             </div>
 
@@ -43,11 +43,11 @@
 
                 <div class="grid grid-cols-3 gap-4 pt-4">
                     <div class="text-center p-4 bg-gray-50 rounded-xl">
-                        <div class="text-3xl font-bold text-[#34C759] mb-2">15+</div>
-                        <p class="text-sm text-gray-600">Kabupaten & Kota</p>
+                        <div class="text-3xl font-bold text-[#34C759] mb-2">4</div>
+                        <p class="text-sm text-gray-600">Kabupaten</p>
                     </div>
                     <div class="text-center p-4 bg-gray-50 rounded-xl">
-                        <div class="text-3xl font-bold text-[#34C759] mb-2">100+</div>
+                        <div class="text-3xl font-bold text-[#34C759] mb-2">50+</div>
                         <p class="text-sm text-gray-600">Destinasi Wisata</p>
                     </div>
                     <div class="text-center p-4 bg-gray-50 rounded-xl">
@@ -55,10 +55,6 @@
                         <p class="text-sm text-gray-600">Masjid</p>
                     </div>
                 </div>
-
-                <a href="{{ route('wisata.catalog') }}" class="inline-block px-8 py-4 bg-[#34C759] text-white rounded-lg font-semibold transition-all duration-300 hover:bg-[#2dac4c] hover:-translate-y-0.5 shadow-lg hover:shadow-xl mt-4">
-                    Mulai Jelajahi
-                </a>
             </div>
         </div>
     </section>
@@ -71,7 +67,7 @@
             <p class="text-lg text-gray-600 max-w-2xl mx-auto">Jelajahi berbagai jenis destinasi wisata sesuai dengan minat Anda</p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
             {{-- pantai --}}
             <a href="" class="relative h-[600px] overflow-hidden rounded-md no-underline block mb-4 shadow-md">
                 <img src="{{ 'images/pantai.avif' }}" alt="" class="w-full h-full object-cover">
@@ -112,20 +108,6 @@
                 <div class="absolute bottom-12 left-4 right-4 z-10">
                     <h3 class="text-2xl font-bold text-white mb-2 leading-snug"><i class="fa-solid fa-mountain" style="color: rgb(99, 230, 190);"></i> Bukit</h3>
                     <p class="text-white text-sm leading-relaxed line-clamp-3">Daratan yang menonjol lebih tinggi, memberikan elevasi sempurna untuk menikmati udara segar dan pemandangan luas. Berbeda dengan gunung yang terjal, perbukitan adalah hamparan gundukan tanah hijau yang berjajar luas, menciptakan lekukan alam yang ikonik dan menenangkan jiwa.</p>
-                </div>
-            </a>
-            {{-- Pulau --}}
-            <a href="" class="relative h-[600px] overflow-hidden rounded-md no-underline block mb-4 shadow-md">
-                <img src="{{ 'images/gili.avif' }}" alt="" class="w-full h-full object-cover">
-                <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
-                <div class="absolute top-4 right-4 z-10">
-                    <span class="inline-block px-3 py-1 bg-[#34C759] text-white text-xs font-semibold rounded-full uppercase tracking-wide">Pulau</span>
-                </div>
-
-                <!-- Bottom-left description -->
-                <div class="absolute bottom-12 left-4 right-4 z-10">
-                    <h3 class="text-2xl font-bold text-white mb-2 leading-snug"><i class="fa-solid fa-earth-oceania" style="color: rgb(99, 230, 190);"></i> Pulau</h3>
-                    <p class="text-white text-sm leading-relaxed line-clamp-3">Daratan unik yang dikelilingi sepenuhnya oleh air, menawarkan sensasi petualangan yang eksklusif. Di sinilah ukuran bukan masalah, karena keindahan sejati ada pada batas cakrawalanya. Temukan ribuan destinasi di berbagai kepulauan kami, di mana setiap titik tanah punya cerita dan karakter yang berbeda</p>
                 </div>
             </a>
             {{-- Budaya --}}
@@ -173,8 +155,8 @@
                 <div class="inline-block p-4 bg-[#34C759]/10 rounded-xl mb-6">
                     <i class="fa-solid fa-brain text-3xl text-[#34C759]"></i>
                 </div>
-                <h3 class="text-xl font-bold text-gray-800 mb-3">Rekomendasi Cerdas</h3>
-                <p class="text-gray-600 leading-relaxed">Sistem AI kami memberikan rekomendasi wisata yang dipersonalisasi berdasarkan preferensi dan kriteria Anda</p>
+                <h3 class="text-xl font-bold text-gray-800 mb-3">Filter Cerdas</h3>
+                <p class="text-gray-600 leading-relaxed">Sistem kami memberikan rekomendasi wisata yang dipersonalisasi berdasarkan preferensi dan kriteria Anda</p>
             </div>
 
             <!-- Feature 2 -->
@@ -183,7 +165,7 @@
                     <i class="fa-solid fa-compass text-3xl text-[#34C759]"></i>
                 </div>
                 <h3 class="text-xl font-bold text-gray-800 mb-3">Penjelajahan Mudah</h3>
-                <p class="text-gray-600 leading-relaxed">Jelajahi ribuan destinasi wisata dengan antarmuka yang intuitif dan navigasi yang user-friendly</p>
+                <p class="text-gray-600 leading-relaxed">Jelajahi destinasi wisata dengan antarmuka yang intuitif dan navigasi yang user-friendly</p>
             </div>
         </div>
     </section>
@@ -234,19 +216,6 @@
                 <div class="bg-white p-6 rounded-2xl shadow-md hover:shadow-lg transition-all">
                     <div class="flex items-center gap-4 mb-4">
                         <div class="p-3 bg-[#34C759]/10 rounded-lg">
-                            <i class="fa-solid fa-database text-2xl text-[#34C759]"></i>
-                        </div>
-                        <div>
-                            <h4 class="text-lg font-bold text-gray-800">Data Terpercaya</h4>
-                            <p class="text-sm text-gray-600">Informasi</p>
-                        </div>
-                    </div>
-                    <p class="text-gray-700">Semua data destinasi wisata diambil dari sumber terpercaya</p>
-                </div>
-
-                <div class="bg-white p-6 rounded-2xl shadow-md hover:shadow-lg transition-all">
-                    <div class="flex items-center gap-4 mb-4">
-                        <div class="p-3 bg-[#34C759]/10 rounded-lg">
                             <i class="fa-solid fa-rocket text-2xl text-[#34C759]"></i>
                         </div>
                         <div>
@@ -256,62 +225,6 @@
                     </div>
                     <p class="text-gray-700">Menggunakan Framework modern untuk membangun website yang interaktif dan responsif</p>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CONTACT SECTION -->
-    <section class="py-20 px-8 mx-auto max-w-6xl">
-        <div class="text-center mb-16">
-            <span class="inline-block px-4 py-2 bg-[#34C759]/10 text-[#34C759] text-sm font-semibold rounded-full mb-4">Hubungi Saya</span>
-            <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-6">Kontak & Informasi</h2>
-            <p class="text-lg text-gray-600 max-w-2xl mx-auto">Ada pertanyaan atau masukan? Hubungi kami melalui berbagai saluran komunikasi yang tersedia</p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-            <!-- Email Contact -->
-            <div class="bg-gradient-to-br from-[#34C759]/5 to-transparent p-8 rounded-2xl border-2 border-[#34C759]/20 text-center hover:border-[#34C759]/50 transition-all">
-                <div class="inline-block p-4 bg-[#34C759] text-white rounded-full mb-6">
-                    <i class="fa-solid fa-envelope text-2xl"></i>
-                </div>
-                <h3 class="text-xl font-bold text-gray-800 mb-2">Email</h3>
-                <p class="text-gray-600 mb-4">Kirimkan pertanyaan Anda melalui email</p>
-                <a href="mailto:johanfebriansyah2022@gmail.com" class="text-[#34C759] font-semibold hover:underline">johanfebriansyah2022@gmail.com</a>
-            </div>
-
-            <!-- Phone Contact -->
-            <div class="bg-gradient-to-br from-[#34C759]/5 to-transparent p-8 rounded-2xl border-2 border-[#34C759]/20 text-center hover:border-[#34C759]/50 transition-all">
-                <div class="inline-block p-4 bg-[#34C759] text-white rounded-full mb-6">
-                    <i class="fa-solid fa-phone text-2xl"></i>
-                </div>
-                <h3 class="text-xl font-bold text-gray-800 mb-2">Telepon</h3>
-                <p class="text-gray-600 mb-4">Hubungi Saya melalui telepon</p>
-                <a href="tel:+6285974190621" class="text-[#34C759] font-semibold hover:underline">+62 859 7419 0621</a>
-            </div>
-
-            <!-- Address Contact -->
-            <div class="bg-gradient-to-br from-[#34C759]/5 to-transparent p-8 rounded-2xl border-2 border-[#34C759]/20 text-center hover:border-[#34C759]/50 transition-all">
-                <div class="inline-block p-4 bg-[#34C759] text-white rounded-full mb-6">
-                    <i class="fa-solid fa-location-dot text-2xl"></i>
-                </div>
-                <h3 class="text-xl font-bold text-gray-800 mb-2">Alamat</h3>
-                <p class="text-gray-600">Jl. Transmigrasi Karang Bagu<br>Lombok, Indonesia</p>
-            </div>
-        </div>
-
-        <!-- Social Media -->
-        <div class="text-center">
-            <h3 class="text-2xl font-bold text-gray-800 mb-6">Ikuti Saya di Media Sosial</h3>
-            <div class="flex justify-center gap-6 flex-wrap">
-                <a href="https://www.facebook.com/johanjo" class="inline-block p-4 bg-[#34C759]/10 text-[#34C759] rounded-full hover:bg-[#34C759] hover:text-white transition-all duration-300">
-                    <i class="fa-brands fa-facebook text-2xl"></i>
-                </a>
-                <a href="https://www.instagram.com/johanfebrian10" class="inline-block p-4 bg-[#34C759]/10 text-[#34C759] rounded-full hover:bg-[#34C759] hover:text-white transition-all duration-300">
-                    <i class="fa-brands fa-instagram text-2xl"></i>
-                </a>
-                <a href="https://www.youtube.com/noizone" class="inline-block p-4 bg-[#34C759]/10 text-[#34C759] rounded-full hover:bg-[#34C759] hover:text-white transition-all duration-300">
-                    <i class="fa-brands fa-youtube text-2xl"></i>
-                </a>
             </div>
         </div>
     </section>

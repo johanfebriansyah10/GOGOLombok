@@ -47,7 +47,7 @@ class WisataTest extends TestCase
             'location' => 'Bali',
             'latitude' => -8.7211,
             'longitude' => 115.1692,
-            'rating' => 5
+            'actual_rating' => 4.8,
         ]);
 
         $this->assertDatabaseHas('wisatas', [
@@ -75,14 +75,14 @@ class WisataTest extends TestCase
             'category_id' => $category->id,
             'name' => 'Pantai Kuta',
             'location' => 'Bali',
-            'rating' => 5
+            'actual_rating' => 4.8,
         ]);
 
         Wisata::create([
             'category_id' => $category->id,
             'name' => 'Pantai Seminyak',
             'location' => 'Bali',
-            'rating' => 4
+            'actual_rating' => 4.5,
         ]);
 
         $retrieved = Category::find($category->id);
@@ -105,7 +105,7 @@ class WisataTest extends TestCase
             'category_id' => $category->id,
             'name' => 'Pantai Kuta',
             'location' => 'Bali',
-            'rating' => 5
+            'actual_rating' => 4.8,
         ]);
 
         $wisataId = $wisata->id;
@@ -126,10 +126,10 @@ class WisataTest extends TestCase
         $this->seed(\Database\Seeders\CategorySeeder::class);
 
         $this->assertDatabaseCount('categories', 4);
-        $this->assertDatabaseCount('wisatas', 5);
+        $this->assertDatabaseCount('wisatas', 10);
 
         $pantaiCategory = Category::where('name', 'Pantai')->first();
         $this->assertNotNull($pantaiCategory);
-        $this->assertCount(2, $pantaiCategory->wisatas);
+        $this->assertCount(3, $pantaiCategory->wisatas);
     }
 }

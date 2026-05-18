@@ -19,12 +19,12 @@
             ]" />
 
             <!-- Main Content -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-8">
                 <!-- Left Side: Image & Info -->
                 <div class="lg:col-span-2">
                     <!-- Image Gallery -->
                     <div class="bg-white overflow-hidden shadow-lg rounded-lg mb-6">
-                        <div class="relative bg-gray-200 dark:bg-gray-700 overflow-hidden" style="aspect-ratio: 16/9;">
+                        <div class="relative bg-gray-200 overflow-hidden" style="aspect-ratio: 16/9;">
                             @if ($wisata->image_url)
                                 <img
                                     id="mainImage"
@@ -33,10 +33,10 @@
                                     class="w-full h-full object-cover"
                                 />
                             @else
-                                <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-300 to-gray-400 dark:from-gray-600 dark:to-gray-700">
+                                <div class="flex items-center justify-center bg-gradient-to-br from-gray-300 to-gray-400 dark:from-gray-600 dark:to-gray-700">
                                     <div class="text-center">
                                         <div class="text-8xl mb-4">🏞️</div>
-                                        <p class="text-gray-700 dark:text-gray-300">Tidak ada foto</p>
+                                        <p class="text-gray-700">Tidak ada foto</p>
                                     </div>
                                 </div>
                             @endif
@@ -44,7 +44,7 @@
                     </div>
 
                     <!-- Basic Info -->
-                    <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-lg rounded-lg p-6 mb-6">
+                    <div class="bg-white overflow-hidden shadow-lg rounded-lg p-6 mb-6">
                         <h2 class="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4">{{ $wisata->name }}</h2>
 
                         <!-- Rating & Category -->
@@ -64,17 +64,17 @@
                         </div>
 
                         <!-- Location -->
-                        <div class="mb-6 pb-6 border-b border-gray-200 dark:border-gray-700">
-                            <h3 class="font-semibold text-gray-900 dark:text-gray-100 mb-3 flex items-center gap-2">
+                        <div class="mb-6 pb-6 border-b border-gray-200">
+                            <h3 class="font-semibold text-gray-900 mb-3 flex items-center gap-2">
                                 Lokasi
                             </h3>
-                            <p class="text-gray-700 dark:text-gray-300 text-lg mb-2"><strong>{{ $wisata->location }}</strong></p>
-                            <p class="text-gray-600 dark:text-gray-400 text-sm">{{ $wisata->address }}</p>
+                            <p class="text-gray-700 text-lg mb-2"><strong>{{ $wisata->location }}</strong></p>
+                            <p class="text-gray-600 text-sm">{{ $wisata->address }}</p>
                             @if ($wisata->latitude && $wisata->longitude)
                                 <!-- Map Section -->
                                 <div class="mt-4">
-                                    <h4 class="font-semibold text-gray-900 dark:text-gray-100 mb-2">Peta Lokasi</h4>
-                                    <div id="map" style="height: 300px; width: 100%;" class="rounded-lg border border-gray-300 dark:border-gray-600"></div>
+                                    <h4 class="font-semibold text-gray-900 mb-2">Peta Lokasi</h4>
+                                    <div id="map" style="height: 300px; width: 100%;" class="rounded-lg border border-gray-300"></div>
                                 </div>
                             @endif
                         </div>
@@ -91,29 +91,44 @@
                         <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
                             <!-- Distance -->
                             <div class="bg-blue-50 dark:bg-blue-900 p-4 rounded-lg">
-                                <div class="flex items-center gap-2 mb-2">
+                                <div class="flex items-center justify-between gap-2 mb-2">
                                     <span class="text-2xl">🚀</span>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Jarak dari Pusat Kota</p>
+                                    <p class="text-2xl font-bold text-blue-600 dark:text-blue-400">{{ number_format($wisata->distance, 1) }}<span class="text-sm ml-1">km</span></p>
                                 </div>
-                                <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Jarak dari Pusat Kota</p>
-                                <p class="text-2xl font-bold text-blue-600 dark:text-blue-400">{{ number_format($wisata->distance, 1) }}<span class="text-sm ml-1">km</span></p>
+                                {{-- note --}}
+                                <p class="my-4">Note:</p>
+                                <p class="text-md text-center bg-blue-500/80 text-white p-1 rounded mb-2">Dari Titik Nol Kilometer Mataram</p>
                             </div>
 
                             <!-- Ticket Price -->
                             <div class="bg-green-50 dark:bg-green-900 p-4 rounded-lg">
-                                <div class="flex items-center gap-2 mb-2">
+                                <div class="flex items-center justify-between gap-2 mb-2">
                                     <span class="text-2xl">🎟️</span>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Harga Tiket</p>
+                                    <p class="text-xl font-bold text-green-600 dark:text-green-400">Rp <span class="text-sm">{{ number_format($wisata->ticket_price, 0, '', '.') }}</span></p>
                                 </div>
-                                <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Harga Tiket</p>
-                                <p class="text-xl font-bold text-green-600 dark:text-green-400">Rp <span class="text-sm">{{ number_format($wisata->ticket_price, 0, '', '.') }}</span></p>
+                                {{-- note --}}
+                                <p class="my-4">Note:</p>
+                                <p class="text-md text-center bg-green-500/80 text-white p-1 rounded">Sudah Termasuk Parkir</p>
                             </div>
 
                             <!-- Facilities -->
                             <div class="bg-purple-50 dark:bg-purple-900 p-4 rounded-lg">
-                                <div class="flex items-center gap-2 mb-2">
+                                <div class="flex items-center justify-between gap-2 mb-2">
                                     <span class="text-2xl">🏢</span>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold inline">Fasilitas</p>
+                                    <p class="text-2xl font-bold text-purple-600 inline">{{ $wisata->facilities_count ?? 0 }}</p>
                                 </div>
-                                <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Fasilitas</p>
-                                <p class="text-2xl font-bold text-purple-600 dark:text-purple-400">{{ $wisata->facilities_count ?? 0 }}</p>
+                                @if ($wisata->facilities && count($wisata->facilities) > 0)
+                                    <ul class="mt-2 text-sm text-gray-600 flex flex-wrap gap-2">
+                                        @foreach ($wisata->facilities as $facility)
+                                            <li class="inline p-2 bg-purple-500/80 text-white rounded-xl">{{ $facility }}</li>
+                                        @endforeach
+                                    </ul>
+                                @else
+                                    <p class="mt-2 text-sm text-gray-500 dark:text-gray-500">Tidak ada fasilitas</p>
+                                @endif
                             </div>
                         </div>
                     </div>

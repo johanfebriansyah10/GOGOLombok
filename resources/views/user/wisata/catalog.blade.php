@@ -4,20 +4,20 @@
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                 {{ __('Daftar Wisata') }}
             </h2>
-            {{-- <div class="flex gap-2">
+            <div class="flex gap-2">
                 <input
                     type="text"
                     id="searchInput"
                     placeholder="Cari wisata..."
                     class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
                 />
-                <select id="categoryFilter" class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <select id="categoryFilter" class="pr-10 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                     <option value="">Semua Kategori</option>
                     @foreach ($categories as $category)
                         <option value="{{ $category->id }}">{{ $category->name }}</option>
                     @endforeach
                 </select>
-            </div> --}}
+            </div>
         </div>
     </x-slot>
 
@@ -27,17 +27,6 @@
             <x-breadcrumbs :breadcrumbs="[
                 ['label' => 'Daftar Wisata', 'url' => null]
             ]" />
-
-            <!-- Info Box -->
-            <div class="mb-8 bg-gradient-to-r from-blue-50 to-indigo-50 border-l-4 border-blue-500 p-6 rounded-lg">
-                <div class="flex items-start gap-4">
-                    <div class="pt-1">
-                        <h3 class="font-semibold text-gray-900 dark:text-gray-100 mb-2">Jelajahi Wisata Terbaik</h3>
-                        <p class="text-gray-700 dark:text-gray-300 text-sm mb-3">Temukan berbagai destinasi wisata menarik dengan foto, rating, dan informasi lengkap</p>
-                        <p class="text-xs text-gray-600 dark:text-gray-400">Klik salah satu wisata untuk melihat detail lengkap dan analisis SAW</p>
-                    </div>
-                </div>
-            </div>
 
             <!-- Wisata Grid -->
             <div id="wisataContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -88,28 +77,40 @@
                                 <!-- Info Grid (Enhanced) -->
                                 <div class="grid grid-cols-2 gap-3 mb-4">
                                     <!-- Distance -->
-                                    <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-3 rounded-lg transform text-center">
-                                        <p class="text-xs text-gray-600 font-semibold uppercase tracking-wider">🚀 Jarak</p>
+                                    <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-3 rounded-lg transform text-center flex items-center justify-between group-hover:bg-gradient-to-br group-hover:from-blue-100 group-hover:to-blue-200 transition duration-200">
+                                        <div>
+                                            <span class="text-xl">🚀</span>
+                                            <p class="text-xs text-gray-600 font-semibold uppercase tracking-wider">Jarak</p>
+                                        </div>
                                         <p class="text-gray-900 font-bold mt-1">{{ number_format($wisata->distance, 1) }} <span class="text-xs">km</span></p>
                                     </div>
 
                                     <!-- Price -->
-                                    <div class="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900  p-3 rounded-lg text-center">
-                                        <p class="text-xs text-gray-600 dark:text-gray-300 font-semibold uppercase tracking-wider">🎟️ Harga Tiket</p>
+                                    <div class="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900  p-3 rounded-lg text-center flex items-center justify-between group-hover:bg-gradient-to-br group-hover:from-green-100 group-hover:to-green-200 transition duration-200">
+                                        <div>
+                                            <span class="text-xl">🎟️</span>
+                                            <p class="text-xs text-gray-600 font-semibold uppercase tracking-wider">Tiket</p>
+                                        </div>
                                         <p class="text-gray-900 dark:text-gray-100 font-bold mt-1">
                                             <span class="text-xs">Rp</span> {{ number_format($wisata->ticket_price / 1000, 0) }} <span class="text-xs">rb</span>
                                         </p>
                                     </div>
 
                                     <!-- Facilities -->
-                                    <div class="bg-gradient-to-br from-purple-50 to-purple-100 p-3 rounded-lg text-center">
-                                        <p class="text-xs text-gray-600 dark:text-gray-300 font-semibold uppercase tracking-wider">🏢 Fasilitas</p>
+                                    <div class="bg-gradient-to-br from-purple-50 to-purple-100 p-3 rounded-lg text-center flex items-center justify-between group-hover:bg-gradient-to-br group-hover:from-purple-100 group-hover:to-purple-200 transition duration-200">
+                                        <div>
+                                            <span class="text-xl">🏢</span>
+                                            <p class="text-xs text-gray-600 font-semibold uppercase tracking-wider">Fasilitas</p>
+                                        </div>
                                         <p class="text-gray-900 dark:text-gray-100 font-bold mt-1">{{ $wisata->facilities_count ?? 0 }}</p>
                                     </div>
 
                                     <!-- Overall Score -->
-                                    <div class="bg-gradient-to-br from-orange-50 to-orange-100 p-3 rounded-lg text-center">
-                                        <p class="text-xs text-gray-600 font-semibold uppercase tracking-wider">⭐ Rating</p>
+                                    <div class="bg-gradient-to-br from-orange-50 to-orange-100 p-3 rounded-lg text-center flex items-center justify-between group-hover:bg-gradient-to-br group-hover:from-orange-100 group-hover:to-orange-200 transition duration-200">
+                                        <div>
+                                            <span class="text-xl">⭐</span>
+                                            <p class="text-xs text-gray-600 font-semibold uppercase tracking-wider">Rating</p>
+                                        </div>
                                         <p class="text-gray-900 font-bold mt-1">{{ number_format($wisata->actual_rating ?? 0, 1) }}/5</p>
                                     </div>
                                 </div>

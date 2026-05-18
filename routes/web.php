@@ -6,8 +6,8 @@ use App\Http\Controllers\Admin\CriteriaController;
 use App\Http\Controllers\Admin\EvaluationController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\WisataController;
+use App\Http\Controllers\Admin\WeightController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RecommendationController;
 use App\Http\Controllers\SAWResultController;
 use App\Http\Controllers\WisataController as UserWisataController;
@@ -19,25 +19,9 @@ Route::get('/', [DashboardController::class, 'show'])->name('dashboard');
 Route::get('/saw/recommendations', [RecommendationController::class, 'index'])->name('saw.recommendations.index');
 Route::get('/saw/recommendations/reset', [RecommendationController::class, 'reset'])->name('saw.recommendations.reset');
 Route::get('/saw/results', [SAWResultController::class, 'index'])->name('saw.results.index');
-Route::get('/saw/results/analysis/transparent', [SAWResultController::class, 'analysis'])->name('saw.results.analysis');
-Route::get('/saw/results/{wisataId}', [SAWResultController::class, 'detail'])->name('saw.results.detail');
 Route::get('/wisata', [UserWisataController::class, 'catalog'])->name('wisata.catalog');
 Route::get('/wisata/{id}', [UserWisataController::class, 'show'])->name('wisata.show');
 
-// User Dashboard - only for users
-Route::middleware(['auth', 'verified', 'role:user'])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'show'])->name('dashboard');
-});
-
-
-// SAW Results - duplicate, remove from auth group since now public
-// Route::middleware(['auth', 'verified'])->group(function () {
-//     Route::get('/saw/recommendations', [RecommendationController::class, 'index'])->name('saw.recommendations.index');
-//     Route::get('/saw/recommendations/reset', [RecommendationController::class, 'reset'])->name('saw.recommendations.reset');
-//     Route::get('/saw/results', [SAWResultController::class, 'index'])->name('saw.results.index');
-//     Route::get('/saw/results/analysis/transparent', [SAWResultController::class, 'analysis'])->name('saw.results.analysis');
-//     Route::get('/saw/results/{wisataId}', [SAWResultController::class, 'detail'])->name('saw.results.detail');
-// });
 
 // Admin Dashboard - only for admins
 Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
@@ -53,18 +37,14 @@ Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->name('ad
     Route::patch('/criterias-weight/{weight}/update-weight', [CriteriaController::class, 'updateWeight'])->name('criterias.update-weight');
     Route::delete('/criterias-weight/{weight}/destroy-weight', [CriteriaController::class, 'destroyWeight'])->name('criterias.destroy-weight');
 
+    // Weights (Bobot Kategori)
+    Route::resource('weights', WeightController::class);
+
     Route::resource('users', UserController::class);
     Route::get('/evaluations', [EvaluationController::class, 'index'])->name('evaluations.index');
     Route::post('/evaluations', [EvaluationController::class, 'store'])->name('evaluations.store');
+    Route::post('/evaluations/populate', [EvaluationController::class, 'populate'])->name('evaluations.populate');
     Route::delete('/evaluations/{evaluation}', [EvaluationController::class, 'destroy'])->name('evaluations.destroy');
-    Route::post('/evaluations/import', [EvaluationController::class, 'import'])->name('evaluations.import');
-});
-
-// Profile routes - for all authenticated users
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 require __DIR__ . '/auth.php';

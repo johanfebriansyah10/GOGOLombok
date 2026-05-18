@@ -1,8 +1,17 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Edit Wisata') }}
-        </h2>
+        <div class="flex justify-between">
+            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+                {{ __('Edit Wisata') }}
+            </h2>
+
+            <a
+            href="{{ route('admin.wisatas.index') }}"
+            class="bg-gray-600 hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded"
+            >
+                Kembali
+            </a>
+        </div>
     </x-slot>
 
     <div class="py-12">
@@ -61,7 +70,7 @@
                             @enderror
                         </div>
 
-                        <div class="grid grid-cols-2 gap-6 mb-6">
+                        <div class="mb-6">
                             <div>
                                 <label for="location" class="block text-sm font-medium mb-2">Lokasi (Nama)</label>
                                 <input
@@ -73,26 +82,6 @@
                                     required
                                 >
                                 @error('location')
-                                    <span class="text-red-600 text-sm mt-1 block">{{ $message }}</span>
-                                @enderror
-                            </div>
-
-                            <div>
-                                <label for="rating" class="block text-sm font-medium mb-2">Rating (1-5)</label>
-                                <select
-                                    id="rating"
-                                    name="rating"
-                                    class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    required
-                                >
-                                    <option value="">-- Pilih Rating --</option>
-                                    <option value="1" {{ old('rating', $wisata->rating) == 1 ? 'selected' : '' }}>1 - Buruk</option>
-                                    <option value="2" {{ old('rating', $wisata->rating) == 2 ? 'selected' : '' }}>2 - Cukup</option>
-                                    <option value="3" {{ old('rating', $wisata->rating) == 3 ? 'selected' : '' }}>3 - Baik</option>
-                                    <option value="4" {{ old('rating', $wisata->rating) == 4 ? 'selected' : '' }}>4 - Sangat Baik</option>
-                                    <option value="5" {{ old('rating', $wisata->rating) == 5 ? 'selected' : '' }}>5 - Luar Biasa</option>
-                                </select>
-                                @error('rating')
                                     <span class="text-red-600 text-sm mt-1 block">{{ $message }}</span>
                                 @enderror
                             </div>
@@ -220,6 +209,71 @@
                                         <span class="text-red-600 text-sm mt-1 block">{{ $message }}</span>
                                     @enderror
                                 </div>
+
+                                <div>
+                                    <label for="review_count" class="block text-sm font-medium mb-2">👥 Jumlah Reviewer</label>
+                                    <input
+                                        type="number"
+                                        id="review_count"
+                                        name="review_count"
+                                        step="1"
+                                        min="0"
+                                        value="{{ old('review_count', intval($wisata->review_count ?? 0)) }}"
+                                        placeholder="Contoh: 1000"
+                                        class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        required
+                                    >
+                                    @error('review_count')
+                                        <span class="text-red-600 text-sm mt-1 block">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="col-span-2 mt-2">
+                                <label class="block text-sm font-medium mb-2">🏢 Fasilitas Tersedia</label>
+                                <div class="grid grid-cols-2 gap-2">
+                                    @php
+                                        $facilityOptions = ['Toilet', 'Musholla / Masjid', 'Parkir', 'Spot Foto', 'Kuliner', 'WiFi', 'Pemandu Wisata', 'Tempat Sampah', 'Bangku Tempat Duduk', 'Gazebo', 'Cafe', 'Kios Suvenir', 'ATM', 'Tempat Bermain Anak', 'Penginapan', 'Pusat Informasi Wisata', 'Outbound', 'Klinik', 'Penyewaan Alat Snorkeling', 'Area Camping'];
+                                        $facilityLabels = [
+                                            'Toilet' => 'Toilet',
+                                            'Musholla / Masjid' => 'Musholla / Masjid',
+                                            'Parkir' => 'Parkir',
+                                            'Spot Foto' => 'Spot Foto',
+                                            'Kuliner' => 'Kuliner',
+                                            'WiFi' => 'WiFi',
+                                            'Pemandu Wisata' => 'Pemandu Wisata',
+                                            'Tempat Sampah' => 'Tempat Sampah',
+                                            'Bangku Tempat Duduk' => 'Bangku Tempat Duduk',
+                                            'Gazebo' => 'Gazebo',
+                                            'Cafe' => 'Cafe',
+                                            'Kios Suvenir' => 'Kios Suvenir',
+                                            'ATM' => 'ATM',
+                                            'Tempat Bermain Anak' => 'Tempat Bermain Anak',
+                                            'Penginapan' => 'Penginapan',
+                                            'Pusat Informasi Wisata' => 'Pusat Informasi Wisata',
+                                            'Outbound' => 'Outbound',
+                                            'Klinik' => 'Klinik',
+                                            'Penyewaan Alat Snorkeling' => 'Penyewaan Alat Snorkeling',
+                                            'Area Camping' => 'Area Camping',
+                                        ];
+                                        $selectedFacilities = old('facilities', $wisata->facilities ?? []);
+                                    @endphp
+                                    @foreach($facilityOptions as $facility)
+                                    <label class="flex items-center">
+                                        <input
+                                            type="checkbox"
+                                            name="facilities[]"
+                                            value="{{ $facility }}"
+                                            {{ in_array($facility, $selectedFacilities) ? 'checked' : '' }}
+                                            class="rounded border-gray-300 dark:border-gray-600 text-blue-600 focus:ring-blue-500 dark:bg-gray-700"
+                                        >
+                                        <span class="ml-2 text-sm">{{ $facilityLabels[$facility] }}</span>
+                                    </label>
+                                    @endforeach
+                                </div>
+                                @error('facilities')
+                                    <span class="text-red-600 text-sm mt-1 block">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
 
@@ -244,19 +298,13 @@
                             @enderror
                         </div>
 
-                        <div class="flex gap-4">
+                        <div class="flex gap-4 justify-center mb-4">
                             <button
                                 type="submit"
                                 class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded"
                             >
                                 Simpan Perubahan
                             </button>
-                            <a
-                                href="{{ route('admin.wisatas.index') }}"
-                                class="bg-gray-600 hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded"
-                            >
-                                Kembali
-                            </a>
                         </div>
                     </form>
                 </div>

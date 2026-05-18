@@ -19,6 +19,12 @@ class EvaluationController extends Controller
         $criterias = Criteria::with('weight')->get();
         $evaluations = Evaluation::all();
 
+        // Auto-populate jika belum ada evaluasi sama sekali
+        if ($evaluations->isEmpty()) {
+            $this->populateEvaluations();
+            $evaluations = Evaluation::all();
+        }
+
         // Build evaluation matrix for display
         $matrix = [];
         foreach ($wisatas as $wisata) {
@@ -38,6 +44,49 @@ class EvaluationController extends Controller
             'matrix' => $matrix,
             'evaluations' => $evaluations,
         ]);
+    }
+
+    /**
+     * Auto-populate evaluations from wisata data (helper method)
+     */
+    private function populateEvaluations()
+    {
+        $requiredCriteriaCodes = ['C1', 'C2', 'C3', 'C4'];
+        $criteriaIds = Criteria::whereIn('code', $requiredCriteriaCodes)
+            ->pluck('id', 'code');
+
+        $missingCriteriaCodes = array_diff($requiredCriteriaCodes, $criteriaIds->keys()->all());
+
+        if ($missingCriteriaCodes !== []) {
+            return; // Skip jika kriteria tidak lengkap
+        }
+
+        $wisatas = Wisata::all([
+            'id',
+            'ticket_price',
+            'distance',
+            'facilities_count',
+            'actual_rating',
+        ]);
+
+        foreach ($wisatas as $wisata) {
+            $evaluations = [
+                ['criteria_id' => $criteriaIds['C1'], 'value' => $wisata->ticket_price],
+                ['criteria_id' => $criteriaIds['C2'], 'value' => $wisata->distance],
+                ['criteria_id' => $criteriaIds['C3'], 'value' => $wisata->facilities_count],
+                ['criteria_id' => $criteriaIds['C4'], 'value' => $wisata->actual_rating],
+            ];
+
+            foreach ($evaluations as $evaluation) {
+                Evaluation::updateOrCreate(
+                    [
+                        'wisata_id' => $wisata->id,
+                        'criteria_id' => $evaluation['criteria_id'],
+                    ],
+                    ['value' => $evaluation['value']]
+                );
+            }
+        }
     }
 
     /**
@@ -76,6 +125,56 @@ class EvaluationController extends Controller
             'success' => true,
             'message' => 'Evaluasi berhasil dihapus',
         ]);
+    }
+
+    /**
+     * Auto-populate evaluations from wisata data
+     */
+    public function populate()
+    {
+        $requiredCriteriaCodes = ['C1', 'C2', 'C3', 'C4'];
+        $criteriaIds = Criteria::whereIn('code', $requiredCriteriaCodes)
+            ->pluck('id', 'code');
+
+        $missingCriteriaCodes = array_diff($requiredCriteriaCodes, $criteriaIds->keys()->all());
+
+        if ($missingCriteriaCodes !== []) {
+            return redirect()->route('admin.evaluations.index')
+                ->with('error', 'Kriteria berikut belum tersedia: ' . implode(', ', $missingCriteriaCodes));
+        }
+
+        $wisatas = Wisata::all([
+            'id',
+            'ticket_price',
+            'distance',
+            'facilities_count',
+            'actual_rating',
+        ]);
+
+        $populatedCount = 0;
+
+        foreach ($wisatas as $wisata) {
+            $evaluations = [
+                ['criteria_id' => $criteriaIds['C1'], 'value' => $wisata->ticket_price],
+                ['criteria_id' => $criteriaIds['C2'], 'value' => $wisata->distance],
+                ['criteria_id' => $criteriaIds['C3'], 'value' => $wisata->facilities_count],
+                ['criteria_id' => $criteriaIds['C4'], 'value' => $wisata->actual_rating],
+            ];
+
+            foreach ($evaluations as $evaluation) {
+                Evaluation::updateOrCreate(
+                    [
+                        'wisata_id' => $wisata->id,
+                        'criteria_id' => $evaluation['criteria_id'],
+                    ],
+                    ['value' => $evaluation['value']]
+                );
+                $populatedCount++;
+            }
+        }
+
+        return redirect()->route('admin.evaluations.index')
+            ->with('success', "Berhasil mengisi nilai evaluasi data wisata");
     }
 
     /**

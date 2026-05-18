@@ -18,7 +18,7 @@ return new class extends Migration
 
             $table->integer('facilities_count')->default(0)->after('distance')->comment('Jumlah fasilitas tersedia');
 
-            $table->decimal('actual_rating', 3, 2)->default(0)->after('rating')->comment('Rating aktual wisata (0-5)');
+            $table->decimal('actual_rating', 3, 2)->default(0)->after('facilities_count')->comment('Rating aktual wisata (0-5)');
         });
     }
 

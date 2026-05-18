@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Edit Bobot Kriteria') }}
+            {{ __('Edit bobot kriteria') }}
         </h2>
     </x-slot>
 
@@ -35,9 +35,6 @@
                                 required
                                 placeholder="0.2"
                             >
-                            <p class="text-gray-600 dark:text-gray-400 text-xs mt-2">
-                                Contoh: 0.2 = 20%, 0.25 = 25%, dsb.
-                            </p>
                             @error('weight')
                                 <span class="text-red-600 text-sm mt-1 block">{{ $message }}</span>
                             @enderror

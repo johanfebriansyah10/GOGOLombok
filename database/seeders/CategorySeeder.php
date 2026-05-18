@@ -50,7 +50,6 @@ class CategorySeeder extends Seeder
                     'address' => 'Jl. Pantai Kuta, Kuta, Bali',
                     'latitude' => -8.7211,
                     'longitude' => 115.1692,
-                    'rating' => 4,
                     'actual_rating' => 4.6,
                 ],
                 [
@@ -63,7 +62,6 @@ class CategorySeeder extends Seeder
                     'address' => 'Jl. Pantai Seminyak, Seminyak, Bali',
                     'latitude' => -8.6953,
                     'longitude' => 115.1691,
-                    'rating' => 5,
                     'actual_rating' => 4.7,
                 ],
                 [
@@ -76,7 +74,6 @@ class CategorySeeder extends Seeder
                     'address' => 'Kraton, Yogyakarta',
                     'latitude' => -7.8106,
                     'longitude' => 110.3637,
-                    'rating' => 4,
                     'actual_rating' => 4.3,
                 ],
             ],
@@ -91,7 +88,6 @@ class CategorySeeder extends Seeder
                     'address' => 'Cemoro Lawang, Probolinggo, Jawa Timur',
                     'latitude' => -7.9427,
                     'longitude' => 112.9529,
-                    'rating' => 5,
                     'actual_rating' => 4.8,
                 ],
                 [
@@ -104,7 +100,6 @@ class CategorySeeder extends Seeder
                     'address' => 'Sembalun, Lombok, NTB',
                     'latitude' => -8.4077,
                     'longitude' => 116.3842,
-                    'rating' => 4,
                     'actual_rating' => 4.7,
                 ],
             ],
@@ -119,7 +114,6 @@ class CategorySeeder extends Seeder
                     'address' => 'Magelang, Jawa Tengah',
                     'latitude' => -7.6079,
                     'longitude' => 110.2038,
-                    'rating' => 5,
                     'actual_rating' => 4.9,
                 ],
                 [
@@ -132,7 +126,6 @@ class CategorySeeder extends Seeder
                     'address' => 'Yogyakarta, Jawa Tengah',
                     'latitude' => -7.7520,
                     'longitude' => 110.4924,
-                    'rating' => 5,
                     'actual_rating' => 4.8,
                 ],
                 [
@@ -145,7 +138,6 @@ class CategorySeeder extends Seeder
                     'address' => 'Medan, Sumatera Utara',
                     'latitude' => 3.1955,
                     'longitude' => 98.6722,
-                    'rating' => 4,
                     'actual_rating' => 4.2,
                 ],
             ],
@@ -160,7 +152,6 @@ class CategorySeeder extends Seeder
                     'address' => 'Tegenungan, Ubud, Bali',
                     'latitude' => -8.5119,
                     'longitude' => 115.2619,
-                    'rating' => 4,
                     'actual_rating' => 4.4,
                 ],
                 [
@@ -173,7 +164,6 @@ class CategorySeeder extends Seeder
                     'address' => 'Bogor, Jawa Barat',
                     'latitude' => -6.7549,
                     'longitude' => 107.0054,
-                    'rating' => 4,
                     'actual_rating' => 4.5,
                 ],
             ],
