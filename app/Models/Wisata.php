@@ -67,10 +67,6 @@ class Wisata extends Model
 
         $path = trim($this->image);
 
-        if (Str::startsWith($path, ['http://', 'https://'])) {
-            return $path;
-        }
-
         if (Str::startsWith($path, ['/storage/', 'storage/'])) {
             return asset(ltrim($path, '/'));
         }

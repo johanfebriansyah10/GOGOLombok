@@ -18,7 +18,8 @@ Route::get('/landing', fn() => view('landing'))->name('landing');
 Route::get('/', [DashboardController::class, 'show'])->name('dashboard');
 Route::get('/saw/recommendations', [RecommendationController::class, 'index'])->name('saw.recommendations.index');
 Route::get('/saw/recommendations/reset', [RecommendationController::class, 'reset'])->name('saw.recommendations.reset');
-Route::get('/saw/results', [SAWResultController::class, 'index'])->name('saw.results.index');
+Route::get('/saw/ranking', [SAWResultController::class, 'index'])->name('saw.results.index');
+Route::redirect('/saw/results', '/saw/ranking');
 Route::get('/wisata', [UserWisataController::class, 'catalog'])->name('wisata.catalog');
 Route::get('/wisata/{id}', [UserWisataController::class, 'show'])->name('wisata.show');
 

@@ -1,4 +1,6 @@
 @import "sweetalert2/dist/sweetalert2.min.css";
+@import "./saw-recommendations.css";
+@import "./dashboard.css";
 
 @tailwind base;
 @tailwind components;

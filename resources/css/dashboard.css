@@ -1,0 +1,222 @@
+/* Dashboard Component Styles */
+@layer components {
+    /* Section Headers */
+    .section-badge {
+        @apply inline-block px-4 py-2 bg-[#34C759]/10 text-[#34C759] text-sm font-semibold rounded-full mb-4;
+    }
+
+    .section-title {
+        @apply text-4xl md:text-5xl font-bold text-gray-800 mb-6 leading-tight;
+    }
+
+    .section-subtitle {
+        @apply text-lg text-gray-600 max-w-2xl mx-auto;
+    }
+
+    /* Hero Section */
+    .hero-container {
+        @apply relative min-h-[92vh] flex flex-col justify-center items-center text-white overflow-hidden;
+    }
+
+    .hero-badge {
+        @apply absolute -top-20 left-32 z-10;
+    }
+
+    .hero-badge-text {
+        @apply inline-block px-3 py-4 bg-[#34C759]/70 text-5xl font-semibold uppercase rounded-lg;
+    }
+
+    .hero-content {
+        @apply max-w-[700px] animate-fadeInUp opacity-0 text-center mt-28;
+    }
+
+    .hero-title {
+        @apply text-5xl md:text-6xl font-bold mb-4 leading-tight mt-6 text-center;
+    }
+
+    .hero-subtitle {
+        @apply text-9xl;
+    }
+
+    .hero-description {
+        @apply text-lg md:text-2xl text-white/90 mb-10 font-light;
+    }
+
+    .hero-buttons {
+        @apply flex gap-4 justify-center flex-wrap animate-fadeInUp opacity-0 mt-6;
+    }
+
+    .hero-btn-primary {
+        @apply px-8 py-4 bg-[#34C759] text-white rounded-lg font-semibold transition-all duration-300 hover:bg-[#2dac4c] hover:-translate-y-0.5 shadow-lg hover:shadow-xl;
+    }
+
+    .hero-btn-secondary {
+        @apply px-8 py-4 bg-transparent text-white border-2 border-white rounded-lg font-semibold transition-all duration-300 hover:bg-white hover:text-[#34C759];
+    }
+
+    /* About Section */
+    .about-grid {
+        @apply grid grid-cols-1 lg:grid-cols-2 gap-12 items-center;
+    }
+
+    .about-image {
+        @apply relative;
+    }
+
+    .about-image-img {
+        @apply w-full rounded-2xl shadow-2xl object-cover h-[500px];
+    }
+
+    .about-image-accent {
+        @apply absolute -bottom-6 -right-6 w-40 h-40 bg-[#34C759]/20 rounded-full blur-3xl;
+    }
+
+    .about-content {
+        @apply space-y-6;
+    }
+
+    .about-stats {
+        @apply grid grid-cols-3 gap-4 pt-4;
+    }
+
+    /* Category Cards */
+    .category-card {
+        @apply relative h-[600px] overflow-hidden rounded-md no-underline block mb-4 shadow-md;
+    }
+
+    .category-card-img {
+        @apply w-full h-full object-cover;
+    }
+
+    .category-card-overlay {
+        @apply absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent;
+    }
+
+    .category-card-badge {
+        @apply absolute top-4 right-4 z-10;
+    }
+
+    .category-card-badge-text {
+        @apply inline-block px-3 py-1 bg-[#34C759] text-white text-xs font-semibold rounded-full uppercase tracking-wide;
+    }
+
+    .category-card-content {
+        @apply absolute bottom-12 left-4 right-4 z-10;
+    }
+
+    .category-card-title {
+        @apply text-2xl font-bold text-white mb-2 leading-snug;
+    }
+
+    .category-card-description {
+        @apply text-white text-sm leading-relaxed line-clamp-3;
+    }
+
+    .category-card-icon {
+        @apply mr-2;
+    }
+
+    /* Feature Cards */
+    .feature-card {
+        @apply bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1;
+    }
+
+    .feature-card-icon-box {
+        @apply inline-block p-4 bg-[#34C759]/10 rounded-xl mb-6;
+    }
+
+    .feature-card-icon {
+        @apply text-3xl text-[#34C759];
+    }
+
+    .feature-card-title {
+        @apply text-xl font-bold text-gray-800 mb-3;
+    }
+
+    .feature-card-text {
+        @apply text-gray-600 leading-relaxed;
+    }
+
+    /* Stat Boxes */
+    .stat-box {
+        @apply text-center p-4 bg-gray-50 rounded-xl;
+    }
+
+    .stat-box-number {
+        @apply text-3xl font-bold text-[#34C759] mb-2;
+    }
+
+    .stat-box-label {
+        @apply text-sm text-gray-600;
+    }
+
+    /* Info Boxes */
+    .info-box {
+        @apply bg-white p-6 rounded-2xl shadow-md hover:shadow-lg transition-all;
+    }
+
+    .info-box-header {
+        @apply flex items-center gap-4 mb-4;
+    }
+
+    .info-box-icon {
+        @apply p-3 bg-[#34C759]/10 rounded-lg;
+    }
+
+    .info-box-icon-inner {
+        @apply text-2xl text-[#34C759];
+    }
+
+    .info-box-title {
+        @apply text-lg font-bold text-gray-800;
+    }
+
+    .info-box-subtitle {
+        @apply text-sm text-gray-600;
+    }
+
+    .info-box-text {
+        @apply text-gray-700;
+    }
+
+    /* About Website Section */
+    .about-website-container {
+        @apply py-20 px-8 mx-auto max-w-6xl bg-gradient-to-br from-gray-50 to-gray-100 rounded-3xl;
+    }
+
+    .about-website-grid {
+        @apply grid grid-cols-1 md:grid-cols-2 gap-12 items-center;
+    }
+
+    .about-website-content {
+        @apply space-y-6;
+    }
+
+    .about-website-heading {
+        @apply text-2xl font-bold text-gray-800;
+    }
+
+    .about-website-text {
+        @apply text-gray-700 leading-relaxed;
+    }
+
+    .about-website-list {
+        @apply space-y-3;
+    }
+
+    .about-website-list-item {
+        @apply flex items-center gap-3;
+    }
+
+    .about-website-list-dot {
+        @apply inline-block w-2 h-2 bg-[#34C759] rounded-full;
+    }
+
+    .about-website-list-text {
+        @apply text-gray-700;
+    }
+
+    .about-website-boxes {
+        @apply grid grid-cols-1 gap-6;
+    }
+}

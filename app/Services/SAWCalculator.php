@@ -16,8 +16,13 @@ class SAWCalculator
             throw new \Exception('Total bobot harus sama dengan 1');
         }
 
-        // 2. Ambil wisata dengan filter (jika ada)
+        // 2. Ambil wisata
         $wisatasQuery = Wisata::all();
+
+        // Jika user location valid diberikan di filters, attach jarak ke setiap wisata
+        if (is_array($filters) && self::hasValidCoordinates($filters['user_lat'] ?? null, $filters['user_lng'] ?? null)) {
+            $wisatasQuery = self::attachDistances($wisatasQuery, $filters['user_lat'], $filters['user_lng']);
+        }
 
         if ($filters && is_array($filters)) {
             $wisatasQuery = self::applyFilters($wisatasQuery, $filters);
@@ -74,18 +79,63 @@ class SAWCalculator
     }
 
     /**
+     * Attach computed distance (km) from user location to each wisata in collection
+     */
+    private static function attachDistances($wisatas, $userLat, $userLng)
+    {
+        return $wisatas->map(function ($wisata) use ($userLat, $userLng) {
+            $lat2 = $wisata->latitude ?? null;
+            $lng2 = $wisata->longitude ?? null;
+
+            if (is_null($lat2) || is_null($lng2)) {
+                $wisata->distance = (float) ($wisata->distance ?? 0);
+            } else {
+                $wisata->distance = round(self::haversineDistance($userLat, $userLng, $lat2, $lng2), 2);
+            }
+
+            return $wisata;
+        });
+    }
+
+    /**
+     * Haversine formula to calculate distance between two lat/lng points in kilometers
+     */
+    private static function haversineDistance($lat1, $lon1, $lat2, $lon2)
+    {
+        $earthRadius = 6371; // km
+
+        $dLat = deg2rad($lat2 - $lat1);
+        $dLon = deg2rad($lon2 - $lon1);
+
+        $a = sin($dLat / 2) * sin($dLat / 2) + cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * sin($dLon / 2) * sin($dLon / 2);
+        $c = 2 * atan2(sqrt($a), sqrt(1 - $a));
+        $d = $earthRadius * $c;
+
+        return $d;
+    }
+
+    private static function hasValidCoordinates($lat, $lng): bool
+    {
+        if (!is_numeric($lat) || !is_numeric($lng)) {
+            return false;
+        }
+
+        $lat = (float) $lat;
+        $lng = (float) $lng;
+
+        return $lat >= -90 && $lat <= 90 && $lng >= -180 && $lng <= 180;
+    }
+
+    /**
      * Build decision matrix (wisata × kriteria)
      */
     private static function buildDecisionMatrix($wisatas, $criterias, $evaluations)
     {
         $matrix = [];
 
-        // Gunakan prior netral agar review_count tetap punya efek walau rating sama
+        // Hitung rata-rata rating wisata sebagai prior untuk Bayesian weighted rating
         $ratingCriteria = $criterias->firstWhere('code', 'C4');
-        $ratingPrior = 2.5;
-        if ($ratingCriteria) {
-            $ratingPrior = self::getRatingPriorValue();
-        }
+        $ratingPrior = self::getRatingPriorValue(); // Ambil rata-rata rating wisata
 
         foreach ($wisatas as $wisata) {
             $row = [
@@ -102,11 +152,15 @@ class SAWCalculator
 
                 $value = $eval ? $eval->value : 0;
 
+                if ($criteria->code === 'C2') {
+                    $value = $wisata->distance ?? $value;
+                }
+
                 // Jika kriteria rating (C4), gunakan weighted rating dengan review_count dari database
                 if ($criteria->code === 'C4' && $ratingCriteria) {
                     $R = $wisata->actual_rating ?? 0; // actual rating dari wisata
                     $v = $wisata->review_count ?? 0; // jumlah reviewer dari wisata
-                    $m = 1000; // minimum ratings threshold untuk credibility (disesuaikan dengan data distribution)
+                    $m = 50; // minimumratings threshold untuk credibility (disesuaikan dengan data distribution)
                     $C = $ratingPrior; // prior netral rating pada skala 0-5
 
                     if ($v > 0) {
@@ -219,6 +273,7 @@ class SAWCalculator
                 'wisata_id' => $row['wisata_id'],
                 'wisata_name' => $row['wisata_name'],
                 'image' => $wisata->image,
+                'distance' => (float) ($wisata->distance ?? 0),
                 'actual_rating' => (float) ($wisata->actual_rating ?? 0),
                 'review_count' => (int) ($wisata->review_count ?? 0),
                 'score' => round($totalScore, 4),
@@ -230,11 +285,19 @@ class SAWCalculator
     }
 
     /**
-     * Neutral prior for 0-5 rating scale.
+     * Calculate average rating from all wisata as neutral prior.
+     * If no wisata data, fallback to 2.5 (midpoint of 0-5 scale).
      */
     private static function getRatingPriorValue()
     {
-        return 2.5;
+        $averageRating = Wisata::where('actual_rating', '>', 0)->avg('actual_rating');
+
+        // Jika tidak ada wisata dengan rating, gunakan midpoint
+        if (is_null($averageRating) || $averageRating == 0) {
+            return 2.5;
+        }
+
+        return round($averageRating, 2);
     }
 
     /**
