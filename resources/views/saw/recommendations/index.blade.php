@@ -150,15 +150,57 @@
                                 </div>
                             </div>
 
+                        <!-- Location Section -->
+                        <div class="mt-2 p-4 bg-gray-50 rounded-lg border border-gray-200">
+                            <label class="form-label mb-3">📍 Lokasi Anda</label>
+                            <p class="text-xs text-gray-500 mb-4">Gunakan GPS untuk lokasi akurat, atau pilih wilayah secara manual jika GPS tidak tersedia.</p>
+
+                            <div class="flex flex-col sm:flex-row gap-3 items-stretch sm:items-end">
+                                <!-- GPS Button -->
+                                <div class="flex-1">
+                                    <label class="text-xs font-medium text-gray-600 mb-1 block">Deteksi Otomatis</label>
+                                    <button
+                                        type="button"
+                                        id="use-location"
+                                        class="btn-outline w-full"
+                                    >
+                                        📡 Gunakan Posisi Saya
+                                    </button>
+                                </div>
+
+                                <div class="flex items-center justify-center text-xs text-gray-400 font-medium">
+                                    atau
+                                </div>
+
+                                <!-- Manual Region Dropdown -->
+                                <div class="flex-1">
+                                    <label for="selected_region" class="text-xs font-medium text-gray-600 mb-1 block">Pilih Wilayah Manual</label>
+                                    <select
+                                        id="selected_region"
+                                        name="selected_region"
+                                        class="form-input w-full"
+                                    >
+                                        <option value="">-- Pilih Wilayah --</option>
+                                        @php
+                                            $regionCenters = \App\Http\Controllers\RecommendationController::getRegionCenters();
+                                        @endphp
+                                        @foreach($regionCenters as $regionName => $coords)
+                                            <option
+                                                value="{{ $regionName }}"
+                                                data-lat="{{ $coords['lat'] }}"
+                                                data-lng="{{ $coords['lng'] }}"
+                                                {{ ($filters['selected_region'] ?? '') === $regionName ? 'selected' : '' }}
+                                            >
+                                                {{ $regionName }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- Submit Button -->
                         <div class="flex gap-3 justify-end pt-4">
-                            <button
-                                type="button"
-                                id="use-location"
-                                class="btn-outline"
-                            >
-                                Gunakan Posisi Saya
-                            </button>
                             <button
                                 type="submit"
                                 class="btn-primary"
@@ -176,6 +218,7 @@
                                 $locationSourceLabels = [
                                     'gps' => 'GPS Browser',
                                     'ip' => 'IP Geolocation',
+                                    'manual' => 'Pilihan Manual',
                                 ];
                                 $locationSourceLabel = $locationSourceLabels[$filters['location_source'] ?? ''] ?? 'Belum diketahui';
                             @endphp
@@ -300,7 +343,7 @@
                                                 </div>
                                             </div>
                                             <div class="mt-3 flex justify-end">
-                                                <a href="{{ route('wisata.show', $wisata->id) }}" class="px-3 py-2 bg-blue-500 text-white rounded text-sm">Detail</a>
+                                                <a href="{{ route('wisata.show', $wisata->id) }}?ref=rekomendasi" class="px-3 py-2 bg-blue-500 text-white rounded text-sm">Detail</a>
                                             </div>
                                         </div>
                                     @endforeach
@@ -379,7 +422,7 @@
                                                         </div>
                                                     </td>
                                                     <td class="px-4 py-3">
-                                                        <a href="{{ route('wisata.show', $wisata->id) }}" class="inline-block px-3 py-2 bg-blue-500 text-white text-xs rounded-lg hover:bg-blue-600 transition">
+                                                        <a href="{{ route('wisata.show', $wisata->id) }}?ref=rekomendasi" class="inline-block px-3 py-2 bg-blue-500 text-white text-xs rounded-lg hover:bg-blue-600 transition">
                                                             Detail
                                                         </a>
                                                     </td>
@@ -419,16 +462,18 @@
             const lngInput = document.getElementById('user_lng');
             const regencyInput = document.getElementById('user_regency');
             const sourceInput = document.getElementById('location_source');
+            const regionSelect = document.getElementById('selected_region');
             const form = document.querySelector('form[action="{{ route('saw.recommendations.index') }}"]');
             const submitBtn = form?.querySelector('button[type="submit"]');
             const mapContainer = document.getElementById('userLocationMap');
             const placeholder = document.getElementById('mapPlaceholder');
             const locationStatus = document.getElementById('locationStatus');
-            const defaultUseBtnText = useBtn?.textContent || 'Gunakan Posisi Saya';
+            const defaultUseBtnText = useBtn?.textContent || '📡 Gunakan Posisi Saya';
             const defaultSubmitBtnText = submitBtn?.textContent || 'Cari Wisata';
             const sourceLabels = {
                 gps: 'GPS Browser',
-                ip: 'IP Geolocation'
+                ip: 'IP Geolocation',
+                manual: 'Pilihan Manual'
             };
             const supportedRegencies = [
                 {name: 'Lombok Barat', aliases: ['lombok barat', 'kabupaten lombok barat']},
@@ -525,7 +570,7 @@
                 }
             }
 
-            function initMap(lat, lng) {
+            function initMap(lat, lng, popupText) {
                 if (!mapContainer || !hasValidCoordinates(lat, lng)) return;
 
                 if (typeof L === 'undefined') {
@@ -546,8 +591,9 @@
 
                 if (userMarker) {
                     userMarker.setLatLng(center);
+                    userMarker.setPopupContent(popupText || 'Lokasi Anda saat ini');
                 } else {
-                    userMarker = L.marker(center).addTo(leafletMap).bindPopup('Lokasi Anda saat ini').openPopup();
+                    userMarker = L.marker(center).addTo(leafletMap).bindPopup(popupText || 'Lokasi Anda saat ini').openPopup();
                 }
 
                 window.setTimeout(function() {
@@ -561,8 +607,13 @@
 
                 if (hasValidCoordinates(lat, lng)) {
                     if (placeholder) placeholder.remove();
-                    initMap(lat, lng);
-                    updateLocationStatus(lat, lng, sourceInput?.value, regencyInput?.value);
+                    const source = sourceInput?.value || '';
+                    const regency = regencyInput?.value || '';
+                    const popupText = source === 'manual'
+                        ? 'Pusat wilayah: ' + regency
+                        : 'Lokasi Anda saat ini';
+                    initMap(lat, lng, popupText);
+                    updateLocationStatus(lat, lng, source, regency);
                     return true;
                 }
 
@@ -676,14 +727,47 @@
                 try {
                     const location = await resolveUserLocation();
                     setLocationInputs(location);
-                    initMap(location.lat, location.lng);
+                    // GPS/IP succeeded — clear manual region dropdown so it doesn't override
+                    if (regionSelect) {
+                        regionSelect.value = '';
+                    }
+                    initMap(location.lat, location.lng, 'Lokasi Anda saat ini');
                     updateLocationStatus(location.lat, location.lng, location.source, location.regency);
                     form.submit();
                 } catch (error) {
-                    alert('Gagal mendapatkan lokasi. Mohon izinkan akses lokasi pada browser Anda.');
+                    alert('Gagal mendapatkan lokasi otomatis. Silakan pilih wilayah secara manual dari dropdown.');
                     setLoadingState(false);
                     isResolvingLocation = false;
                 }
+            }
+
+            // Handle manual region dropdown change
+            if (regionSelect) {
+                regionSelect.addEventListener('change', function() {
+                    const selected = regionSelect.options[regionSelect.selectedIndex];
+                    if (!selected || !selected.value) {
+                        return;
+                    }
+
+                    const lat = parseFloat(selected.dataset.lat);
+                    const lng = parseFloat(selected.dataset.lng);
+                    const regionName = selected.value;
+
+                    if (!hasValidCoordinates(lat, lng)) return;
+
+                    // Set hidden inputs for manual location
+                    setLocationInputs({
+                        lat: lat,
+                        lng: lng,
+                        regency: regionName,
+                        source: 'manual'
+                    });
+
+                    // Show map at region center
+                    if (placeholder) placeholder.remove();
+                    initMap(lat, lng, 'Pusat wilayah: ' + regionName);
+                    updateLocationStatus(lat, lng, 'manual', regionName);
+                });
             }
 
             syncMapFromInputs();
@@ -699,10 +783,12 @@
                     const lat = parseFloat(latInput?.value);
                     const lng = parseFloat(lngInput?.value);
 
+                    // If we already have valid coordinates (from GPS, IP, or manual dropdown), submit normally
                     if (hasValidCoordinates(lat, lng)) {
                         return;
                     }
 
+                    // No coordinates at all — try auto-detect before submitting
                     event.preventDefault();
                     resolveLocationAndSubmit();
                 });

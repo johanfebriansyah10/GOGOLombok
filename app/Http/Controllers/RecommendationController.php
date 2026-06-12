@@ -20,6 +20,18 @@ class RecommendationController extends Controller
     ];
 
     /**
+     * Default center coordinates for each supported regency.
+     * Used as fallback when GPS/IP location is unavailable.
+     */
+    private const REGION_CENTERS = [
+        'Lombok Barat'  => ['lat' => -8.6500, 'lng' => 116.0800],
+        'Lombok Tengah' => ['lat' => -8.7200, 'lng' => 116.2700],
+        'Lombok Timur'  => ['lat' => -8.6500, 'lng' => 116.5400],
+        'Lombok Utara'  => ['lat' => -8.3500, 'lng' => 116.1600],
+        'Kota Mataram'  => ['lat' => -8.5800, 'lng' => 116.1200],
+    ];
+
+    /**
      * Show recommendation form with filter preferences
      */
     public function index(Request $request)
@@ -35,6 +47,7 @@ class RecommendationController extends Controller
             'user_lng' => $request->input('user_lng'),
             'user_regency' => $this->normalizeRegency($request->input('user_regency')),
             'location_source' => $this->normalizeLocationSource($request->input('location_source')),
+            'selected_region' => $request->input('selected_region'),
         ];
 
         if ($this->hasValidCoordinates($filters['user_lat'], $filters['user_lng'])) {
@@ -52,7 +65,25 @@ class RecommendationController extends Controller
                 'source' => $filters['location_source'],
             ]);
         } else {
-            unset($filters['user_lat'], $filters['user_lng'], $filters['user_regency'], $filters['location_source']);
+            // Fallback: if no valid GPS/IP coordinates, check for manual region selection
+            $selectedRegion = $filters['selected_region'] ?? null;
+
+            if ($selectedRegion && isset(self::REGION_CENTERS[$selectedRegion])) {
+                $center = self::REGION_CENTERS[$selectedRegion];
+                $filters['user_lat'] = $center['lat'];
+                $filters['user_lng'] = $center['lng'];
+                $filters['user_regency'] = $selectedRegion;
+                $filters['location_source'] = 'manual';
+
+                $request->session()->put('recommendation_user_location', [
+                    'latitude' => $center['lat'],
+                    'longitude' => $center['lng'],
+                    'regency' => $selectedRegion,
+                    'source' => 'manual',
+                ]);
+            } else {
+                unset($filters['user_lat'], $filters['user_lng'], $filters['user_regency'], $filters['location_source']);
+            }
         }
 
         // Remove null/empty values
@@ -111,7 +142,7 @@ class RecommendationController extends Controller
 
     private function normalizeLocationSource(?string $source): ?string
     {
-        return in_array($source, ['gps', 'ip'], true) ? $source : null;
+        return in_array($source, ['gps', 'ip', 'manual'], true) ? $source : null;
     }
 
     private function resolveRegencyFromCoordinates(float $lat, float $lng): ?string
@@ -180,5 +211,13 @@ class RecommendationController extends Controller
         }
 
         return null;
+    }
+
+    /**
+     * Get available region centers for the view.
+     */
+    public static function getRegionCenters(): array
+    {
+        return self::REGION_CENTERS;
     }
 }

@@ -4,45 +4,45 @@
             <!-- Logo -->
             <div class="flex items-center">
                 <a href="{{ route('dashboard') }}" class="flex items-center gap-2 font-bold text-gray-800 text-lg hover:opacity-80 transition">
-                    <x-application-logo1/>
+                    <x-application-logo1 />
                 </a>
             </div>
 
             <!-- Desktop Navigation (Centered) -->
             <div class="hidden md:flex items-center gap-4">
                 @if (Auth::check() && Auth::user()->role === 'admin')
-                    <a href="{{ route('admin.dashboard') }}" class="px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('admin.dashboard') ? 'text-gray-100 border-b-2 border-gray-100 hover:border-blue-300': 'text-gray-100 hover:border-blue-300 hover:border-b-2 border-b-2 border-transparent' }} transition">
-                        Dashboard
-                    </a>
-                    <a href="{{ route('admin.categories.index') }}" class="px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('admin.categories.*') ? 'text-gray-100 border-b-2 border-gray-100 hover:border-blue-300': 'text-gray-100 hover:border-blue-300 hover:border-b-2 border-b-2 border-transparent' }} transition">
-                        Kategori
-                    </a>
-                    <a href="{{ route('admin.wisatas.index') }}" class="px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('admin.wisatas.*') ? 'text-gray-100 border-b-2 border-gray-100 hover:border-blue-300': 'text-gray-100 hover:border-blue-300 hover:border-b-2 border-b-2 border-transparent' }} transition">
-                        Wisata
-                    </a>
-                    <a href="{{ route('admin.criterias.index') }}" class="px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('admin.criterias.*') ? 'text-gray-100 border-b-2 border-gray-100 hover:border-blue-300': 'text-gray-100 hover:border-blue-300 hover:border-b-2 border-b-2 border-transparent' }} transition">
-                        Kriteria
-                    </a>
-                    <a href="{{ route('admin.weights.index') }}" class="px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('admin.weights.*') ? 'text-gray-100 border-b-2 border-gray-100 hover:border-blue-300': 'text-gray-100 hover:border-blue-300 hover:border-b-2 border-b-2 border-transparent' }} transition">
-                        Bobot Kategori
-                    </a>
-                    <a href="{{ route('admin.evaluations.index') }}" class="px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('admin.evaluations.*') ? 'text-gray-100 border-b-2 border-gray-100 hover:border-blue-300': 'text-gray-100 hover:border-blue-300 hover:border-b-2 border-b-2 border-transparent' }} transition">
-                        Evaluasi
-                    </a>
+                <a href="{{ route('admin.dashboard') }}" class="px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('admin.dashboard') ? 'text-gray-100 border-b-2 border-gray-100 hover:border-blue-300': 'text-gray-100 hover:border-blue-300 hover:border-b-2 border-b-2 border-transparent' }} transition">
+                    Dashboard
+                </a>
+                <a href="{{ route('admin.categories.index') }}" class="px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('admin.categories.*') ? 'text-gray-100 border-b-2 border-gray-100 hover:border-blue-300': 'text-gray-100 hover:border-blue-300 hover:border-b-2 border-b-2 border-transparent' }} transition">
+                    Kategori
+                </a>
+                <a href="{{ route('admin.wisatas.index') }}" class="px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('admin.wisatas.*') ? 'text-gray-100 border-b-2 border-gray-100 hover:border-blue-300': 'text-gray-100 hover:border-blue-300 hover:border-b-2 border-b-2 border-transparent' }} transition">
+                    Wisata
+                </a>
+                <a href="{{ route('admin.criterias.index') }}" class="px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('admin.criterias.*') ? 'text-gray-100 border-b-2 border-gray-100 hover:border-blue-300': 'text-gray-100 hover:border-blue-300 hover:border-b-2 border-b-2 border-transparent' }} transition">
+                    Kriteria
+                </a>
+                <a href="{{ route('admin.weights.index') }}" class="px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('admin.weights.*') ? 'text-gray-100 border-b-2 border-gray-100 hover:border-blue-300': 'text-gray-100 hover:border-blue-300 hover:border-b-2 border-b-2 border-transparent' }} transition">
+                    Bobot Kategori
+                </a>
+                <a href="{{ route('admin.evaluations.index') }}" class="px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('admin.evaluations.*') ? 'text-gray-100 border-b-2 border-gray-100 hover:border-blue-300': 'text-gray-100 hover:border-blue-300 hover:border-b-2 border-b-2 border-transparent' }} transition">
+                    Evaluasi
+                </a>
                 @else
-                    <!-- Guest navigation -->
-                    <a href="{{ route('dashboard') }}" class="px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('dashboard') ? 'text-gray-100 border-b-2 border-gray-100 hover:border-blue-300': 'text-gray-100 hover:border-blue-300 hover:border-b-2 border-b-2 border-transparent' }} transition">
-                        Dashboard
-                    </a>
-                    <a href="{{ route('wisata.catalog') }}" class="px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('wisata.*') ? 'text-gray-100 border-b-2 border-gray-100 hover:border-blue-300': 'text-gray-100 hover:border-blue-300 hover:border-b-2 border-b-2 border-transparent' }} transition">
-                        Wisata
-                    </a>
-                    <a href="{{ route('saw.recommendations.index') }}" class="px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('saw.recommendations.*') ? 'text-gray-100 border-b-2 border-gray-100 hover:border-blue-300': 'text-gray-100 hover:border-blue-300 hover:border-b-2 border-b-2 border-transparent' }} transition">
-                        Rekomendasi
-                    </a>
-                    <a href="{{ route('saw.results.index') }}" class="px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('saw.results.*') ? 'text-gray-100 border-b-2 border-gray-100 hover:border-blue-300': 'text-gray-100 hover:border-blue-300 hover:border-b-2 border-b-2 border-transparent' }} transition">
-                        Ranking
-                    </a>
+                <!-- Guest navigation -->
+                <a href="{{ route('dashboard') }}" class="px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('dashboard') ? 'text-gray-100 border-b-2 border-gray-100 hover:border-blue-300': 'text-gray-100 hover:border-blue-300 hover:border-b-2 border-b-2 border-transparent' }} transition">
+                    Dashboard
+                </a>
+                <a href="{{ route('wisata.catalog') }}" class="px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('wisata.*') ? 'text-gray-100 border-b-2 border-gray-100 hover:border-blue-300': 'text-gray-100 hover:border-blue-300 hover:border-b-2 border-b-2 border-transparent' }} transition">
+                    Wisata
+                </a>
+                <a href="{{ route('saw.recommendations.index') }}" class="px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('saw.recommendations.*') ? 'text-gray-100 border-b-2 border-gray-100 hover:border-blue-300': 'text-gray-100 hover:border-blue-300 hover:border-b-2 border-b-2 border-transparent' }} transition">
+                    Rekomendasi
+                </a>
+                <!-- <a href="{{ route('saw.results.index') }}" class="px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('saw.results.*') ? 'text-gray-100 border-b-2 border-gray-100 hover:border-blue-300': 'text-gray-100 hover:border-blue-300 hover:border-b-2 border-b-2 border-transparent' }} transition">
+                    Ranking
+                </a> -->
                 @endif
             </div>
 
@@ -54,16 +54,15 @@
                     @csrf
                     <button
                         type="submit"
-                        class="inline-flex items-center px-4 py-2 bg-white text-green-600 font-semibold rounded-lg hover:bg-gray-100 transition"
-                    >
+                        class="inline-flex items-center px-4 py-2 bg-white text-green-600 font-semibold rounded-lg hover:bg-gray-100 transition">
                         {{ __('Log Out') }}
                     </button>
                 </form>
                 @else
                 <!-- Login Button for Guests -->
-                <a href="{{ route('admin.login') }}" class="hidden md:inline-flex items-center px-4 py-2 bg-white text-green-600 font-semibold rounded-lg hover:bg-gray-100 transition">
+                <!-- <a href="{{ route('admin.login') }}" class="hidden md:inline-flex items-center px-4 py-2 bg-white text-green-600 font-semibold rounded-lg hover:bg-gray-100 transition">
                     Admin Login
-                </a>
+                </a> -->
                 @endif
 
                 <!-- Mobile Hamburger Menu -->
@@ -82,48 +81,48 @@
         <div x-show="open" class="md:hidden border-t border-gray-200 bg-white">
             <div class="px-2 pt-2 pb-3 space-y-1">
                 @if (Auth::check() && Auth::user()->role === 'admin')
-                    <a href="{{ route('admin.dashboard') }}" class="block px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('admin.dashboard') ? 'text-gray-500 border-b-2 border-blue-300': 'text-gray-700 hover:text-blue-600 hover:bg-gray-50' }} transition">
-                        Dashboard
-                    </a>
-                    <a href="{{ route('admin.categories.index') }}" class="block px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('admin.categories.*') ? 'text-gray-500 border-b-2 border-blue-300': 'text-gray-700 hover:text-blue-600 hover:bg-gray-50' }} transition">
-                        Kategori
-                    </a>
-                    <a href="{{ route('admin.wisatas.index') }}" class="block px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('admin.wisatas.*') ? 'text-gray-500 border-b-2 border-blue-300': 'text-gray-700 hover:text-blue-600 hover:bg-gray-50' }} transition">
-                        Wisata
-                    </a>
-                    <a href="{{ route('admin.criterias.index') }}" class="block px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('admin.criterias.*') ? 'text-gray-500 border-b-2 border-blue-300': 'text-gray-700 hover:text-blue-600 hover:bg-gray-50' }} transition">
-                        Kriteria
-                    </a>
-                    <a href="{{ route('admin.weights.index') }}" class="block px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('admin.weights.*') ? 'text-gray-500 border-b-2 border-blue-300': 'text-gray-700 hover:text-blue-600 hover:bg-gray-50' }} transition">
-                        Bobot Kategori
-                    </a>
-                    <a href="{{ route('admin.evaluations.index') }}" class="block px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('admin.evaluations.*') ? 'text-gray-500 border-b-2 border-blue-300': 'text-gray-700 hover:text-blue-600 hover:bg-gray-50' }} transition">
-                        Evaluasi
-                    </a>
+                <a href="{{ route('admin.dashboard') }}" class="block px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('admin.dashboard') ? 'text-gray-500 border-b-2 border-blue-300': 'text-gray-700 hover:text-blue-600 hover:bg-gray-50' }} transition">
+                    Dashboard
+                </a>
+                <a href="{{ route('admin.categories.index') }}" class="block px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('admin.categories.*') ? 'text-gray-500 border-b-2 border-blue-300': 'text-gray-700 hover:text-blue-600 hover:bg-gray-50' }} transition">
+                    Kategori
+                </a>
+                <a href="{{ route('admin.wisatas.index') }}" class="block px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('admin.wisatas.*') ? 'text-gray-500 border-b-2 border-blue-300': 'text-gray-700 hover:text-blue-600 hover:bg-gray-50' }} transition">
+                    Wisata
+                </a>
+                <a href="{{ route('admin.criterias.index') }}" class="block px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('admin.criterias.*') ? 'text-gray-500 border-b-2 border-blue-300': 'text-gray-700 hover:text-blue-600 hover:bg-gray-50' }} transition">
+                    Kriteria
+                </a>
+                <a href="{{ route('admin.weights.index') }}" class="block px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('admin.weights.*') ? 'text-gray-500 border-b-2 border-blue-300': 'text-gray-700 hover:text-blue-600 hover:bg-gray-50' }} transition">
+                    Bobot Kategori
+                </a>
+                <a href="{{ route('admin.evaluations.index') }}" class="block px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('admin.evaluations.*') ? 'text-gray-500 border-b-2 border-blue-300': 'text-gray-700 hover:text-blue-600 hover:bg-gray-50' }} transition">
+                    Evaluasi
+                </a>
                 @elseif (Auth::check())
-                    <a href="{{ route('dashboard') }}" class="block px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('dashboard') ? 'text-gray-500 border-b-2 border-blue-300': 'text-gray-700 hover:text-blue-600 hover:bg-gray-50' }} transition">
-                        Home
-                    </a>
-                    <a href="{{ route('wisata.catalog') }}" class="block px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('wisata.*') ? 'text-gray-500 border-b-2 border-blue-300': 'text-gray-700 hover:text-blue-600 hover:bg-gray-50' }} transition">
-                        Katalog
-                    </a>
-                    <a href="{{ route('saw.recommendations.index') }}" class="block px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('saw.recommendations.*') ? 'text-gray-500 border-b-2 border-blue-300': 'text-gray-700 hover:text-blue-600 hover:bg-gray-50' }} transition">
-                        Rekomendasi
-                    </a>
-                    <a href="{{ route('saw.results.index') }}" class="block px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('saw.results.*') ? 'text-gray-500 border-b-2 border-blue-300': 'text-gray-700 hover:text-blue-600 hover:bg-gray-50' }} transition">
-                        Ranking
-                    </a>
+                <a href="{{ route('dashboard') }}" class="block px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('dashboard') ? 'text-gray-500 border-b-2 border-blue-300': 'text-gray-700 hover:text-blue-600 hover:bg-gray-50' }} transition">
+                    Home
+                </a>
+                <a href="{{ route('wisata.catalog') }}" class="block px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('wisata.*') ? 'text-gray-500 border-b-2 border-blue-300': 'text-gray-700 hover:text-blue-600 hover:bg-gray-50' }} transition">
+                    Katalog
+                </a>
+                <a href="{{ route('saw.recommendations.index') }}" class="block px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('saw.recommendations.*') ? 'text-gray-500 border-b-2 border-blue-300': 'text-gray-700 hover:text-blue-600 hover:bg-gray-50' }} transition">
+                    Rekomendasi
+                </a>
+                <!-- <a href="{{ route('saw.results.index') }}" class="block px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('saw.results.*') ? 'text-gray-500 border-b-2 border-blue-300': 'text-gray-700 hover:text-blue-600 hover:bg-gray-50' }} transition">
+                    Ranking
+                </a> -->
                 @else
-                    <!-- Guest mobile navigation -->
-                    <a href="{{ route('dashboard') }}" class="block px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('dashboard') ? 'text-gray-500 border-b-2 border-blue-300': 'text-gray-700 hover:text-blue-600 hover:bg-gray-50' }} transition">
-                        Beranda
-                    </a>
-                    <a href="{{ route('saw.recommendations.index') }}" class="block px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('saw.recommendations.*') ? 'text-gray-500 border-b-2 border-blue-300': 'text-gray-700 hover:text-blue-600 hover:bg-gray-50' }} transition">
-                        Rekomendasi
-                    </a>
-                    <a href="{{ route('saw.results.index') }}" class="block px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('saw.results.*') ? 'text-gray-500 border-b-2 border-blue-300': 'text-gray-700 hover:text-blue-600 hover:bg-gray-50' }} transition">
-                        Ranking
-                    </a>
+                <!-- Guest mobile navigation -->
+                <a href="{{ route('dashboard') }}" class="block px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('dashboard') ? 'text-gray-500 border-b-2 border-blue-300': 'text-gray-700 hover:text-blue-600 hover:bg-gray-50' }} transition">
+                    Beranda
+                </a>
+                <a href="{{ route('saw.recommendations.index') }}" class="block px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('saw.recommendations.*') ? 'text-gray-500 border-b-2 border-blue-300': 'text-gray-700 hover:text-blue-600 hover:bg-gray-50' }} transition">
+                    Rekomendasi
+                </a>
+                <!-- <a href="{{ route('saw.results.index') }}" class="block px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('saw.results.*') ? 'text-gray-500 border-b-2 border-blue-300': 'text-gray-700 hover:text-blue-600 hover:bg-gray-50' }} transition">
+                    Ranking
+                </a> -->
                 @endif
             </div>
 

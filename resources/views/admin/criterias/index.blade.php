@@ -26,9 +26,6 @@
                     <div class="p-6">
                         <div class="flex justify-between items-center mb-6">
                             <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">Daftar kriteria</h3>
-                            <a href="{{ route('admin.criterias.create') }}" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded">
-                                + Tambah kriteria
-                            </a>
                         </div>
 
                         @if ($criterias->isEmpty())

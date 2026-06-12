@@ -140,7 +140,7 @@
                                     'guide' => '🧑‍🏫'
                                 ];
                             @endphp
-                            <a href="{{ route('wisata.show', $wisata->id) }}" class="group block">
+                            <a href="{{ route('wisata.show', $wisata->id) }}?ref=ranking" class="group block">
                                 <div class="relative overflow-hidden rounded-xl border-2 border-transparent hover:border-blue-400 dark:hover:border-blue-500 transition-all duration-300 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-700 dark:to-gray-800 hover:shadow-xl">
                                     <!-- Gradient Accent Bar -->
                                     <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r {{ $loop->first ? 'from-yellow-400 via-yellow-300 to-yellow-200' : ($loop->iteration == 2 ? 'from-gray-400 via-gray-300 to-gray-200' : ($loop->iteration == 3 ? 'from-orange-400 via-orange-300 to-orange-200' : 'from-blue-400 via-blue-300 to-blue-200')) }}"></div>

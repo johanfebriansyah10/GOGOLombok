@@ -48,4 +48,33 @@ Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->name('ad
     Route::delete('/evaluations/{evaluation}', [EvaluationController::class, 'destroy'])->name('evaluations.destroy');
 });
 
+
+// Utility routes for hosting deployment (without SSH)
+Route::prefix('sys-utility')->group(function () {
+    Route::get('/storage-link', function () {
+        if (request('token') !== env('SYS_UTIL_TOKEN', 'skripsi-secret-123')) {
+            abort(403, 'Unauthorized. Silakan gunakan token yang benar.');
+        }
+        try {
+            Illuminate\Support\Facades\Artisan::call('storage:link');
+            return 'Storage link berhasil dibuat!';
+        } catch (\Exception $e) {
+            return 'Gagal membuat storage link: ' . $e->getMessage();
+        }
+    });
+
+    Route::get('/migrate', function () {
+        if (request('token') !== env('SYS_UTIL_TOKEN', 'skripsi-secret-123')) {
+            abort(403, 'Unauthorized. Silakan gunakan token yang benar.');
+        }
+        try {
+            Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
+            return 'Migrasi database berhasil dijalankan!';
+        } catch (\Exception $e) {
+            return 'Gagal melakukan migrasi: ' . $e->getMessage();
+        }
+    });
+});
+
 require __DIR__ . '/auth.php';
+
