@@ -16,7 +16,6 @@ class RecommendationController extends Controller
         'Lombok Tengah',
         'Lombok Timur',
         'Lombok Utara',
-        'Kota Mataram',
     ];
 
     /**
@@ -24,11 +23,10 @@ class RecommendationController extends Controller
      * Used as fallback when GPS/IP location is unavailable.
      */
     private const REGION_CENTERS = [
-        'Lombok Barat'  => ['lat' => -8.6500, 'lng' => 116.0800],
+        'Lombok Barat'  => ['lat' => -8.6500, 'lng' => 116.0800], 
         'Lombok Tengah' => ['lat' => -8.7200, 'lng' => 116.2700],
         'Lombok Timur'  => ['lat' => -8.6500, 'lng' => 116.5400],
         'Lombok Utara'  => ['lat' => -8.3500, 'lng' => 116.1600],
-        'Kota Mataram'  => ['lat' => -8.5800, 'lng' => 116.1200],
     ];
 
     /**
@@ -150,7 +148,7 @@ class RecommendationController extends Controller
         try {
             $response = Http::timeout(4)
                 ->withHeaders([
-                    'User-Agent' => config('app.name', 'Laravel') . ' recommendation geocoder',
+                    'User-Agent' => config('app.name', 'GOlombok') . ' recommendation geocoder',
                 ])
                 ->get('https://nominatim.openstreetmap.org/reverse', [
                     'format' => 'jsonv2',

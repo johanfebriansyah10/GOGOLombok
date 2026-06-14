@@ -77,4 +77,3 @@ Route::prefix('sys-utility')->group(function () {
 });
 
 require __DIR__ . '/auth.php';
-

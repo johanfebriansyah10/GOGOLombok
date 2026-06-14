@@ -4,9 +4,6 @@
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                 {{ __('Halaman Bobot Kategori Admin') }}
             </h2>
-            <a href="{{ route('admin.weights.create') }}" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded">
-                + Tambah Bobot
-            </a>
         </div>
     </x-slot>
 

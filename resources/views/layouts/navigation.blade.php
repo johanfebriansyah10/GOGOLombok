@@ -18,7 +18,7 @@
                     Kategori
                 </a>
                 <a href="{{ route('admin.wisatas.index') }}" class="px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('admin.wisatas.*') ? 'text-gray-100 border-b-2 border-gray-100 hover:border-blue-300': 'text-gray-100 hover:border-blue-300 hover:border-b-2 border-b-2 border-transparent' }} transition">
-                    Wisata
+                    Alternatif
                 </a>
                 <a href="{{ route('admin.criterias.index') }}" class="px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('admin.criterias.*') ? 'text-gray-100 border-b-2 border-gray-100 hover:border-blue-300': 'text-gray-100 hover:border-blue-300 hover:border-b-2 border-b-2 border-transparent' }} transition">
                     Kriteria
@@ -88,7 +88,7 @@
                     Kategori
                 </a>
                 <a href="{{ route('admin.wisatas.index') }}" class="block px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('admin.wisatas.*') ? 'text-gray-500 border-b-2 border-blue-300': 'text-gray-700 hover:text-blue-600 hover:bg-gray-50' }} transition">
-                    Wisata
+                    Alternatif
                 </a>
                 <a href="{{ route('admin.criterias.index') }}" class="block px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('admin.criterias.*') ? 'text-gray-500 border-b-2 border-blue-300': 'text-gray-700 hover:text-blue-600 hover:bg-gray-50' }} transition">
                     Kriteria
@@ -96,9 +96,9 @@
                 <a href="{{ route('admin.weights.index') }}" class="block px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('admin.weights.*') ? 'text-gray-500 border-b-2 border-blue-300': 'text-gray-700 hover:text-blue-600 hover:bg-gray-50' }} transition">
                     Bobot Kategori
                 </a>
-                <a href="{{ route('admin.evaluations.index') }}" class="block px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('admin.evaluations.*') ? 'text-gray-500 border-b-2 border-blue-300': 'text-gray-700 hover:text-blue-600 hover:bg-gray-50' }} transition">
+                {{-- <a href="{{ route('admin.evaluations.index') }}" class="block px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('admin.evaluations.*') ? 'text-gray-500 border-b-2 border-blue-300': 'text-gray-700 hover:text-blue-600 hover:bg-gray-50' }} transition">
                     Evaluasi
-                </a>
+                </a> --}}
                 @elseif (Auth::check())
                 <a href="{{ route('dashboard') }}" class="block px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('dashboard') ? 'text-gray-500 border-b-2 border-blue-300': 'text-gray-700 hover:text-blue-600 hover:bg-gray-50' }} transition">
                     Home
@@ -116,6 +116,9 @@
                 <!-- Guest mobile navigation -->
                 <a href="{{ route('dashboard') }}" class="block px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('dashboard') ? 'text-gray-500 border-b-2 border-blue-300': 'text-gray-700 hover:text-blue-600 hover:bg-gray-50' }} transition">
                     Beranda
+                </a>
+                <a href="{{ route('wisata.catalog') }}" class="block px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('wisata.*') ? 'text-gray-500 border-b-2 border-blue-300': 'text-gray-700 hover:text-blue-600 hover:bg-gray-50' }} transition">
+                    Wisata
                 </a>
                 <a href="{{ route('saw.recommendations.index') }}" class="block px-3 py-2 rounded-md text-md font-medium {{ request()->routeIs('saw.recommendations.*') ? 'text-gray-500 border-b-2 border-blue-300': 'text-gray-700 hover:text-blue-600 hover:bg-gray-50' }} transition">
                     Rekomendasi

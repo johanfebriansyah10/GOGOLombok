@@ -222,7 +222,7 @@
                                 <label class="block text-sm font-medium mb-2">🏢 Fasilitas Tersedia</label>
                                 <div class="grid grid-cols-2 gap-2">
                                     @php
-                                        $facilityOptions = ['Toilet', 'Musholla / Masjid', 'Parkir', 'Spot Foto', 'Kuliner', 'WiFi', 'Pemandu Wisata', 'Tempat Sampah', 'Bangku Tempat Duduk', 'Gazebo', 'Cafe', 'Kios Suvenir', 'ATM', 'Tempat Bermain Anak', 'Penginapan', 'Pusat Informasi Wisata', 'Outbound', 'Klinik', 'Penyewaan Alat Snorkeling', 'Area Camping'];
+                                        $facilityOptions = ['Toilet', 'Musholla / Masjid', 'Parkir', 'Spot Foto', 'Kuliner', 'WiFi', 'Pemandu Wisata', 'Tempat Sampah', 'Bangku Tempat Duduk', 'Gazebo', 'Cafe', 'Kios Suvenir', 'ATM', 'Tempat Bermain Anak', 'Penginapan', 'Pusat Informasi Wisata', 'Outbound', 'Klinik', 'Penyewaan Alat Snorkeling', 'Area Camping', 'Kolam Renang'];
                                         $facilityLabels = [
                                             'Toilet' => 'Toilet',
                                             'Musholla / Masjid' => 'Musholla / Masjid',
@@ -244,6 +244,7 @@
                                             'Klinik' => 'Klinik',
                                             'Penyewaan Alat Snorkeling' => 'Penyewaan Alat Snorkeling',
                                             'Area Camping' => 'Area Camping',
+                                            'Kolam Renang' => 'Kolam Renang',
                                         ];
                                     @endphp
                                     @foreach($facilityOptions as $facility)

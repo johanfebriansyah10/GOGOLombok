@@ -75,16 +75,7 @@
                                 </div>
 
                                 <!-- Info Grid (Enhanced) -->
-                                <div class="grid grid-cols-2 gap-3 mb-4">
-                                    <!-- Distance -->
-                                    <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-3 rounded-lg transform text-center flex items-center justify-between group-hover:bg-gradient-to-br group-hover:from-blue-100 group-hover:to-blue-200 transition duration-200">
-                                        <div>
-                                            <span class="text-xl">🚀</span>
-                                            <p class="text-xs text-gray-600 font-semibold uppercase tracking-wider">Jarak</p>
-                                        </div>
-                                        <p class="text-gray-900 font-bold mt-1">{{ number_format($wisata->distance, 1) }} <span class="text-xs">km</span></p>
-                                    </div>
-
+                                <div class="grid grid-cols-1 gap-3 mb-4">
                                     <!-- Price -->
                                     <div class="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900  p-3 rounded-lg text-center flex items-center justify-between group-hover:bg-gradient-to-br group-hover:from-green-100 group-hover:to-green-200 transition duration-200">
                                         <div>

@@ -73,15 +73,13 @@
                                         class="form-input"
                                         placeholder="Contoh: 100"
                                         value="{{ $filters['max_distance'] ?? '' }}"
-                                        step="5"
+                                        step="2"
                                         min="0"
                                     />
                                     <span class="form-input-suffix">km</span>
                                 </div>
                                 <p class="form-helper">Cari wisata dalam jarak kurang dari nilai di #1atas dari pusat kota</p>
                             </div>
-
-
                             <!-- Rating Minimal -->
                             <div>
                                 <label for="min_rating" class="form-label">
@@ -111,7 +109,7 @@
                                 </label>
                                 <div class="flex-wrap-gap">
                                     @php
-                                        $facilityOptions = ['Toilet', 'Musholla / Masjid', 'Parkir', 'Spot Foto', 'Kuliner', 'WiFi', 'Guide', 'Tempat Sampah', 'Bangku Tempat Duduk', 'Gazebo', 'Cafe', 'Kios Suvenir', 'ATM', 'Tempat Bermain Anak', 'Penginapan', 'Pusat Informasi Wisata', 'Outbound', 'Klinik', 'Penyewaan Alat Snorkeling', 'Area Camping'];
+                                        $facilityOptions = ['Toilet', 'Musholla / Masjid', 'Parkir', 'Spot Foto', 'Kuliner', 'WiFi', 'Guide', 'Tempat Sampah', 'Bangku Tempat Duduk', 'Gazebo', 'Cafe', 'Kios Suvenir', 'ATM', 'Tempat Bermain Anak', 'Penginapan', 'Pusat Informasi Wisata', 'Outbound', 'Klinik', 'Penyewaan Alat Snorkeling', 'Area Camping', 'Kolam Renang'];
                                         $facilityLabels = [
                                             'Toilet' => 'Toilet',
                                             'Musholla / Masjid' => 'Musholla / Masjid',
@@ -133,6 +131,7 @@
                                             'Klinik' => 'Klinik',
                                             'Penyewaan Alat Snorkeling' => 'Penyewaan Alat Snorkeling',
                                             'Area Camping' => 'Area Camping',
+                                            'Kolam Renang' => 'Kolam Renang',
                                         ];
                                     @endphp
                                     @foreach($facilityOptions as $facility)
@@ -164,7 +163,7 @@
                                         id="use-location"
                                         class="btn-outline w-full"
                                     >
-                                        📡 Gunakan Posisi Saya
+                                        📌 Gunakan Posisi Saya
                                     </button>
                                 </div>
 
@@ -209,7 +208,7 @@
                             </button>
                         </div>
 
-                        <div class="mt-6">
+                        <div class="mt-6 z-1">
                             <div class="text-sm font-semibold text-gray-700 mb-2">Peta Lokasi Anda</div>
                             <div id="userLocationMap" class="w-full h-72 rounded-xl border border-gray-200 bg-gray-50 overflow-hidden">
                                 <div id="mapPlaceholder" class="flex items-center justify-center h-full text-gray-500">Tekan "Gunakan Posisi Saya" untuk melihat lokasi Anda</div>
@@ -239,50 +238,7 @@
                 </div>
             </div>
 
-            <!-- Criteria Weights Info -->
-            <div class="mb-8 bg-gradient-to-r from-indigo-50 to-blue-50 dark:from-indigo-900/30 dark:to-blue-900/30 border-2 border-indigo-200 dark:border-indigo-700 overflow-hidden shadow-md sm:rounded-xl">
-                <div class="p-6">
-                    <div class="flex items-center gap-3 mb-6">
-                        <h3 class="text-lg font-bold text-gray-900 dark:text-gray-100">📊 Bobot Kriteria Perangkingan</h3>
-                        <span class="text-xs bg-indigo-500 text-white px-3 py-1 rounded-full font-semibold">Total = 100%</span>
-                    </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                        @foreach ($criterias as $criteria)
-                            @php
-                                $weight = $criteria->weight ? floatval($criteria->weight->weight) * 100 : 0;
-                                $colors = [
-                                    'C1' => ['bg' => 'from-red-500 to-red-600', 'light' => 'from-red-100 to-red-50', 'text' => 'text-red-700', 'darkText' => 'dark:text-red-300', 'icon' => '💵'],
-                                    'C2' => ['bg' => 'from-blue-500 to-blue-600', 'light' => 'from-blue-100 to-blue-50', 'text' => 'text-blue-700', 'darkText' => 'dark:text-blue-300', 'icon' => '🗺️'],
-                                    'C3' => ['bg' => 'from-green-500 to-green-600', 'light' => 'from-green-100 to-green-50', 'text' => 'text-green-700', 'darkText' => 'dark:text-green-300', 'icon' => '🏛️'],
-                                    'C4' => ['bg' => 'from-yellow-500 to-yellow-600', 'light' => 'from-yellow-100 to-yellow-50', 'text' => 'text-yellow-700', 'darkText' => 'dark:text-yellow-300', 'icon' => '⭐'],
-                                ];
-                                $color = $colors[$criteria->code] ?? ['bg' => 'from-gray-500 to-gray-600', 'light' => 'from-gray-100 to-gray-50', 'text' => 'text-gray-700', 'darkText' => 'dark:text-gray-300', 'icon' => '📌'];
-                            @endphp
-                            <div class="bg-gradient-to-br {{ $color['light'] }} dark:from-gray-700 dark:to-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg p-4 shadow-sm hover:shadow-md transition">
-                                <div class="flex items-center justify-between mb-3">
-                                    <div class="flex items-center gap-2">
-                                        <span class="text-2xl">{{ $color['icon'] }}</span>
-                                        <span class="text-sm font-bold text-gray-600 dark:text-gray-400 bg-gray-300 dark:bg-gray-600 px-2 py-1 rounded">{{ $criteria->code }}</span>
-                                    </div>
-                                    <span class="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-br {{ $color['bg'] }} text-white rounded-full font-bold text-lg shadow">
-                                        {{ number_format($weight, 0) }}%
-                                    </span>
-                                </div>
-                                <p class="text-sm font-semibold {{ $color['text'] }} dark:text-gray-300">{{ $criteria->name }}</p>
-                                <div class="mt-3 w-full bg-gray-300 dark:bg-gray-600 rounded-full h-2 overflow-hidden">
-                                    <div class="h-full bg-gradient-to-r {{ $color['bg'] }} rounded-full transition-all" style="width: {{ $weight }}%"></div>
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
-                    <div class="mt-4 p-3 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-600 text-sm text-gray-700 dark:text-gray-300">
-                        <p class="font-semibold mb-2">💡 Keterangan:</p>
-                        <ul class="space-y-1 text-xs md:text-sm">
-                            <li>• Perangkingan wisata dipengaruhi oleh bobot kriteria yang telah ditentukan di atas</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+
             <!-- Results Section -->
             @if ($hasFilters || (isset($result) && (isset($result['error']) || isset($result['message']))))
                 @if (isset($result['error']))
@@ -437,6 +393,50 @@
                 @endif
             @else
                 <!-- Initial State - No Filter Applied -->
+                            <!-- Criteria Weights Info -->
+            <div class="mb-8 bg-gradient-to-r from-indigo-50 to-blue-50 dark:from-indigo-900/30 dark:to-blue-900/30 border-2 border-indigo-200 dark:border-indigo-700 overflow-hidden shadow-md sm:rounded-xl">
+                <div class="p-6">
+                    <div class="flex items-center gap-3 mb-6">
+                        <h3 class="text-lg font-bold text-gray-900 dark:text-gray-100">📊 Bobot Kriteria Perangkingan</h3>
+                        <span class="text-xs bg-indigo-500 text-white px-3 py-1 rounded-full font-semibold">Total = 100%</span>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                        @foreach ($criterias as $criteria)
+                            @php
+                                $weight = $criteria->weight ? floatval($criteria->weight->weight) * 100 : 0;
+                                $colors = [
+                                    'C1' => ['bg' => 'from-red-500 to-red-600', 'light' => 'from-red-100 to-red-50', 'text' => 'text-red-700', 'darkText' => 'dark:text-red-300', 'icon' => '💵'],
+                                    'C2' => ['bg' => 'from-blue-500 to-blue-600', 'light' => 'from-blue-100 to-blue-50', 'text' => 'text-blue-700', 'darkText' => 'dark:text-blue-300', 'icon' => '🗺️'],
+                                    'C3' => ['bg' => 'from-green-500 to-green-600', 'light' => 'from-green-100 to-green-50', 'text' => 'text-green-700', 'darkText' => 'dark:text-green-300', 'icon' => '🏛️'],
+                                    'C4' => ['bg' => 'from-yellow-500 to-yellow-600', 'light' => 'from-yellow-100 to-yellow-50', 'text' => 'text-yellow-700', 'darkText' => 'dark:text-yellow-300', 'icon' => '⭐'],
+                                ];
+                                $color = $colors[$criteria->code] ?? ['bg' => 'from-gray-500 to-gray-600', 'light' => 'from-gray-100 to-gray-50', 'text' => 'text-gray-700', 'darkText' => 'dark:text-gray-300', 'icon' => '📌'];
+                            @endphp
+                            <div class="bg-gradient-to-br {{ $color['light'] }} dark:from-gray-700 dark:to-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg p-4 shadow-sm hover:shadow-md transition">
+                                <div class="flex items-center justify-between mb-3">
+                                    <div class="flex items-center gap-2">
+                                        <span class="text-2xl">{{ $color['icon'] }}</span>
+                                        <span class="text-sm font-bold text-gray-600 dark:text-gray-400 bg-gray-300 dark:bg-gray-600 px-2 py-1 rounded">{{ $criteria->code }}</span>
+                                    </div>
+                                    <span class="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-br {{ $color['bg'] }} text-white rounded-full font-bold text-lg shadow">
+                                        {{ number_format($weight, 0) }}%
+                                    </span>
+                                </div>
+                                <p class="text-sm font-semibold {{ $color['text'] }} dark:text-gray-300">{{ $criteria->name }}</p>
+                                <div class="mt-3 w-full bg-gray-300 dark:bg-gray-600 rounded-full h-2 overflow-hidden">
+                                    <div class="h-full bg-gradient-to-r {{ $color['bg'] }} rounded-full transition-all" style="width: {{ $weight }}%"></div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                    <div class="mt-4 p-3 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-600 text-sm text-gray-700 dark:text-gray-300">
+                        <p class="font-semibold mb-2">💡 Keterangan:</p>
+                        <ul class="space-y-1 text-xs md:text-sm">
+                            <li>• Perangkingan wisata dipengaruhi oleh bobot kriteria yang telah ditentukan di atas</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
                 <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-dashed border-blue-300 rounded-lg p-12 text-center">
                     <div class="text-5xl mb-4">🎯</div>
                     <h3 class="text-2xl font-bold text-gray-900 mb-2">Mulai Cari Wisata Tujuan Anda</h3>
@@ -468,7 +468,7 @@
             const mapContainer = document.getElementById('userLocationMap');
             const placeholder = document.getElementById('mapPlaceholder');
             const locationStatus = document.getElementById('locationStatus');
-            const defaultUseBtnText = useBtn?.textContent || '📡 Gunakan Posisi Saya';
+            const defaultUseBtnText = useBtn?.textContent || 'Gunakan Posisi Saya';
             const defaultSubmitBtnText = submitBtn?.textContent || 'Cari Wisata';
             const sourceLabels = {
                 gps: 'GPS Browser',
@@ -480,7 +480,6 @@
                 {name: 'Lombok Tengah', aliases: ['lombok tengah', 'kabupaten lombok tengah']},
                 {name: 'Lombok Timur', aliases: ['lombok timur', 'kabupaten lombok timur']},
                 {name: 'Lombok Utara', aliases: ['lombok utara', 'kabupaten lombok utara']},
-                {name: 'Kota Mataram', aliases: ['mataram', 'kota mataram']}
             ];
             let leafletMap;
             let userMarker;

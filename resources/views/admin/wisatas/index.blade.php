@@ -2,10 +2,10 @@
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                {{ __('Halaman Wisata Admin') }}
+                {{ __('Halaman Alternatif') }}
             </h2>
             <a href="{{ route('admin.wisatas.create') }}" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded">
-                + Tambah Wisata
+                + Tambah Alternatif
             </a>
         </div>
     </x-slot>
@@ -37,7 +37,6 @@
                                         <th class="px-4 py-4 font-semibold text-[16px] text-center">Kategori</th>
                                         <th class="px-4 py-4 font-semibold text-[16px] text-center">Lokasi</th>
                                         <th class="px-4 py-4 font-semibold text-[16px] text-center">Harga</th>
-                                        <th class="px-4 py-4 font-semibold text-[16px] text-center">Jarak (km)</th>
                                         <th class="px-4 py-4 font-semibold text-[16px] text-center">Fasilitas</th>
                                         <th class="px-4 py-4 font-semibold text-[16px] text-center">Rating</th>
                                         <th class="px-4 py-4 font-semibold text-[16px] text-center">Aksi</th>
@@ -62,7 +61,6 @@
                                             </td>
                                             <td class="px-4 py-3 text-center">{{ $wisata->location }}</td>
                                             <td class="px-4 py-3 text-center font-semibold">Rp {{ number_format($wisata->ticket_price, 0, ',', '.') }}</td>
-                                            <td class="px-4 py-3 text-center">{{ number_format($wisata->distance, 1) }} km</td>
                                             <td class="px-4 py-3 text-center">
                                                 <span class="inline-block px-2 py-1 rounded text-xs font-semibold {{ $wisata->facilities_count >= 10 ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' : ($wisata->facilities_count >= 5 ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200' : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200') }}">
                                                     {{ $wisata->facilities_count }}
