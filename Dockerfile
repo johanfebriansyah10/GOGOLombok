@@ -6,12 +6,14 @@ FROM node:20-alpine AS node-build
 WORKDIR /app
 
 # Install dependencies first (for better caching)
-COPY package.json ./
+COPY package.json package-lock.json* ./
 RUN npm ci --no-audit --no-fund
 
 # Copy source and build
 COPY postcss.config.js tailwind.config.js vite.config.js ./
 COPY resources/ resources/
+# Pastikan folder public ada agar hasil build tidak salah tempat
+COPY public/ public/
 RUN npm run build
 
 # =============================================================================
@@ -21,7 +23,7 @@ FROM composer:2 AS composer-build
 
 WORKDIR /app
 
-COPY composer.json ./
+COPY composer.json composer.lock* ./
 RUN composer install \
     --no-dev \
     --no-interaction \
@@ -38,23 +40,21 @@ FROM php:8.2-fpm-alpine AS runner
 
 # Install system dependencies and PHP extensions
 RUN apk add --no-cache \
-    # Nginx and utilities
     nginx \
     bash \
     curl \
     gettext \
+    oniguruma-dev \
     # PHP extensions required by Laravel
     && docker-php-ext-install \
     bcmath \
     ctype \
     fileinfo \
+    mbstring \
     pdo \
     pdo_mysql \
-    # Clean up
+    # Clean up apk cache
     && rm -rf /var/cache/apk/* /tmp/*
-
-# Install mbstring (built-in but ensure it's enabled)
-RUN docker-php-ext-install mbstring
 
 # Copy Nginx configuration
 COPY docker/nginx.conf /etc/nginx/nginx.conf
@@ -62,20 +62,20 @@ COPY docker/nginx.conf /etc/nginx/nginx.conf
 # Copy PHP-FPM configuration (override default pool config)
 COPY docker/php-fpm.conf /usr/local/etc/php-fpm.d/zz-www.conf
 
-# Copy from composer stage
-COPY --from=composer-build /app/vendor/ /var/www/html/vendor/
+WORKDIR /var/www/html
 
-# Copy from node build stage
-COPY --from=node-build /app/public/build/ /var/www/html/public/build/
+# 1. SALIN SOURCE CODE UTAMA TERLEBIH DAHULU (Ubah ownership ke www-data)
+COPY --chown=www-data:www-data . /var/www/html/
 
-# Copy application source
-COPY . /var/www/html/
+# 2. TIMPA DENGAN DEPENDENSI BERSIH DARI MULTI-STAGE BUILD
+COPY --from=composer-build --chown=www-data:www-data /app/vendor/ /var/www/html/vendor/
+COPY --from=node-build --chown=www-data:www-data /app/public/build/ /var/www/html/public/build/
 
 # Copy entrypoint script
 COPY docker/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
-# Create required directories and set permissions
+# Create required directories and set strict permissions
 RUN mkdir -p /var/www/html/storage/framework/cache/data \
     && mkdir -p /var/www/html/storage/framework/sessions \
     && mkdir -p /var/www/html/storage/framework/views \
@@ -86,7 +86,7 @@ RUN mkdir -p /var/www/html/storage/framework/cache/data \
     && chown -R www-data:www-data /var/www/html/storage \
     && chown -R www-data:www-data /var/www/html/bootstrap/cache
 
-# Clean up files not needed in production
+# Clean up files not needed in production (Mempertahankan database/seeders untuk keperluan migrasi awal)
 RUN rm -f /var/www/html/.env.example \
     /var/www/html/.env.production.example \
     /var/www/html/phpunit.xml \
@@ -95,13 +95,10 @@ RUN rm -f /var/www/html/.env.example \
     /var/www/html/.gitattributes \
     /var/www/html/.htaccess \
     && rm -rf /var/www/html/tests \
-    /var/www/html/database/factories \
-    /var/www/html/database/seeders
+    /var/www/html/database/factories
 
 # Expose Railway's expected port
 EXPOSE ${PORT:-8080}
-
-WORKDIR /var/www/html
 
 # Health check to verify the app is running
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
