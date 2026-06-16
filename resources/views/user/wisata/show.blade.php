@@ -101,21 +101,16 @@ $backLabel = 'Daftar Wisata';
 
                         <!-- Key Info Grid -->
                         <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-                            <!-- Distance -->
-                            <div class="bg-blue-50 dark:bg-blue-900 p-4 rounded-lg">
-                                <div class="flex items-center justify-between gap-2 mb-2">
-                                    <span class="text-2xl">🚀</span>
-                                    <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Jarak dari Pusat Kota</p>
-                                    <p class="text-2xl font-bold text-blue-600 dark:text-blue-400">{{ number_format($wisata->distance, 1) }}<span class="text-sm ml-1">km</span></p>
-                                </div>
-                            </div>
-
                             <!-- Ticket Price -->
                             <div class="bg-green-50 dark:bg-green-900 p-4 rounded-lg">
                                 <div class="flex items-center justify-between gap-2 mb-2">
                                     <span class="text-2xl">🎟️</span>
                                     <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Harga Tiket</p>
+                                    @if ($wisata->ticket_price == 0)
+                                    <p>Gratis</p>
+                                    @else
                                     <p class="text-xl font-bold text-green-600 dark:text-green-400">Rp <span class="text-sm">{{ number_format($wisata->ticket_price, 0, '', '.') }}</span></p>
+                                    @endif
                                 </div>
                             </div>
                             <!-- Facilities -->
@@ -142,7 +137,7 @@ $backLabel = 'Daftar Wisata';
 
             <!-- Related Wisatas -->
             @if ($related->isNotEmpty())
-            <div class="mt-12 bg-white dark:bg-gray-800 overflow-hidden shadow-lg rounded-lg p-8">
+            <div class="mt-12 bg-white overflow-hidden shadow-lg rounded-lg p-8">
                 <h2 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6">🌟 Wisata Sejenis</h2>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">

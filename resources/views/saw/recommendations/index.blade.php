@@ -54,7 +54,7 @@
                                         class="form-input-pl"
                                         placeholder="Contoh: 200000"
                                         value="{{ $filters['max_budget'] ?? '' }}"
-                                        step="5000"
+                                        step="2000"
                                         min="0"
                                     />
                                 </div>
@@ -73,7 +73,7 @@
                                         class="form-input"
                                         placeholder="Contoh: 100"
                                         value="{{ $filters['max_distance'] ?? '' }}"
-                                        step="2"
+                                        step="5"
                                         min="0"
                                     />
                                     <span class="form-input-suffix">km</span>
@@ -221,18 +221,6 @@
                                 ];
                                 $locationSourceLabel = $locationSourceLabels[$filters['location_source'] ?? ''] ?? 'Belum diketahui';
                             @endphp
-                            <div id="locationStatus" class="mt-3 text-sm text-gray-600">
-                                @if (isset($filters['user_lat'], $filters['user_lng']))
-                                    Lokasi tersimpan:
-                                    <span class="font-semibold text-gray-900">{{ $filters['user_regency'] ?? 'Kabupaten belum terdeteksi' }}</span>
-                                    <span class="mx-1">•</span>
-                                    {{ $locationSourceLabel }}
-                                    <span class="mx-1">•</span>
-                                    {{ number_format((float) $filters['user_lat'], 6) }}, {{ number_format((float) $filters['user_lng'], 6) }}
-                                @else
-                                    Sistem akan meminta izin GPS browser saat Anda mencari rekomendasi.
-                                @endif
-                            </div>
                         </div>
                     </form>
                 </div>

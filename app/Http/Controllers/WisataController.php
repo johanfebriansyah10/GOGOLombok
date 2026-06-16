@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Wisata;
 use App\Models\Category;
-use Illuminate\Http\Request;
 
 class WisataController extends Controller
 {
@@ -14,9 +13,10 @@ class WisataController extends Controller
     public function catalog()
     {
         $wisatas = Wisata::with('category')->get();
+        $locations = Wisata::select('location')->distinct()->pluck('location');
         $categories = Category::all();
 
-        return view('user.wisata.catalog', compact('wisatas', 'categories'));
+        return view('user.wisata.catalog', compact('wisatas', 'locations', 'categories'));
     }
 
     /**

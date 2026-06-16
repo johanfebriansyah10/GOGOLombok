@@ -17,6 +17,12 @@
                         <option value="{{ $category->id }}">{{ $category->name }}</option>
                     @endforeach
                 </select>
+                <select id="locationFilter" name="location" class="pr-10 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <option value="">Semua Wilayah</option>
+                    @foreach ($locations as $location)
+                    <option value="{{ $location }}">{{ $location }}</option>
+                    @endforeach
+                </select>
             </div>
         </div>
     </x-slot>
@@ -31,7 +37,8 @@
             <!-- Wisata Grid -->
             <div id="wisataContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 @forelse ($wisatas as $wisata)
-                    <a href="{{ route('wisata.show', $wisata->id) }}" class="group" data-category="{{ $wisata->category_id ?? '' }}">
+                    <a href="{{ route('wisata.show', $wisata->id) }}" class="group" data-category="{{ $wisata->category_id ?? '' }}"
+                    data-location="{{ strtolower($wisata->location) }}">
                         <div class="bg-white overflow-hidden shadow-lg rounded-xl hover:shadow-2xl h-full flex flex-col">
                             <!-- Image Container with Overlay -->
                             <div class="relative overflow-hidden bg-gradient-to-br from-gray-200 to-gray-300 h-64 flex-shrink-0">
@@ -75,7 +82,7 @@
                                 </div>
 
                                 <!-- Info Grid (Enhanced) -->
-                                <div class="grid grid-cols-1 gap-3 mb-4">
+                                <div class="grid grid-cols-2 gap-3 mb-4">
                                     <!-- Price -->
                                     <div class="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900  p-3 rounded-lg text-center flex items-center justify-between group-hover:bg-gradient-to-br group-hover:from-green-100 group-hover:to-green-200 transition duration-200">
                                         <div>
@@ -103,6 +110,15 @@
                                             <p class="text-xs text-gray-600 font-semibold uppercase tracking-wider">Rating</p>
                                         </div>
                                         <p class="text-gray-900 font-bold mt-1">{{ number_format($wisata->actual_rating ?? 0, 1) }}/5</p>
+                                    </div>
+
+                                    <!-- Reviwer -->
+                                    <div class="bg-gradient-to-br from-orange-50 to-orange-100 p-3 rounded-lg text-center flex items-center justify-between group-hover:bg-gradient-to-br group-hover:from-orange-100 group-hover:to-orange-200 transition duration-200">
+                                        <div>
+                                            <span class="text-xl">👥</span>
+                                            <p class="text-xs text-gray-600 font-semibold uppercase tracking-wider">Reviewer</p>
+                                        </div>
+                                        <p class="text-gray-900 font-bold mt-1">{{ $wisata->review_count }}</p>
                                     </div>
                                 </div>
 
@@ -150,6 +166,7 @@
         document.head.appendChild(style);
 
         // Search dan Filter functionality
+        const locationFilter = document.getElementById('locationFilter');
         const searchInput = document.getElementById('searchInput');
         const categoryFilter = document.getElementById('categoryFilter');
         const wisataCards = document.querySelectorAll('#wisataContainer a');
@@ -157,18 +174,24 @@
         function filterWisatas() {
             const searchTerm = searchInput.value.toLowerCase();
             const selectedCategory = categoryFilter.value;
+            const selectedLocation = locationFilter.value.toLowerCase();
 
             wisataCards.forEach((card, index) => {
-                const name = card.querySelector('h3').textContent.toLowerCase();
-                const category = card.dataset.category || '';
+            const name = card.querySelector('h3').textContent.toLowerCase();
+            const category = card.dataset.category || '';
+            const location = card.dataset.location || '';
 
-                const matchesSearch = name.includes(searchTerm);
-                const matchesCategory = !selectedCategory || category === selectedCategory;
+            const matchesSearch = name.includes(searchTerm);
+            const matchesCategory = !selectedCategory || category === selectedCategory;
+            const matchesLocation = !selectedLocation || location === selectedLocation;
 
-                const shouldShow = matchesSearch && matchesCategory;
+            const shouldShow =
+                matchesSearch &&
+                matchesCategory &&
+                matchesLocation;
+
                 card.style.display = shouldShow ? 'block' : 'none';
 
-                // Re-trigger animation on filter
                 if (shouldShow) {
                     card.style.animation = 'none';
                     setTimeout(() => {
@@ -177,8 +200,8 @@
                 }
             });
         }
-
         searchInput?.addEventListener('keyup', filterWisatas);
         categoryFilter?.addEventListener('change', filterWisatas);
+        locationFilter?.addEventListener('change', filterWisatas);
     </script>
 </x-app-layout>
